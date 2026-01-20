@@ -43,15 +43,6 @@ namespace Assets._Project.Develop.Runtime.UI.MainMenu
             _disposables.Clear();
         }
 
-        private void OnLossesChanged(int oldValue, int newValue)
-        {
-            _view.SetLosesText(newValue.ToString());
-        }
-
-        private void OnWinsChanged(int oldValue, int newValue)
-        {
-            _view.SetWinsText(newValue.ToString());
-        }
 
         private void OnStartGameButtonClicked()
         {

@@ -1,4 +1,5 @@
 ﻿using Assets._Project.Develop.Infrastructure.DI;
+using Assets._Project.Develop.Runtime.UI;
 using Assets._Project.Develop.Runtime.UI.Core;
 using Assets._Project.Develop.Runtime.Utilites.AssetsManagment;
 using Assets._Project.Develop.Runtime.Utilites.ConfigsManagment;
@@ -9,11 +10,8 @@ using Assets._Project.Develop.Runtime.Utilites.DataManagment.KeyStorage;
 using Assets._Project.Develop.Runtime.Utilites.DataManagment.Serializers;
 using Assets._Project.Develop.Runtime.Utilites.DataProviders;
 using Assets._Project.Develop.Runtime.Utilites.LoadingScreen;
-using Assets._Project.Develop.Runtime.Utilites.Reactive;
 using Assets._Project.Develop.Runtime.Utilites.SceneManagement;
 using Assets._Project.Develop.Runtime.Utilites.Timer;
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -43,6 +41,13 @@ namespace Assets._Project.Develop.Infrastructure.EntryPoint
 
             container.RegisterAsSingle(CreateTimerServiceFactory);
 
+            container.RegisterAsSingle(CreateProjectPresentersFactory);
+
+        }
+
+        private static ProjectPresentersFactory CreateProjectPresentersFactory(DIContainer container)
+        {
+            return new ProjectPresentersFactory(container);
         }
 
         private static TimerServiceFactory CreateTimerServiceFactory(DIContainer container)
