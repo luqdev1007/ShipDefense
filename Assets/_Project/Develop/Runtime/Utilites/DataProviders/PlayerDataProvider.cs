@@ -1,4 +1,6 @@
-﻿using Assets._Project.Develop.Runtime.Utilites.ConfigsManagment;
+﻿using Assets._Project.Develop.Runtime.Configs.Meta.Wallet;
+using Assets._Project.Develop.Runtime.Meta.Features.Wallet;
+using Assets._Project.Develop.Runtime.Utilites.ConfigsManagment;
 using Assets._Project.Develop.Runtime.Utilites.DataManagment;
 using System;
 using System.Collections.Generic;
@@ -18,14 +20,13 @@ namespace Assets._Project.Develop.Runtime.Utilites.DataProviders
         {
             return new PlayerData()
             {
-                // WalletData = InitWalletData(),
+                WalletData = InitWalletData(),
                 Wins = 0,
                 Losses = 0,
                 CompletedLevels = new()
             };
         }
 
-        /*
         private Dictionary<CurrencyTypes, int> InitWalletData()
         {
             Dictionary<CurrencyTypes, int> walletData = new();
@@ -37,7 +38,6 @@ namespace Assets._Project.Develop.Runtime.Utilites.DataProviders
 
             return walletData;
         }
-        */
     }
 }
 

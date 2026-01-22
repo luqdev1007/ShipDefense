@@ -1,4 +1,5 @@
 ﻿using Assets._Project.Develop.Infrastructure.DI;
+using Assets._Project.Develop.Runtime.Meta.Features.Wallet;
 using Assets._Project.Develop.Runtime.UI;
 using Assets._Project.Develop.Runtime.UI.Core;
 using Assets._Project.Develop.Runtime.Utilites.AssetsManagment;
@@ -10,8 +11,11 @@ using Assets._Project.Develop.Runtime.Utilites.DataManagment.KeyStorage;
 using Assets._Project.Develop.Runtime.Utilites.DataManagment.Serializers;
 using Assets._Project.Develop.Runtime.Utilites.DataProviders;
 using Assets._Project.Develop.Runtime.Utilites.LoadingScreen;
+using Assets._Project.Develop.Runtime.Utilites.Reactive;
 using Assets._Project.Develop.Runtime.Utilites.SceneManagement;
 using Assets._Project.Develop.Runtime.Utilites.Timer;
+using System.Collections.Generic;
+using System;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -42,6 +46,8 @@ namespace Assets._Project.Develop.Infrastructure.EntryPoint
             container.RegisterAsSingle(CreateTimerServiceFactory);
 
             container.RegisterAsSingle(CreateProjectPresentersFactory);
+
+            container.RegisterAsSingle(CreateWalletService).NonLazy();
 
         }
 
@@ -106,6 +112,16 @@ namespace Assets._Project.Develop.Infrastructure.EntryPoint
                 .Load<StandartLoadingScreen>("Utilities/StandartLoadingScreen");
 
             return Object.Instantiate(standartLoadingScreen);
+        }
+
+        private static WalletService CreateWalletService(DIContainer container)
+        {
+            Dictionary<CurrencyTypes, ReactiveVariable<int>> currencies = new();
+
+            foreach (CurrencyTypes currencyType in Enum.GetValues(typeof(CurrencyTypes)))
+                currencies[currencyType] = new ReactiveVariable<int>();
+
+            return new WalletService(currencies, container.Resolve<PlayerDataProvider>());
         }
     }
 }

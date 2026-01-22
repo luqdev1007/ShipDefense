@@ -28,6 +28,8 @@ namespace Assets._Project.Develop.Runtime.Meta.Infrastructure
             _playerDataProvider = _container.Resolve<PlayerDataProvider>();
             _coroutinesPerformer = _container.Resolve<ICoroutinesPerformer>();
 
+
+
             yield break;
         }
 
