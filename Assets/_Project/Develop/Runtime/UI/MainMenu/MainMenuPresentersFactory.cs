@@ -19,7 +19,8 @@ namespace Assets._Project.Develop.Runtime.UI.MainMenu
                 view,
                 _container.Resolve<MainMenuPopupService>(),
                 _container.Resolve<SceneSwitcherService>(),
-                _container.Resolve<ICoroutinesPerformer>()
+                _container.Resolve<ICoroutinesPerformer>(),
+                _container.Resolve<ProjectPresentersFactory>()
                 );
         } 
     }

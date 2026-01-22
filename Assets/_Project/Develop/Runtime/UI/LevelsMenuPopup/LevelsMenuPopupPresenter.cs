@@ -1,4 +1,5 @@
-﻿using Assets._Project.Develop.Runtime.UI.Core;
+﻿using Assets._Project.Develop.Runtime.Configs.Gameplay.Levels;
+using Assets._Project.Develop.Runtime.UI.Core;
 using Assets._Project.Develop.Runtime.Utilites.ConfigsManagment;
 using Assets._Project.Develop.Runtime.Utilites.CoroutinesManagment;
 using Assets._Project.Develop.Runtime.Utilites.SceneManagement;
@@ -39,7 +40,6 @@ namespace Assets._Project.Develop.Runtime.UI.LevelsMenuPopup
 
             _view.SetTitle(TitleName);
 
-            /*
             LevelsListConfig levelsListConfig = _configProviderService.GetConfig<LevelsListConfig>();
 
             for (int i = 0; i < levelsListConfig.Levels.Count; i++)
@@ -48,7 +48,7 @@ namespace Assets._Project.Develop.Runtime.UI.LevelsMenuPopup
 
                 _view.LevelTilesListView.Add(levelTileView);
 
-                GameplayInputArgs inputArgs = new GameplayInputArgs(typeModeConfig.GetValueFor(typeMode), levelsListConfig.Levels[i].LevelNumber);
+                GameplayInputArgs inputArgs = new GameplayInputArgs(levelsListConfig.Levels[i].LevelNumber);
 
                 LevelTilePresenter levelTilePresenter = _presentersFactory
                     .CreateLevelTilePresenter(levelTileView, inputArgs, levelsListConfig.Levels[i]);
@@ -57,7 +57,6 @@ namespace Assets._Project.Develop.Runtime.UI.LevelsMenuPopup
 
                 _levelTilePresenters.Add(levelTilePresenter);
             }
-            */
         }
 
         public override void Dispose()
