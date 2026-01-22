@@ -57,8 +57,6 @@ namespace Assets._Project.Develop.Runtime.Meta.Features.Wallet
 
         public void ReadFrom(PlayerData data)
         {
-            Debug.Log(data.WalletData == null);
-
             foreach (KeyValuePair<CurrencyTypes, int> currency in data.WalletData)
             {
                 if (_currencies.ContainsKey(currency.Key))
