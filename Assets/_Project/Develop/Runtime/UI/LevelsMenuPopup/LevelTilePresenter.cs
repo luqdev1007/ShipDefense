@@ -1,4 +1,5 @@
-﻿using Assets._Project.Develop.Runtime.UI.Core;
+﻿using Assets._Project.Develop.Runtime.Configs.Gameplay.Levels;
+using Assets._Project.Develop.Runtime.UI.Core;
 using Assets._Project.Develop.Runtime.Utilites.CoroutinesManagment;
 using Assets._Project.Develop.Runtime.Utilites.SceneManagement;
 
@@ -10,26 +11,29 @@ namespace Assets._Project.Develop.Runtime.UI.LevelsMenuPopup
         private readonly ICoroutinesPerformer _coroutinesPerformer;
         private readonly GameplayInputArgs _inputArgs;
         private readonly LevelTileView _view;
+        private readonly LevelConfig _config;
 
         public LevelTilePresenter(
-            SceneSwitcherService sceneSwitcher, 
-            ICoroutinesPerformer coroutinesPerformer, 
-            GameplayInputArgs inputArgs, 
-            LevelTileView view)
+            SceneSwitcherService sceneSwitcher,
+            ICoroutinesPerformer coroutinesPerformer,
+            GameplayInputArgs inputArgs,
+            LevelTileView view,
+            LevelConfig config)
         {
             _sceneSwitcher = sceneSwitcher;
             _coroutinesPerformer = coroutinesPerformer;
             _inputArgs = inputArgs;
             _view = view;
+            _config = config;
         }
 
         public LevelTileView View => _view;
 
         public void Initialize()
         {
-            /*
             _view.Init(_config.LevelName, _config.LevelIcon);
 
+            /*
             if (_levelsService.CanPlay(_config.LevelNumber))
             {
                 if (_levelsService.IsLevelCompleted(_config.LevelNumber))

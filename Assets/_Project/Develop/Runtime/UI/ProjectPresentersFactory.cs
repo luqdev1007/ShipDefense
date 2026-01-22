@@ -41,7 +41,8 @@ namespace Assets._Project.Develop.Runtime.UI
                 _container.Resolve<SceneSwitcherService>(),
                 _container.Resolve<ICoroutinesPerformer>(),
                 inputArgs,
-                view);
+                view,
+                config);
         }
 
         public ConfirmPopupPresenter CreateConfirmPopupPresenter(
