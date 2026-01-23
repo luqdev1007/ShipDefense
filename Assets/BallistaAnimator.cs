@@ -8,8 +8,11 @@ public class BallistaAnimator : MonoBehaviour
     [SerializeField] private Transform _backMechRoll;
     [SerializeField] private Transform[] _ropeParts;
     [SerializeField] private Transform _rotateBody;
+    [SerializeField] private Transform _arrowPivot;
+    /*
     [SerializeField] private Transform _leftRopePivot;
     [SerializeField] private Transform _rightRopePivot;
+    */
 
     [SerializeField] private float _maxAngleX = -70;
     [SerializeField] private float _totalDuration = 2;
@@ -20,35 +23,40 @@ public class BallistaAnimator : MonoBehaviour
     private const float FullAngle = 360;
     private const int Direction = -1;
 
-    public void AnimateRopeDisappearance()
+public void AnimateRopeDisappearance()
+{
+    Sequence mainSequence = DOTween.Sequence();
+    
+    int count = _ropeParts.Length;
+    float totalDuration = _totalDuration * 0.75f;
+
+    // 1. Сначала запускаем движение самого ArrowPivot. 
+    // Он — "двигатель" всей анимации.
+    // Допустим, он должен приехать в позицию последней части веревки.
+    Vector3 targetPos = _ropeParts[count - 1].position;
+    mainSequence.Append(_arrowPivot.DOMove(targetPos, totalDuration).SetEase(Ease.InQuad));
+
+    // 2. Параллельно (через Insert) запускаем исчезновение веревок.
+    for (int i = 0; i < count; i++) 
     {
-        Sequence ropeSequence = DOTween.Sequence();
+        Transform part = _ropeParts[i];
+        part.localScale = Vector3.one * 0.1f;
 
-        int count = _ropeParts.Length;
-        float totalRopeTime = _totalDuration * 0.75f;
+        float progress = (float)i / (count > 1 ? count - 1 : 1);
+        
+        // Используем InQuad для прогресса старта, чтобы создать эффект "натяжения"
+        float easedProgress = progress * progress; 
+        float delay = easedProgress * (totalDuration - 0.1f);
 
-        for (int i = 0; i < count; i++) 
-        {
-            Transform part = _ropeParts[i];
-            part.localScale = Vector3.one * 0.1f;
+        // Время схлопывания должно быть коротким, чтобы создавалось ощущение, 
+        // что пивот "проглатывает" кусок веревки, проходя через него.
+        float shrinkTime = 0.15f; 
 
-            float progress = (float)i / (count > 1 ? count - 1 : 1);
-
-            float easedProgress = progress * progress;
-
-            // Если хочешь еще более резкое замедление в конце, используй InCubic:
-            // float easedProgress = progress * progress * progress;
-
-            float delay = easedProgress * (totalRopeTime - 0.2f);
-
-            float shrinkTime = Mathf.Lerp(2, 0.05f, progress);
-
-            ropeSequence.Insert(delay,
-                part.DOScale(Vector3.zero, shrinkTime)
-                    .SetEase(Ease.OutQuad) 
-            );
-        }
+        mainSequence.Insert(delay,
+            part.DOScale(Vector3.zero, shrinkTime).SetEase(Ease.OutQuad)
+        );
     }
+}
 
     private void Update()
     {
@@ -66,8 +74,13 @@ public class BallistaAnimator : MonoBehaviour
         _finalRotateBody = new Vector3(_maxAngleX, 0, 0);
 
         _rotateBody.transform.eulerAngles = new Vector3(-90, 0, 0);
+
+        /*
         _leftRopePivot.transform.eulerAngles = new Vector3(0, 0, -37.5f);
         _rightRopePivot.transform.eulerAngles = new Vector3(0, 0, 0);
+        */
+
+        
 
         _backMechRoll.DOLocalRotate(_finalRotateBackMechRoll, _totalDuration, RotateMode.FastBeyond360)
             .SetRelative(true)
@@ -79,10 +92,12 @@ public class BallistaAnimator : MonoBehaviour
             .SetEase(Ease.OutQuart)
             .From(_rotateBody.localEulerAngles);
 
+        /*
         _leftRopePivot.DOLocalRotate(Vector3.zero, _totalDuration)
             .SetEase(Ease.OutQuart);
 
         _rightRopePivot.DOLocalRotate(new Vector3(0, 0, -37.5f), _totalDuration)
             .SetEase(Ease.OutQuart);
+        */
     }
 }
