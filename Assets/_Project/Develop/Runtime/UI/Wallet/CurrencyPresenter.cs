@@ -35,6 +35,7 @@ namespace Assets._Project.Develop.Runtime.UI.Wallet
         {
             UpdateValue(_currency.Value);
             _view.SetIcon(_currencyIconsConfig.GetSpriteFor(_currencyTypes));
+            _view.ResetSize();
 
             _disposable = _currency.Subscribe(OnCurrencyChanged);
         }

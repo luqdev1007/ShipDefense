@@ -8,6 +8,11 @@ public class IconTextView : MonoBehaviour, IView
     [SerializeField] private TMP_Text _text;
     [SerializeField] private Image _icon;
 
+    public void ResetSize()
+    {
+        transform.localScale = Vector3.one;
+    }
+
     public void SetText(string value)
     {
         gameObject.SetActive(true);
