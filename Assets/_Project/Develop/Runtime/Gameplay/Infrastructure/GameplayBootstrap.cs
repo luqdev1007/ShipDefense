@@ -21,6 +21,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Infrastructure
                 throw new ArgumentException($"{nameof(sceneArgs)} is not match with {typeof(GameplayInputArgs)} type");
 
             _inputArgs = gameplayInputArgs;
+
+            GameplayContextRegistrations.Process(_container);
         }
 
         public override IEnumerator Initialize()
