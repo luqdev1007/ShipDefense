@@ -1,16 +1,44 @@
 fileFormatVersion: 2
-guid: 94414e5141d9d1e4a833d76ef0f136b5
-AssetOrigin:
-  serializedVersion: 1
-  productId: 241220
-  packageName: Pirate Customized
-  packageVersion: 1.0
-  assetPath: Assets/Pirate/Mesh/Stand.obj
-  uploadId: 548640
+guid: 8966b0c09c882f64689802efd0b65110
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Feathers.003
+    second: {fileID: 2100000, guid: d818b3ff2032d06499ba17b436c160a8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Metal.003
+    second: {fileID: 2100000, guid: 72e352652557c314c80afbb8e86b4e79, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Rope.003
+    second: {fileID: 2100000, guid: 1c4b168f79b4ead438d461d364309cd4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Wood01.003
+    second: {fileID: 2100000, guid: 12c0eb39e62b8504daf9367fb32ab2af, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Wood02.003
+    second: {fileID: 2100000, guid: 45775094a0d25c2449b9a4caa89f5cd6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Wood02.004
+    second: {fileID: 2100000, guid: dd91753398b55fc438b6cb1911d2f7e6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Wood03.003
+    second: {fileID: 2100000, guid: f30eea4a4a51e8b489cd69383276b164, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -50,7 +78,7 @@ ModelImporter:
     importBlendShapes: 1
     importCameras: 1
     importLights: 1
-    nodeNameCollisionStrategy: 0
+    nodeNameCollisionStrategy: 1
     fileIdsGeneration: 2
     swapUVChannels: 0
     generateSecondaryUV: 0
@@ -106,8 +134,8 @@ ModelImporter:
   humanoidOversampling: 1
   avatarSetup: 0
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
-  importBlendShapeDeformPercent: 0
-  remapMaterialsIfMaterialImportModeIsNone: 1
+  importBlendShapeDeformPercent: 1
+  remapMaterialsIfMaterialImportModeIsNone: 0
   additionalBone: 0
   userData: 
   assetBundleName: 
