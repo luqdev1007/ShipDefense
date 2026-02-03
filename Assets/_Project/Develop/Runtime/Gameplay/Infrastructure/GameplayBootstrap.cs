@@ -1,10 +1,11 @@
-﻿using Assets._Project.Develop.Infrastructure;
-using Assets._Project.Develop.Infrastructure.DI;
+﻿using Assets._Project.Develop.Infrastructure.DI;
+using Assets._Project.Develop.Infrastructure;
+using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore;
+using Assets._Project.Develop.Runtime.Meta.Features.Wallet;
 using Assets._Project.Develop.Runtime.Utilites.SceneManagement;
 using System;
 using System.Collections;
 using UnityEngine;
-
 
 namespace Assets._Project.Develop.Runtime.Gameplay.Infrastructure
 {
@@ -12,6 +13,11 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Infrastructure
     {
         private DIContainer _container;
         private GameplayInputArgs _inputArgs;
+
+        private WalletService _walletService;
+
+        [SerializeField] private TestGameplay _testGameplay;
+        private EntitiesLifeContext _entitiesLifeContext;
 
         public override void ProcessRegistrations(DIContainer container, IInputSceneArgs sceneArgs = null)
         {
@@ -22,29 +28,58 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Infrastructure
 
             _inputArgs = gameplayInputArgs;
 
-            GameplayContextRegistrations.Process(_container);
+            GameplayContextRegistrations.Process(_container, _inputArgs);
         }
 
         public override IEnumerator Initialize()
         {
-            Debug.Log("Gameplay scene init");
+            Debug.Log($"Вы попали на уровень {_inputArgs.LevelNumber}");
+
+            Debug.Log("Инициализация геймплейной сцены");
+
+            _walletService = _container.Resolve<WalletService>();
+
+            _entitiesLifeContext = _container.Resolve<EntitiesLifeContext>();
+
+            _testGameplay.Initialize(_container);
 
             yield break;
         }
 
         public override void Run()
         {
-            Debug.Log($"Start gameplay scene");
+            Debug.Log("Старт геймплейной сцены");
+
+            _testGameplay.Run();
         }
 
         private void Update()
         {
-            
-        }
+            _entitiesLifeContext?.Update(Time.deltaTime);
 
-        private void OnDestroy()
-        {
-            
+            /*
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                SceneSwitcherService sceneSwitcherService = _container.Resolve<SceneSwitcherService>();
+                ICoroutinesPerformer coroutinesPerformer = _container.Resolve<ICoroutinesPerformer>();
+                coroutinesPerformer.StartPerform(sceneSwitcherService.ProcessSwitchTo(Scenes.MainMenu));
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                _walletService.Add(CurrencyTypes.Gold, 10);
+                Debug.Log("Золота осталось: " + _walletService.GetCurrency(CurrencyTypes.Gold).Value);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                if (_walletService.Enough(CurrencyTypes.Gold, 10))
+                {
+                    _walletService.Spend(CurrencyTypes.Gold, 10);
+                    Debug.Log("Золота осталось: " + _walletService.GetCurrency(CurrencyTypes.Gold).Value);
+                }
+            }
+            */
         }
     }
 }
