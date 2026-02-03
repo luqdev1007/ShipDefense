@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: cc76853705fefad42b28c481f3dd9c9b
+guid: 141cc18a42e68c341b031fc150d1f5db
 AssetOrigin:
   serializedVersion: 1
   productId: 147682
   packageName: Fantasy Free GUI
   packageVersion: 1.0
-  assetPath: Assets/Freeui/ZOSMA/Main/Incircle.png
+  assetPath: Assets/Freeui/ZOSMA/Start/Touchtoscreen.png
   uploadId: 314113
 TextureImporter:
   internalIDToNameTable: []

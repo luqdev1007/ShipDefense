@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: cc76853705fefad42b28c481f3dd9c9b
+guid: 6e7dc87ca75e3974f8689919175f30aa
 AssetOrigin:
   serializedVersion: 1
   productId: 147682
   packageName: Fantasy Free GUI
   packageVersion: 1.0
-  assetPath: Assets/Freeui/ZOSMA/Main/Incircle.png
+  assetPath: Assets/Freeui/ZOSMA/Stage/Stagename.png
   uploadId: 314113
 TextureImporter:
   internalIDToNameTable: []
