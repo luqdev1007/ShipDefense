@@ -2586,7 +2586,8 @@ GameObject:
   - component: {fileID: 679670110}
   - component: {fileID: 679670109}
   - component: {fileID: 679670108}
-  m_Layer: 0
+  - component: {fileID: 679670111}
+  m_Layer: 4
   m_Name: Water
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2661,6 +2662,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1864351043}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &679670111
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 679670107}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 25, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &688216295
 GameObject:
   m_ObjectHideFlags: 0
@@ -2937,6 +2959,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03329e1776f54b147bef325a15cc50a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _mainCamera: {fileID: 635422877}
+  _hittableLayers:
+    serializedVersion: 2
+    m_Bits: 16
 --- !u!1 &885401149
 GameObject:
   m_ObjectHideFlags: 0

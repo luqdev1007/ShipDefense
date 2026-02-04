@@ -1,3 +1,4 @@
+using Assets._Project.Develop.Runtime.Configs.Gameplay.Explosions;
 using Assets._Project.Develop.Runtime.Configs.Gameplay.Levels;
 using Assets._Project.Develop.Runtime.Configs.Meta.Wallet;
 using Assets._Project.Develop.Runtime.Utilites.AssetsManagment;
@@ -17,6 +18,7 @@ namespace Assets._Project.Develop.Runtime.Utilites.ConfigsManagment
             { typeof(StartWalletConfig), "Configs/Meta/Wallet/StartWalletConfig" },
             { typeof(CurrencyIconsConfig), "Configs/Meta/Wallet/CurrencyIconsConfig" },
             { typeof(LevelsListConfig), "Configs/Gameplay/Levels/LevelsListConfig" },
+            { typeof(ExplosionsListConfig), "Configs/Gameplay/Explosions/ExplosionsListConfig" },
         };
 
         public ResourcesConfigsLoader(ResourcesAssetsLoader resources)

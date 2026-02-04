@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using Object = UnityEngine.Object;
+using Assets._Project.Develop.Runtime.Utilites.RaycastManagment;
 
 namespace Assets._Project.Develop.Infrastructure.EntryPoint
 {
@@ -49,6 +50,12 @@ namespace Assets._Project.Develop.Infrastructure.EntryPoint
 
             container.RegisterAsSingle(CreateWalletService).NonLazy();
 
+            container.RegisterAsSingle(CreateSurfaceRaycaster);
+        }
+
+        private static SurfaceRaycaster CreateSurfaceRaycaster(DIContainer container)
+        {
+            return new SurfaceRaycaster();
         }
 
         private static ProjectPresentersFactory CreateProjectPresentersFactory(DIContainer container)

@@ -1,6 +1,8 @@
 ﻿using Assets._Project.Develop.Infrastructure.DI;
 using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore;
 using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Mono;
+using Assets._Project.Develop.Runtime.Gameplay.Features.ExplosionFeature;
+using Assets._Project.Develop.Runtime.Gameplay.Features.InputFeature;
 using Assets._Project.Develop.Runtime.Utilites.AssetsManagment;
 using Assets._Project.Develop.Runtime.Utilites.SceneManagement;
 
@@ -10,15 +12,28 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Infrastructure
     {
         public static void Process(DIContainer container, GameplayInputArgs args)
         {
+            // entities
+            container.RegisterAsSingle(CreateMonoEntitiesFactory).NonLazy();
             container.RegisterAsSingle(CreateEntitiesFactory);
-
             container.RegisterAsSingle(CreateEntitiesLifeContext);
-
             container.RegisterAsSingle(CreateCollidersRegistryService);
 
-            container.RegisterAsSingle(CreateMonoEntitiesFactory).NonLazy();
+            // input
+            container.RegisterAsSingle<IInputService>(CreateDesktopInput);
+
+            // factories
+            container.RegisterAsSingle(CreateExplosionFactory);
         }
 
+        private static ExplosionsFactory CreateExplosionFactory(DIContainer container)
+        {
+            return new ExplosionsFactory(container);
+        }
+
+        private static DesktopInput CreateDesktopInput(DIContainer container)
+        {
+            return new DesktopInput();
+        }
 
         private static CollidersRegistryService CreateCollidersRegistryService(DIContainer container)
         {
