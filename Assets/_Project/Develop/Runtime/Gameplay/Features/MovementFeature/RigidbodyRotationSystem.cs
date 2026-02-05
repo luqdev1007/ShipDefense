@@ -16,7 +16,6 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.MovementFeature
 
         public void OnInit(Entity entity)
         {
-            /*
             _direction = entity.RotationDirection;
             _rigidbody = entity.Rigidbody;
             _rotationSpeed = entity.RotationSpeed;
@@ -25,7 +24,6 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.MovementFeature
 
             if (_direction.Value != Vector3.zero)
                 _rigidbody.transform.rotation = Quaternion.LookRotation(_direction.Value.normalized);
-            */
         }
 
         public void OnUpdate(float deltaTime)

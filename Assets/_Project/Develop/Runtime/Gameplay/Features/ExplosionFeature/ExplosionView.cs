@@ -4,14 +4,9 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.ExplosionFeature
 
     public class ExplosionView : MonoBehaviour
     {
-        public void Initialize(float range, float damage)
+        public void Initialize(Explosion effect)
         {
-            Collider[] targets = Physics.OverlapSphere(transform.position, range);
-
-            foreach (var target in targets)
-            {
-                Debug.Log($"Взрыв задел: {target.name} на {damage} урона");
-            }
+            effect.Activate(transform.position);
 
             Destroy(gameObject, 2f);
         }

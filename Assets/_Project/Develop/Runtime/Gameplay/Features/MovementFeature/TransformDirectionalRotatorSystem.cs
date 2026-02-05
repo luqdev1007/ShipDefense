@@ -12,10 +12,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.MovementFeature
 
         public void OnInit(Entity entity)
         {
-            /*
             _moveDirection = entity.MoveDirection;
             _transform = entity.Transform;
-            */
         }
 
         public void OnUpdate(float deltaTime)
@@ -23,6 +21,10 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.MovementFeature
             if (_moveDirection.Value.sqrMagnitude > 0)
             {
                 Quaternion targetRotation = Quaternion.LookRotation(_moveDirection.Value);
+
+                Debug.Log("target rotation: " + targetRotation.eulerAngles);
+                Debug.Log("current rotation: " + _transform.rotation.eulerAngles);
+
                 _transform.rotation = targetRotation;
             }
         }

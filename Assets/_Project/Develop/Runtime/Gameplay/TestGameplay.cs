@@ -55,6 +55,11 @@ namespace Assets._Project.Develop.Runtime.Gameplay
                 }
             }
 
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                _entitiesFactory.CreateShip(atRandomSpawner: true);
+            }
+
 
             /*
             Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));

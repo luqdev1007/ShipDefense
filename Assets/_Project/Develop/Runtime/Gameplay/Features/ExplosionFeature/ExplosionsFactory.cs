@@ -27,7 +27,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.ExplosionFeature
                 throw new ArgumentException($"no config for {type} type explosion");
 
             ExplosionView instance = Object.Instantiate(config.ViewPrefab, at, Quaternion.identity);
-            instance.Initialize(config.Range, config.Damage);
+            instance.Initialize(new Explosion(config.Range, config.Power));
         }
     }
 }
