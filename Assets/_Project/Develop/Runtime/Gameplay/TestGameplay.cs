@@ -53,7 +53,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay
 
             if (Input.GetKeyDown(KeyCode.S))
             {
-                _entitiesFactory.CreateShip(atRandomSpawner: true);
+                _entitiesFactory.CreateShip();
             }
         }
     }

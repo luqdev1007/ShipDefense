@@ -1,5 +1,6 @@
 ﻿using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore;
 using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Mono;
+using Assets._Project.Develop.Runtime.Gameplay.Features.ApplyDamage;
 using Assets._Project.Develop.Runtime.Gameplay.Features.LifeCycle;
 using UnityEngine;
 
@@ -33,9 +34,9 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.ExplosionFeature
 
                 if (monoEntity != null)
                 {
-                    if (monoEntity.LinkedEntity.HasComponent<CurrentHealth>())
+                    if (monoEntity.LinkedEntity.HasComponent<TakeDamageRequest>())
                     {
-                        monoEntity.LinkedEntity.CurrentHealth.Value -= 1;
+                        monoEntity.LinkedEntity.TakeDamageRequest.Invoke(1);
                         Debug.Log(monoEntity.gameObject.name + " health: " + monoEntity.LinkedEntity.CurrentHealth.Value);
                     }
                 }

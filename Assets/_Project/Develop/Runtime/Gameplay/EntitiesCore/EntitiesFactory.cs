@@ -1,5 +1,6 @@
 ﻿using Assets._Project.Develop.Infrastructure.DI;
 using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Mono;
+using Assets._Project.Develop.Runtime.Gameplay.Features.ApplyDamage;
 using Assets._Project.Develop.Runtime.Gameplay.Features.LifeCycle;
 using Assets._Project.Develop.Runtime.Gameplay.Features.MovementFeature;
 using Assets._Project.Develop.Runtime.Utilites;
@@ -45,7 +46,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
             return entity;
         }
 
-        public Entity CreateShip(bool atRandomSpawner = false)
+        public Entity CreateShip()
         {
             Entity entity = CreateEmpty();
 
@@ -59,13 +60,22 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
             entity
                 .AddMoveSpeed(new ReactiveVariable<float>(1))
                 .AddMoveDirection(new ReactiveVariable<Vector3>())
+
                 .AddMaxHealth(new ReactiveVariable<float>(10))
                 .AddCurrentHealth(new ReactiveVariable<float>(10))
+
                 .AddIsDead(new ReactiveVariable<bool>())
                 .AddInDeathProcess()
                 .AddDeathProcessCurrentTime(new ReactiveVariable<float>(2))
-                .AddDeathProcessInitialTime(new ReactiveVariable<float>(2));
-                
+                .AddDeathProcessInitialTime(new ReactiveVariable<float>(2))
+
+                .AddTakeDamageRequest()
+                .AddTakeDamageEvent()
+                ;
+
+
+            ICompositeCondition canApplyDamage = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.IsDead.Value == false));
 
             ICompositeCondition mustDie = new CompositeCondition()
                 .Add(new FuncCondition(() => entity.CurrentHealth.Value <= 0));
@@ -76,14 +86,20 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
 
             entity
                 .AddMustDie(mustDie)
-                .AddMustSelfRelease(mustSelfRelease);
+                .AddMustSelfRelease(mustSelfRelease)
+                .AddCanApplyDamage(canApplyDamage)
+                ;
 
             entity
                 .AddSystem(new TransformMoveTowardsTargetSystem())
                 .AddSystem(new TransformDirectionalRotatorSystem())
+
                 .AddSystem(new DeathSystem())
                 .AddSystem(new DeathProcessTimerSystem())
-                .AddSystem(new SelfReleaseSystem(_entitiesLifeContext));
+                .AddSystem(new SelfReleaseSystem(_entitiesLifeContext))
+
+                .AddSystem(new ApplyDamageSystem())
+                ;
 
             _entitiesLifeContext.Add(entity);
 
