@@ -3,6 +3,7 @@ using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore;
 using Assets._Project.Develop.Runtime.Gameplay.Features.ExplosionFeature;
 using Assets._Project.Develop.Runtime.Gameplay.Features.InputFeature;
 using Assets._Project.Develop.Runtime.Gameplay.Features.TeamsFeature;
+using Assets._Project.Develop.Runtime.UI.Gameplay;
 using Assets._Project.Develop.Runtime.Utilites.RaycastManagment;
 using UnityEngine;
 
@@ -41,7 +42,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay
             _isRunning = true;
 
             _mainShip = _entitiesFactory.CreateMainShip();
-            // _container
+            _container.Resolve<GameplayScreenPresenter>().SubscribeHealthView(_mainShip.CurrentHealth);
         }
 
         private void Update()

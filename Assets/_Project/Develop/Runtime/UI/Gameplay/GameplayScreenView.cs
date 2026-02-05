@@ -6,7 +6,7 @@ namespace Assets._Project.Develop.Runtime.UI.Gameplay
 {
     public class GameplayScreenView : MonoBehaviour, IView
     {
-        [SerializeField] private IconTextView _healthDisplay;
+        [field: SerializeField] public IconTextView HealthDisplay;
 
         public void Init()
         {

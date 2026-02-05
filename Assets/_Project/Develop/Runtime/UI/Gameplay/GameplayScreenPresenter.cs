@@ -1,6 +1,9 @@
 ﻿using Assets._Project.Develop.Runtime.UI.Core;
 using System.Collections.Generic;
 using System;
+using Assets._Project.Develop.Runtime.Utilites.Reactive;
+using UnityEngine;
+using Unity.Collections.LowLevel.Unsafe;
 
 namespace Assets._Project.Develop.Runtime.UI.Gameplay
 {
@@ -35,6 +38,18 @@ namespace Assets._Project.Develop.Runtime.UI.Gameplay
                 presenter.Dispose();
 
             _disposables.Clear();
+        }
+
+
+        public void SubscribeHealthView(IReadOnlyVariable<float> currentHealth)
+        {
+            _disposables.Add(currentHealth.Subscribe(OnCurrentHealthChanged));
+            _view.HealthDisplay.SetText(currentHealth.Value.ToString());
+        }
+
+        private void OnCurrentHealthChanged(float oldValue, float newValue)
+        {
+            _view.HealthDisplay.SetText(newValue.ToString());
         }
     }
 }
