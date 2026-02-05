@@ -27,6 +27,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay
 
         private Entity _mainShip;
 
+        private Transform _projectileSpawnParent;
+
         public void Initialize(DIContainer container)
         {
             _container = container;
@@ -43,6 +45,15 @@ namespace Assets._Project.Develop.Runtime.Gameplay
 
             _mainShip = _entitiesFactory.CreateMainShip();
             _container.Resolve<GameplayScreenPresenter>().SubscribeHealthView(_mainShip.CurrentHealth);
+
+            foreach (var i in _mainShip.Transform.GetComponentsInChildren<Transform>())
+            {
+                if (i.gameObject.name.Contains("ProjectileParent"))
+                {
+                    _projectileSpawnParent = i;
+                    break;
+                }
+            }
         }
 
         private void Update()
@@ -52,10 +63,17 @@ namespace Assets._Project.Develop.Runtime.Gameplay
 
             if (_input.IsAttackKeyPressed)
             {
+                Entity projectile = _entitiesFactory.CreateArrowProjectile(_projectileSpawnParent, _projectileSpawnParent.forward, 1, _mainShip);
+
+                /*
                 if (_surfaceRaycaster.TryGetHitInfo(_mainCamera, _hittableLayers, out RaycastHit hitInfo))
                 {
                     _explosionsFactory.Create(ExplosionType.Large, hitInfo.point, true);
+
+                    Entity projectile = _entitiesFactory.CreateArrowProjectile(_projectileSpawnParent, _projectileSpawnParent.forward, 1, _mainShip);
+                    projectile.Transform.SetParent(null);
                 }
+                */
             }
 
             if (Input.GetKeyDown(KeyCode.S))
@@ -69,6 +87,16 @@ namespace Assets._Project.Develop.Runtime.Gameplay
                 _mainShip.TakeDamageRequest.Invoke(1);
             }
             */
+
+            if (Input.GetKeyDown(KeyCode.T))
+            {
+                Time.timeScale -= 0.1f;
+            }
+
+            if (Input.GetKeyDown(KeyCode.U))
+            {
+                Time.timeScale += 0.1f;
+            }
         }
     }
 }

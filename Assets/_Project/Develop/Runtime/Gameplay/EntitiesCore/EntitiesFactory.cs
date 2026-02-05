@@ -194,6 +194,67 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
             return entity;
         }
 
+        public Entity CreateArrowProjectile(Transform parent, Vector3 direction, float damage, Entity owner)
+        {
+            Entity entity = CreateEmpty();
+
+            _monoEntitiesFactory.Create(entity, parent, "Entities/ArrowProjectile")
+                .transform.SetParent(null);
+
+            entity
+                .AddMoveDirection(new ReactiveVariable<Vector3>(direction))
+                .AddMoveSpeed(new ReactiveVariable<float>(25))
+
+                .AddIsDead()
+                .AddContactsDetectingMask(LayersAPI.LayerMaskWater)
+                .AddContactCollidersBuffer(new Buffer<Collider>(64))
+                .AddContactEntitiesBuffer(new Buffer<Entity>(64))
+                .AddBodyContactDamage(new ReactiveVariable<float>(damage))
+                .AddDeathMask(LayersAPI.LayerMaskWater)
+                .AddIsTouchDeathMask()
+                .AddIsTouchAnotherTeam()
+                .AddTeam(new ReactiveVariable<Teams>(owner.Team.Value))
+                ;
+
+
+            ICompositeCondition mustDie = new CompositeCondition(LogicOperations.Or)
+                .Add(new FuncCondition(() => entity.IsTouchDeathMask.Value == true))
+                .Add(new FuncCondition(() => entity.IsTouchAnotherTeam.Value == true));
+
+            ICompositeCondition mustSelfRelease = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.IsDead.Value == true));
+
+            /*
+            ICompositeCondition mustExplode = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.IsTouchAnotherTeam.Value == true));
+            */
+
+            entity
+                .AddMustDie(mustDie)
+                .AddMustExplode(mustDie)
+                .AddMustSelfRelease(mustSelfRelease);
+
+            entity
+                  .AddSystem(new RigidbodyMovementSystem())
+                  .AddSystem(new TransformRotateWithLinearVelocitySystem())
+
+                  .AddSystem(new DeathSystem())
+                  .AddSystem(new DisableCollidersOnDeathSystem())
+                  .AddSystem(new SelfReleaseSystem(_entitiesLifeContext))
+                  .AddSystem(new BodyContactDetectingSystem())
+                  .AddSystem(new BodyContactsEntitiesFilterSystem(_collidersRegistryService))
+                  .AddSystem(new DealDamageOnContactSystem())
+                  .AddSystem(new DeathMaskTouchDetectorSystem())
+                  .AddSystem(new AnotherTeamTouchDetectorSystem())
+
+                  .AddSystem(new SelfExplodeSystem(_container.Resolve<ExplosionsFactory>()))
+                  ;
+
+            _entitiesLifeContext.Add(entity);
+
+            return entity;
+        }
+
         private Entity CreateEmpty() => new Entity();
     }
 }

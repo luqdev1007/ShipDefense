@@ -37,7 +37,9 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.MovementFeature
             }
             */
 
-            Vector3 velocity = _moveDirection.Value.normalized * _moveSpeed.Value;
+            Vector3 velocity = _rigidbody.linearVelocity;
+            velocity = _moveDirection.Value.normalized * _moveSpeed.Value;
+            velocity.y = _rigidbody.linearVelocity.y;
 
             // _isMoving.Value = _rigidbody.linearVelocity.magnitude > 0;
 

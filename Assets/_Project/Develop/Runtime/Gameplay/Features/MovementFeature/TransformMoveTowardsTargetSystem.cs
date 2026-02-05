@@ -15,13 +15,12 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.MovementFeature
 
         private ITargetSelector _targetSelector;
         private EntitiesLifeContext _entitiesLifeContext;
+        private ReactiveVariable<Entity> _target;
 
         public TransformMoveTowardsTargetSystem(EntitiesLifeContext entitiesLifeContext)
         {
             _entitiesLifeContext = entitiesLifeContext;
         }
-
-        private ReactiveVariable<Entity> _target;
 
         public void OnInit(Entity entity)
         {
@@ -45,8 +44,6 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.MovementFeature
             if (_target == null || _transform == null || _canMove.Evaluate() == false) 
                 return;
 
-            if (Vector3.Distance(_transform.position, _target.Value.Transform.position) < 10)
-                return;
 
             Vector3 nextStep = Vector3.MoveTowards(
                 _transform.position,
