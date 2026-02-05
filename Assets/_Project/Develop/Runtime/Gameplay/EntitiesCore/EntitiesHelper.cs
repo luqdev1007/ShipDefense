@@ -1,10 +1,5 @@
 ﻿using Assets._Project.Develop.Runtime.Gameplay.Features.TeamsFeature;
 using Assets._Project.Develop.Runtime.Utilites.Reactive;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
 {
@@ -12,7 +7,6 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
     {
         public static bool TryTakeDamageFrom(Entity source, Entity damageable, float damage)
         {
-            /*
             if (damageable.TryGetTakeDamageRequest(out ReactiveEvent<float> takeDamageRequest) == false)
                 return false;
 
@@ -26,14 +20,10 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
             takeDamageRequest.Invoke(damage);
 
             return true;
-            */
-
-            return true;
         }
 
         public static bool IsSameTeam(Entity firstEntity, Entity secondEntity)
         {
-            /*
             if (firstEntity.TryGetTeam(out ReactiveVariable<Teams> sourceTeam)
                 && secondEntity.TryGetTeam(out ReactiveVariable<Teams> targetTeam))
             {
@@ -41,9 +31,6 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
             }
 
             return false;
-            */
-
-            return true;
         }
     }
 }

@@ -46,6 +46,56 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
             return entity;
         }
 
+        public Entity CreateMainShip()
+        {
+            Entity entity = CreateEmpty();
+
+
+            _monoEntitiesFactory.Create(entity, Vector3.up * 10, "Entities/MainShip");
+
+            entity
+                .AddMaxHealth(new ReactiveVariable<float>(10))
+                .AddCurrentHealth(new ReactiveVariable<float>(10))
+
+                .AddIsDead(new ReactiveVariable<bool>())
+                .AddInDeathProcess()
+                .AddDeathProcessCurrentTime(new ReactiveVariable<float>(2))
+                .AddDeathProcessInitialTime(new ReactiveVariable<float>(2))
+
+                .AddTakeDamageRequest()
+                .AddTakeDamageEvent()
+                ;
+
+
+            ICompositeCondition canApplyDamage = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.IsDead.Value == false));
+
+            ICompositeCondition mustDie = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.CurrentHealth.Value <= 0));
+
+            ICompositeCondition mustSelfRelease = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.IsDead.Value == true))
+                .Add(new FuncCondition(() => entity.InDeathProcess.Value == false));
+
+            entity
+                .AddMustDie(mustDie)
+                .AddMustSelfRelease(mustSelfRelease)
+                .AddCanApplyDamage(canApplyDamage)
+                ;
+
+            entity
+                .AddSystem(new DeathSystem())
+                .AddSystem(new DeathProcessTimerSystem())
+                .AddSystem(new SelfReleaseSystem(_entitiesLifeContext))
+
+                .AddSystem(new ApplyDamageSystem())
+                ;
+
+            _entitiesLifeContext.Add(entity);
+
+            return entity;
+        }
+
         public Entity CreateShip()
         {
             Entity entity = CreateEmpty();

@@ -23,6 +23,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay
 
         private bool _isRunning;
 
+        private Entity _mainShip;
+
         public void Initialize(DIContainer container)
         {
             _container = container;
@@ -36,6 +38,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay
         public void Run()
         {
             _isRunning = true;
+
+            _mainShip = _entitiesFactory.CreateMainShip();
         }
 
         private void Update()
@@ -55,6 +59,13 @@ namespace Assets._Project.Develop.Runtime.Gameplay
             {
                 _entitiesFactory.CreateShip();
             }
+
+            /*
+            if (Input.GetKeyDown(KeyCode.D))
+            {
+                _mainShip.TakeDamageRequest.Invoke(1);
+            }
+            */
         }
     }
 }

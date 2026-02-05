@@ -9,17 +9,14 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Sensors
     {
         private Buffer<Collider> _contacts;
         private LayerMask _mask;
-
         private CapsuleCollider _body;
 
         public void OnInit(Entity entity)
         {
-            /*
             _contacts = entity.ContactCollidersBuffer;
             _mask = entity.ContactsDetectingMask;
 
             _body = entity.BodyCollider;
-            */
         }
 
         public void OnUpdate(float deltaTime)
