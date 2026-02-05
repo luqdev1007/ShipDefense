@@ -7,6 +7,7 @@ using Assets._Project.Develop.Runtime.Gameplay.Features.LifeCycle;
 using Assets._Project.Develop.Runtime.Gameplay.Features.MovementFeature;
 using Assets._Project.Develop.Runtime.Gameplay.Features.Sensors;
 using Assets._Project.Develop.Runtime.Gameplay.Features.TeamsFeature;
+using Assets._Project.Develop.Runtime.Meta.Features.ShipUpgrades;
 using Assets._Project.Develop.Runtime.Utilites;
 using Assets._Project.Develop.Runtime.Utilites.Conditions;
 using Assets._Project.Develop.Runtime.Utilites.Reactive;
@@ -57,9 +58,11 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
 
             _monoEntitiesFactory.Create(entity, Vector3.up * 10, "Entities/MainShip");
 
+            PlayerMainShipDataProvider shipData = _container.Resolve<PlayerMainShipDataProvider>();
+
             entity
-                .AddMaxHealth(new ReactiveVariable<float>(10))
-                .AddCurrentHealth(new ReactiveVariable<float>(10))
+                .AddMaxHealth(new ReactiveVariable<float>(shipData.MaxHealth))
+                .AddCurrentHealth(new ReactiveVariable<float>(shipData.MaxHealth))
 
                 .AddTeam(new ReactiveVariable<Teams>(Teams.Allies))
 

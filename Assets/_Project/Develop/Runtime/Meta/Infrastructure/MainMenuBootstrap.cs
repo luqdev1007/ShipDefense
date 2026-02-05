@@ -1,5 +1,6 @@
 ﻿using Assets._Project.Develop.Infrastructure;
 using Assets._Project.Develop.Infrastructure.DI;
+using Assets._Project.Develop.Runtime.Meta.Features.ShipUpgrades;
 using Assets._Project.Develop.Runtime.Utilites.CoroutinesManagment;
 using Assets._Project.Develop.Runtime.Utilites.DataProviders;
 using Assets._Project.Develop.Runtime.Utilites.SceneManagement;
@@ -42,6 +43,12 @@ namespace Assets._Project.Develop.Runtime.Meta.Infrastructure
             {
                 _coroutinesPerformer.StartPerform(_playerDataProvider.SaveAsync());
                 Debug.Log("Data is saved");
+            }
+
+            if (Input.GetKeyDown(KeyCode.H))
+            {
+                _container.Resolve<PlayerMainShipDataProvider>().MaxHealth++;
+                Debug.Log("max hp increased don't forget press f2 to save");
             }
         }
     }
