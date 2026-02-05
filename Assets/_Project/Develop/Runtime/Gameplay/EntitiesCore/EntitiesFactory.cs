@@ -55,7 +55,6 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
         {
             Entity entity = CreateEmpty();
 
-
             _monoEntitiesFactory.Create(entity, Vector3.up * 10, "Entities/MainShip");
 
             entity
@@ -136,6 +135,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
 
                 .AddTakeDamageRequest()
                 .AddTakeDamageEvent()
+
+                .AddCurrentTarget()
                 ;
 
             ICompositeCondition canMove = new CompositeCondition()
@@ -167,7 +168,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
                 ;
 
             entity
-                .AddSystem(new TransformMoveTowardsTargetSystem())
+                .AddSystem(new TransformMoveTowardsTargetSystem(_entitiesLifeContext))
                 .AddSystem(new TransformDirectionalRotatorSystem())
 
                 .AddSystem(new ApplyDamageSystem())

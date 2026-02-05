@@ -2,7 +2,6 @@
 using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Systems;
 using Assets._Project.Develop.Runtime.Utilites.Conditions;
 using Assets._Project.Develop.Runtime.Utilites.Reactive;
-using System.Linq;
 using UnityEngine;
 
 namespace Assets._Project.Develop.Runtime.Gameplay.Features.MovementFeature
@@ -14,38 +13,51 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.MovementFeature
         private ICompositeCondition _canMove;
         private Transform _transform;
 
-        private Transform _target;
+        private ITargetSelector _targetSelector;
+        private EntitiesLifeContext _entitiesLifeContext;
+
+        public TransformMoveTowardsTargetSystem(EntitiesLifeContext entitiesLifeContext)
+        {
+            _entitiesLifeContext = entitiesLifeContext;
+        }
+
+        private ReactiveVariable<Entity> _target;
 
         public void OnInit(Entity entity)
         {
-            // тут должен браться target в виде игрока
-            _target = Object.FindObjectsByType<Transform>(FindObjectsSortMode.None)
-                .First(i => i.gameObject.name.ToLower().Contains("mainship"));
-
+            _target = entity.CurrentTarget;
             _moveDirection = entity.MoveDirection;
             _moveSpeed = entity.MoveSpeed;
             _canMove = entity.CanMove;
             _transform = entity.Transform;
+
+            _targetSelector = new NearestDamagableTargetSelector(entity);
         }
 
         public void OnUpdate(float deltaTime)
         {
+            if (_target.Value == null)
+            {
+                _target.Value = _targetSelector.SelectTargetFrom(_entitiesLifeContext.Entities);
+                return;
+            }
+
             if (_target == null || _transform == null || _canMove.Evaluate() == false) 
                 return;
 
-            if (Vector3.Distance(_transform.position, _target.position) < 10)
+            if (Vector3.Distance(_transform.position, _target.Value.Transform.position) < 10)
                 return;
 
             Vector3 nextStep = Vector3.MoveTowards(
                 _transform.position,
-                _target.position,
+                _target.Value.Transform.position,
                 _moveSpeed.Value * deltaTime
             );
 
             nextStep.y = _transform.position.y;
             _transform.position = nextStep;
 
-            Vector3 directionToTarget = (_target.position - _transform.position).normalized;
+            Vector3 directionToTarget = (_target.Value.Transform.position - _transform.position).normalized;
             directionToTarget.y = 0; 
             _moveDirection.Value = directionToTarget;
         }
