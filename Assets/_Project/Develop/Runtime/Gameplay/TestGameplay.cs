@@ -41,6 +41,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay
             _isRunning = true;
 
             _mainShip = _entitiesFactory.CreateMainShip();
+            // _container
         }
 
         private void Update()
