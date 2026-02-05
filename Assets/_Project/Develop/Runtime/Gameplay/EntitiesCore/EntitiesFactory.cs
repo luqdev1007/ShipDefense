@@ -57,7 +57,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
             _monoEntitiesFactory.Create(entity, randomSpawner, "Entities/SmallShip");
 
             entity
-                .AddMoveSpeed(new ReactiveVariable<float>(10))
+                .AddMoveSpeed(new ReactiveVariable<float>(1))
                 .AddMoveDirection(new ReactiveVariable<Vector3>())
                 .AddMaxHealth(new ReactiveVariable<float>(10))
                 .AddCurrentHealth(new ReactiveVariable<float>(10))

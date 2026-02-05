@@ -1,5 +1,6 @@
 ﻿using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore;
 using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Systems;
+using Assets._Project.Develop.Runtime.Utilites.Conditions;
 using Assets._Project.Develop.Runtime.Utilites.Reactive;
 using System.Linq;
 using UnityEngine;
@@ -10,6 +11,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.MovementFeature
     {
         private ReactiveVariable<Vector3> _moveDirection;
         private ReactiveVariable<float> _moveSpeed;
+        private ICompositeCondition _mustDie;
         private Transform _transform;
 
         private Transform _target;
@@ -23,11 +25,12 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.MovementFeature
             _moveDirection = entity.MoveDirection;
             _moveSpeed = entity.MoveSpeed;
             _transform = entity.Transform;
+            _mustDie = entity.MustDie;
         }
 
         public void OnUpdate(float deltaTime)
         {
-            if (_target == null || _transform == null) 
+            if (_target == null || _transform == null || _mustDie.Evaluate()) 
                 return;
 
             if (Vector3.Distance(_transform.position, _target.position) < 10)
