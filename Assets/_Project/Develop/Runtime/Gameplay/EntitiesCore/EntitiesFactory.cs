@@ -1,13 +1,17 @@
 ﻿using Assets._Project.Develop.Infrastructure.DI;
 using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Mono;
 using Assets._Project.Develop.Runtime.Gameplay.Features.ApplyDamage;
+using Assets._Project.Develop.Runtime.Gameplay.Features.ContactTakeDamage;
 using Assets._Project.Develop.Runtime.Gameplay.Features.LifeCycle;
 using Assets._Project.Develop.Runtime.Gameplay.Features.MovementFeature;
+using Assets._Project.Develop.Runtime.Gameplay.Features.Sensors;
+using Assets._Project.Develop.Runtime.Gameplay.Features.TeamsFeature;
 using Assets._Project.Develop.Runtime.Utilites;
 using Assets._Project.Develop.Runtime.Utilites.Conditions;
 using Assets._Project.Develop.Runtime.Utilites.Reactive;
 using System.Linq;
 using UnityEngine;
+using static UnityEngine.Rendering.STP;
 
 namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
 {
@@ -57,6 +61,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
                 .AddMaxHealth(new ReactiveVariable<float>(10))
                 .AddCurrentHealth(new ReactiveVariable<float>(10))
 
+                .AddTeam(new ReactiveVariable<Teams>(Teams.Allies))
+
                 .AddIsDead(new ReactiveVariable<bool>())
                 .AddInDeathProcess()
                 .AddDeathProcessCurrentTime(new ReactiveVariable<float>(2))
@@ -96,7 +102,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
             return entity;
         }
 
-        public Entity CreateShip()
+        public Entity CreateShip(Teams team)
         {
             Entity entity = CreateEmpty();
 
@@ -108,11 +114,18 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
             _monoEntitiesFactory.Create(entity, randomSpawner, "Entities/SmallShip");
 
             entity
-                .AddMoveSpeed(new ReactiveVariable<float>(1))
+                .AddMoveSpeed(new ReactiveVariable<float>(5))
                 .AddMoveDirection(new ReactiveVariable<Vector3>())
 
                 .AddMaxHealth(new ReactiveVariable<float>(10))
                 .AddCurrentHealth(new ReactiveVariable<float>(10))
+
+                .AddBodyContactDamage(new ReactiveVariable<float>(2))
+                .AddContactsDetectingMask(LayersAPI.LayerMaskHittable)
+                .AddContactCollidersBuffer(new Buffer<Collider>(64))
+                .AddContactEntitiesBuffer(new Buffer<Entity>(64))
+
+                .AddTeam(new ReactiveVariable<Teams>(team))
 
                 .AddIsDead(new ReactiveVariable<bool>())
                 .AddInDeathProcess()
@@ -123,6 +136,11 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
                 .AddTakeDamageEvent()
                 ;
 
+            ICompositeCondition canMove = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.IsDead.Value == false));
+
+            ICompositeCondition canRotate = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.IsDead.Value == false));
 
             ICompositeCondition canApplyDamage = new CompositeCondition()
                 .Add(new FuncCondition(() => entity.IsDead.Value == false));
@@ -135,6 +153,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
                 .Add(new FuncCondition(() => entity.InDeathProcess.Value == false));
 
             entity
+                .AddCanMove(canMove)
+                .AddCanRotate(canRotate)
                 .AddMustDie(mustDie)
                 .AddMustSelfRelease(mustSelfRelease)
                 .AddCanApplyDamage(canApplyDamage)
@@ -144,12 +164,17 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
                 .AddSystem(new TransformMoveTowardsTargetSystem())
                 .AddSystem(new TransformDirectionalRotatorSystem())
 
+                .AddSystem(new ApplyDamageSystem())
+
                 .AddSystem(new DeathSystem())
                 .AddSystem(new DeathProcessTimerSystem())
+                .AddSystem(new DisableCollidersOnDeathSystem())
                 .AddSystem(new SelfReleaseSystem(_entitiesLifeContext))
 
-                .AddSystem(new ApplyDamageSystem())
-                ;
+                .AddSystem(new BodyContactDetectingSystem())
+                .AddSystem(new BodyContactsEntitiesFilterSystem(_collidersRegistryService))
+                .AddSystem(new DealDamageOnContactSystem());
+            ;
 
             _entitiesLifeContext.Add(entity);
 

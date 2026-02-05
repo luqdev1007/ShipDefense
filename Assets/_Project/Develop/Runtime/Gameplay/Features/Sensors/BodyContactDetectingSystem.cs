@@ -26,8 +26,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Sensors
                 _body.bounds.max,
                 _body.radius,
                 _contacts.Items,
-                _mask, 
-                QueryTriggerInteraction.Ignore);
+                _mask); //, 
+                        //QueryTriggerInteraction.Ignore);
 
             RemoveSelfFromContacts();
         }

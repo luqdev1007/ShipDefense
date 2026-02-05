@@ -10,7 +10,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Sensors
 
         public override void Register(Entity entity)
         {
-            // entity.AddBodyCollider(_body);
+            entity.AddBodyCollider(_body);
         }
     }
 }

@@ -15,11 +15,9 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Sensors
 
         public void OnInit(Entity entity)
         {
-            /*
             _contacts = entity.ContactEntitiesBuffer;
             _isTouchAnotherTeam = entity.IsTouchAnotherTeam;
             _sourceTeam = entity.Team;
-            */
         }
 
         public void OnUpdate(float deltaTime)
@@ -28,7 +26,6 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Sensors
             {
                 Entity contact = _contacts.Items[i];
 
-                /*
                 if (contact.TryGetTeam(out ReactiveVariable<Teams> anotherTeam))
                 {
                     if (_sourceTeam.Value != anotherTeam.Value)
@@ -37,7 +34,6 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Sensors
                         return;
                     }
                 }
-                */
             }
 
             _isTouchAnotherTeam.Value = false;

@@ -3,6 +3,7 @@ using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Systems;
 using Assets._Project.Develop.Runtime.Utilites;
 using Assets._Project.Develop.Runtime.Utilites.Reactive;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Assets._Project.Develop.Runtime.Gameplay.Features.ContactTakeDamage
 {
@@ -27,6 +28,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.ContactTakeDamage
         {
             for (int i = 0; i < _contacts.Count; i++)
             {
+                // Debug.Log("Deal damage to" + _contacts.Count + " contacts");
+
                 Entity contactEntity = _contacts.Items[i];
 
                 if (_processedEntities.Contains(contactEntity) == false)
@@ -34,6 +37,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.ContactTakeDamage
                     _processedEntities.Add(contactEntity);
 
                     EntitiesHelper.TryTakeDamageFrom(_entity, contactEntity, _damage.Value);
+                    // Debug.Log($"{_entity.Transform.name} deals {_damage} to {contactEntity.Transform.name}");
                 }
             }
 
