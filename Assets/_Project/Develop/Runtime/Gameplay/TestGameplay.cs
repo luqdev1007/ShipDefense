@@ -21,8 +21,6 @@ namespace Assets._Project.Develop.Runtime.Gameplay
 
         private IInputService _input;
 
-        private Entity _entity;
-
         private bool _isRunning;
 
         public void Initialize(DIContainer container)
@@ -37,8 +35,6 @@ namespace Assets._Project.Develop.Runtime.Gameplay
 
         public void Run()
         {
-            // _entity = _entitiesFactory.CreateTit(Vector3.zero);
-
             _isRunning = true;
         }
 
@@ -59,13 +55,6 @@ namespace Assets._Project.Develop.Runtime.Gameplay
             {
                 _entitiesFactory.CreateShip(atRandomSpawner: true);
             }
-
-
-            /*
-            Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
-
-            _entity.MoveDirection.Value = input;
-            */
         }
     }
 }

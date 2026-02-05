@@ -1,9 +1,9 @@
 ﻿using Assets._Project.Develop.Infrastructure.DI;
 using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Mono;
-using Assets._Project.Develop.Runtime.Gameplay.Features.ExplosionFeature;
+using Assets._Project.Develop.Runtime.Gameplay.Features.LifeCycle;
 using Assets._Project.Develop.Runtime.Gameplay.Features.MovementFeature;
-using Assets._Project.Develop.Runtime.Gameplay.Features.Sensors;
 using Assets._Project.Develop.Runtime.Utilites;
+using Assets._Project.Develop.Runtime.Utilites.Conditions;
 using Assets._Project.Develop.Runtime.Utilites.Reactive;
 using System.Linq;
 using UnityEngine;
@@ -58,11 +58,32 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
 
             entity
                 .AddMoveSpeed(new ReactiveVariable<float>(10))
-                .AddMoveDirection(new ReactiveVariable<Vector3>());
+                .AddMoveDirection(new ReactiveVariable<Vector3>())
+                .AddMaxHealth(new ReactiveVariable<float>(10))
+                .AddCurrentHealth(new ReactiveVariable<float>(10))
+                .AddIsDead(new ReactiveVariable<bool>())
+                .AddInDeathProcess()
+                .AddDeathProcessCurrentTime(new ReactiveVariable<float>(2))
+                .AddDeathProcessInitialTime(new ReactiveVariable<float>(2));
+                
+
+            ICompositeCondition mustDie = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.CurrentHealth.Value <= 0));
+
+            ICompositeCondition mustSelfRelease = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.IsDead.Value == true))
+                .Add(new FuncCondition(() => entity.InDeathProcess.Value == false));
+
+            entity
+                .AddMustDie(mustDie)
+                .AddMustSelfRelease(mustSelfRelease);
 
             entity
                 .AddSystem(new TransformMoveTowardsTargetSystem())
-                .AddSystem(new TransformDirectionalRotatorSystem());
+                .AddSystem(new TransformDirectionalRotatorSystem())
+                .AddSystem(new DeathSystem())
+                .AddSystem(new DeathProcessTimerSystem())
+                .AddSystem(new SelfReleaseSystem(_entitiesLifeContext));
 
             _entitiesLifeContext.Add(entity);
 

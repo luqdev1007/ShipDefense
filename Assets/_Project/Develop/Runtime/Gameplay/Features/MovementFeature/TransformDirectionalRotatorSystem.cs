@@ -22,9 +22,6 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.MovementFeature
             {
                 Quaternion targetRotation = Quaternion.LookRotation(_moveDirection.Value);
 
-                Debug.Log("target rotation: " + targetRotation.eulerAngles);
-                Debug.Log("current rotation: " + _transform.rotation.eulerAngles);
-
                 _transform.rotation = targetRotation;
             }
         }
