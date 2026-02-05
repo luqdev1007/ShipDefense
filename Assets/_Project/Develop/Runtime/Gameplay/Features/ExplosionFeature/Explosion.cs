@@ -1,11 +1,10 @@
-﻿using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore;
-using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Mono;
+﻿using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Mono;
 using Assets._Project.Develop.Runtime.Gameplay.Features.ApplyDamage;
-using Assets._Project.Develop.Runtime.Gameplay.Features.LifeCycle;
 using UnityEngine;
 
 namespace Assets._Project.Develop.Runtime.Gameplay.Features.ExplosionFeature
 {
+
     public class Explosion
     {
         private float _range;
@@ -17,9 +16,9 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.ExplosionFeature
             _power = power;
         }
 
-        public void Activate(Vector3 at)
+        public void Activate(Vector3 at, float extraRange = 0)
         {
-            Collider[] targets = Physics.OverlapSphere(at, _range);
+            Collider[] targets = Physics.OverlapSphere(at, _range + extraRange);
 
             foreach (Collider target in targets)
             {

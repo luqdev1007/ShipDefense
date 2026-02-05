@@ -19,7 +19,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.ExplosionFeature
             _configs = _container.Resolve<ConfigsProviderService>().GetConfig<ExplosionsListConfig>();
         }
 
-        public void Create(ExplosionType type, Vector3 at)
+        public ExplosionView Create(ExplosionType type, Vector3 at, bool activateOnCreate = false)
         {
             var config = _configs.GetBy(type);
 
@@ -27,7 +27,9 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.ExplosionFeature
                 throw new ArgumentException($"no config for {type} type explosion");
 
             ExplosionView instance = Object.Instantiate(config.ViewPrefab, at, Quaternion.identity);
-            instance.Initialize(new Explosion(config.Range, config.Power));
+            instance.Initialize(new Explosion(config.Range, config.Power), activateOnCreate);
+
+            return instance;
         }
     }
 }

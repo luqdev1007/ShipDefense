@@ -52,7 +52,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay
             {
                 if (_surfaceRaycaster.TryGetHitInfo(_mainCamera, _hittableLayers, out RaycastHit hitInfo))
                 {
-                    _explosionsFactory.Create(ExplosionType.Large, hitInfo.point);
+                    _explosionsFactory.Create(ExplosionType.Large, hitInfo.point, true);
                 }
             }
 

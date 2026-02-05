@@ -11,7 +11,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.MovementFeature
     {
         private ReactiveVariable<Vector3> _moveDirection;
         private ReactiveVariable<float> _moveSpeed;
-        private ICompositeCondition _mustDie;
+        private ICompositeCondition _canMove;
         private Transform _transform;
 
         private Transform _target;
@@ -24,13 +24,13 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.MovementFeature
 
             _moveDirection = entity.MoveDirection;
             _moveSpeed = entity.MoveSpeed;
+            _canMove = entity.CanMove;
             _transform = entity.Transform;
-            _mustDie = entity.MustDie;
         }
 
         public void OnUpdate(float deltaTime)
         {
-            if (_target == null || _transform == null || _mustDie.Evaluate()) 
+            if (_target == null || _transform == null || _canMove.Evaluate() == false) 
                 return;
 
             if (Vector3.Distance(_transform.position, _target.position) < 10)

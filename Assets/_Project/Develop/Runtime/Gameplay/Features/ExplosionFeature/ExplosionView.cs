@@ -4,11 +4,16 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.ExplosionFeature
 
     public class ExplosionView : MonoBehaviour
     {
-        public void Initialize(Explosion effect)
-        {
-            effect.Activate(transform.position);
+        public Explosion ExplosionEffect { get; private set; }
 
-            Destroy(gameObject, 2f);
+        public void Initialize(Explosion effect, bool activateOnCreate = false, float selfDestroyTime = 2)
+        {
+            ExplosionEffect = effect;
+
+            if (activateOnCreate)
+                effect.Activate(transform.position);
+
+            Destroy(gameObject, selfDestroyTime);
         }
     }
 }
