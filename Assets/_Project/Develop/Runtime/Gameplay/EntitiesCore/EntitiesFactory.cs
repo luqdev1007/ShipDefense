@@ -3,6 +3,7 @@ using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Mono;
 using Assets._Project.Develop.Runtime.Gameplay.Features.ApplyDamage;
 using Assets._Project.Develop.Runtime.Gameplay.Features.Ballista;
 using Assets._Project.Develop.Runtime.Gameplay.Features.ContactTakeDamage;
+using Assets._Project.Develop.Runtime.Gameplay.Features.CustomPhysics;
 using Assets._Project.Develop.Runtime.Gameplay.Features.ExplosionFeature;
 using Assets._Project.Develop.Runtime.Gameplay.Features.InputFeature;
 using Assets._Project.Develop.Runtime.Gameplay.Features.LifeCycle;
@@ -201,12 +202,13 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
         {
             Entity entity = CreateEmpty();
 
-            _monoEntitiesFactory.Create(entity, parent, "Entities/ArrowProjectile")
-                .transform.SetParent(null);
+            MonoEntity mono = _monoEntitiesFactory.Create(entity, parent, "Entities/ArrowProjectile");
+            Vector3 shootDirection = parent.forward;
 
             entity
-                .AddMoveDirection(new ReactiveVariable<Vector3>(direction))
-                .AddMoveSpeed(new ReactiveVariable<float>(25 * tintPower))
+                .AddPushDirection(new ReactiveVariable<Vector3>(shootDirection))
+                .AddPushForce(new ReactiveVariable<float>(25 * tintPower))
+                .AddGravityScale(new ReactiveVariable<float>(10))
 
                 .AddIsDead()
                 .AddContactsDetectingMask(LayersAPI.LayerMaskWater)
@@ -233,8 +235,10 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
                 .AddMustSelfRelease(mustSelfRelease);
 
             entity
-                  .AddSystem(new RigidbodyMovementSystem())
-                  .AddSystem(new TransformRotateWithLinearVelocitySystem())
+                  .AddSystem(new RigidbodyGravityApplySystem()) // 1
+                   //.AddSystem(new RigidbodyMovementSystem()) // 2            
+                  .AddSystem(new AddInstantPushPowerSystem()) // 2
+                  .AddSystem(new TransformRotateWithLinearVelocitySystem()) // 3
 
                   .AddSystem(new DeathSystem())
                   .AddSystem(new DisableCollidersOnDeathSystem())
@@ -248,6 +252,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
                   .AddSystem(new SelfExplodeSystem(_container.Resolve<ExplosionsFactory>()))
                   ;
 
+            mono.transform.SetParent(null);
             _entitiesLifeContext.Add(entity);
 
             return entity;

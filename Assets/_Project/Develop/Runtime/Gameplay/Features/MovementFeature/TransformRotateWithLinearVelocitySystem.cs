@@ -13,6 +13,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.MovementFeature
         {
             _transform = entity.Transform;
             _rigidbody = entity.Rigidbody;
+
+            _rigidbody.useGravity = false;
         }
 
         public void OnUpdate(float deltaTime)
@@ -20,8 +22,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.MovementFeature
             if (_rigidbody.linearVelocity.sqrMagnitude <= 0.1f)
                 return;
 
-            Debug.Log("rotating");
-             _transform.rotation = Quaternion.LookRotation(_rigidbody.linearVelocity);
+            _transform.rotation = Quaternion.LookRotation(_rigidbody.linearVelocity);
         }
     }
 }
