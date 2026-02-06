@@ -60,23 +60,11 @@ namespace Assets._Project.Develop.Runtime.Gameplay
         {
             if (_isRunning == false)
                 return;
-   
-            if (_input.IsAttackKeyPressed)
-            {
-                _shootTimer = 0;
-                _isShootStarted = true;
-            }
-
-            if (_isShootStarted && _shootTimer < 2)
-            {
-                _shootTimer += Time.deltaTime;
-            }
 
             if (_input.IsAttackKeyReleased)
             {
-                _shootTimer = _shootTimer < 1 ? 1 : _shootTimer;
-                _isShootStarted = false;
-                _entitiesFactory.CreateArrowProjectile(_projectileParent, _projectileParent.forward, 1, _mainShip, _shootTimer);
+                float power = _ballista.ChargeProgress < 0.5f ? 1f : _ballista.ChargeProgress * 2f;
+                _entitiesFactory.CreateArrowProjectile(_projectileParent, _projectileParent.forward, 1, _mainShip, power);
             }
 
             if (Input.GetKeyDown(KeyCode.E))

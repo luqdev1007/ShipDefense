@@ -16,5 +16,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.InputFeature
         public Vector2 RotateDirection { get; set; }
 
         public bool IsAttackKeyReleased => Input.GetKeyUp(KeyCode.Space);
+
+        public bool IsAttackKeyHold => Input.GetKey(KeyCode.Space);
     }
 }
