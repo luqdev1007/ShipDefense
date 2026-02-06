@@ -116,9 +116,11 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
             Transform[] spawners = Object.FindObjectsByType<Transform>(FindObjectsSortMode.None)
                 .Where(i => i.gameObject.layer == LayersAPI.LayerSpawner).ToArray(); // game input args?
 
+            Vector3 randomOfsset = new Vector3(Random.Range(-10, 10), 0, Random.Range(-10, 10));
             Transform randomSpawner = spawners[Random.Range(0, spawners.Length)];
 
-            _monoEntitiesFactory.Create(entity, randomSpawner, "Entities/SmallShip");
+            var mono = _monoEntitiesFactory.Create(entity, randomSpawner, "Entities/SmallShip");
+            mono.transform.position += randomOfsset;
 
             entity
                 .AddMoveSpeed(new ReactiveVariable<float>(5))

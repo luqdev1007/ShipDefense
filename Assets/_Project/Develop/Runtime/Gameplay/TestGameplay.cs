@@ -1,11 +1,9 @@
 ﻿using Assets._Project.Develop.Infrastructure.DI;
 using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore;
 using Assets._Project.Develop.Runtime.Gameplay.Features.Ballista;
-using Assets._Project.Develop.Runtime.Gameplay.Features.ExplosionFeature;
 using Assets._Project.Develop.Runtime.Gameplay.Features.InputFeature;
 using Assets._Project.Develop.Runtime.Gameplay.Features.TeamsFeature;
 using Assets._Project.Develop.Runtime.UI.Gameplay;
-using Assets._Project.Develop.Runtime.Utilites.RaycastManagment;
 using UnityEngine;
 
 namespace Assets._Project.Develop.Runtime.Gameplay
@@ -18,10 +16,6 @@ namespace Assets._Project.Develop.Runtime.Gameplay
         private DIContainer _container;
         private EntitiesFactory _entitiesFactory;
 
-        private ExplosionsFactory _explosionsFactory;
-
-        private SurfaceRaycaster _surfaceRaycaster;
-
         private IInputService _input;
 
         private bool _isRunning;
@@ -32,17 +26,13 @@ namespace Assets._Project.Develop.Runtime.Gameplay
 
         private Transform _projectileParent;
 
-        private float _shootTimer = 0;
-        private bool _isShootStarted = false;
 
         public void Initialize(DIContainer container)
         {
             _container = container;
 
             _entitiesFactory = _container.Resolve<EntitiesFactory>();
-            _explosionsFactory = _container.Resolve<ExplosionsFactory>();
             _input = _container.Resolve<IInputService>();
-            _surfaceRaycaster = _container.Resolve<SurfaceRaycaster>();
         }
 
         public void Run()

@@ -46,7 +46,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Ballista
             _currentYRotation = Mathf.Clamp(_currentYRotation, _horizontalLimits.x, _horizontalLimits.y);
             _horizontalPivot.localRotation = Quaternion.Euler(0, _currentYRotation, 0);
 
-            _currentXRotation -= input.y * _rotationSpeed * Time.deltaTime;
+            _currentXRotation += input.y * _rotationSpeed * Time.deltaTime;
             _currentXRotation = Mathf.Clamp(_currentXRotation, _verticalLimits.x, _verticalLimits.y);
             _verticalPivot.localRotation = Quaternion.Euler(_currentXRotation, 0, 0);
         }
