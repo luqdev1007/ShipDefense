@@ -3,6 +3,7 @@ using Assets._Project.Develop.Runtime.Gameplay.Features.InputFeature;
 
 namespace Assets._Project.Develop.Runtime.Gameplay.Features.Ballista
 {
+
     public class BallistaController : MonoBehaviour
     {
         [field:SerializeField] public Transform ProjectileParent { get; private set; }
