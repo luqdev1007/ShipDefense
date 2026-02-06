@@ -197,7 +197,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
             return entity;
         }
 
-        public Entity CreateArrowProjectile(Transform parent, Vector3 direction, float damage, Entity owner)
+        public Entity CreateArrowProjectile(Transform parent, Vector3 direction, float damage, Entity owner, float tintPower)
         {
             Entity entity = CreateEmpty();
 
@@ -206,7 +206,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
 
             entity
                 .AddMoveDirection(new ReactiveVariable<Vector3>(direction))
-                .AddMoveSpeed(new ReactiveVariable<float>(25))
+                .AddMoveSpeed(new ReactiveVariable<float>(25 * tintPower))
 
                 .AddIsDead()
                 .AddContactsDetectingMask(LayersAPI.LayerMaskWater)
@@ -226,11 +226,6 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
 
             ICompositeCondition mustSelfRelease = new CompositeCondition()
                 .Add(new FuncCondition(() => entity.IsDead.Value == true));
-
-            /*
-            ICompositeCondition mustExplode = new CompositeCondition()
-                .Add(new FuncCondition(() => entity.IsTouchAnotherTeam.Value == true));
-            */
 
             entity
                 .AddMustDie(mustDie)

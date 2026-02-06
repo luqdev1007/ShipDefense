@@ -1,5 +1,6 @@
 ﻿using Assets._Project.Develop.Infrastructure.DI;
 using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore;
+using Assets._Project.Develop.Runtime.Gameplay.Features.Ballista;
 using Assets._Project.Develop.Runtime.Gameplay.Features.ExplosionFeature;
 using Assets._Project.Develop.Runtime.Gameplay.Features.InputFeature;
 using Assets._Project.Develop.Runtime.Gameplay.Features.TeamsFeature;
@@ -27,7 +28,12 @@ namespace Assets._Project.Develop.Runtime.Gameplay
 
         private Entity _mainShip;
 
-        private Transform _projectileSpawnParent;
+        private BallistaController _ballista;
+
+        private Transform _projectileParent;
+
+        private float _shootTimer = 0;
+        private bool _isShootStarted = false;
 
         public void Initialize(DIContainer container)
         {
@@ -46,56 +52,36 @@ namespace Assets._Project.Develop.Runtime.Gameplay
             _mainShip = _entitiesFactory.CreateMainShip();
             _container.Resolve<GameplayScreenPresenter>().SubscribeHealthView(_mainShip.CurrentHealth);
 
-            foreach (var i in _mainShip.Transform.GetComponentsInChildren<Transform>())
-            {
-                if (i.gameObject.name.Contains("ProjectileParent"))
-                {
-                    _projectileSpawnParent = i;
-                    break;
-                }
-            }
+            _ballista = _mainShip.Transform.GetComponentInChildren<BallistaController>();
+            _projectileParent = _ballista.ProjectileParent;
         }
 
         private void Update()
         {
             if (_isRunning == false)
                 return;
-
+   
             if (_input.IsAttackKeyPressed)
             {
-                Entity projectile = _entitiesFactory.CreateArrowProjectile(_projectileSpawnParent, _projectileSpawnParent.forward, 1, _mainShip);
+                _shootTimer = 0;
+                _isShootStarted = true;
+            }
 
-                /*
-                if (_surfaceRaycaster.TryGetHitInfo(_mainCamera, _hittableLayers, out RaycastHit hitInfo))
-                {
-                    _explosionsFactory.Create(ExplosionType.Large, hitInfo.point, true);
+            if (_isShootStarted && _shootTimer < 2)
+            {
+                _shootTimer += Time.deltaTime;
+            }
 
-                    Entity projectile = _entitiesFactory.CreateArrowProjectile(_projectileSpawnParent, _projectileSpawnParent.forward, 1, _mainShip);
-                    projectile.Transform.SetParent(null);
-                }
-                */
+            if (_input.IsAttackKeyReleased)
+            {
+                _shootTimer = _shootTimer < 1 ? 1 : _shootTimer;
+                _isShootStarted = false;
+                _entitiesFactory.CreateArrowProjectile(_projectileParent, _projectileParent.forward, 1, _mainShip, _shootTimer);
             }
 
             if (Input.GetKeyDown(KeyCode.E))
             {
                 _entitiesFactory.CreateShip(Teams.Enemies);
-            }
-
-            /*
-            if (Input.GetKeyDown(KeyCode.D))
-            {
-                _mainShip.TakeDamageRequest.Invoke(1);
-            }
-            */
-
-            if (Input.GetKeyDown(KeyCode.T))
-            {
-                Time.timeScale -= 0.1f;
-            }
-
-            if (Input.GetKeyDown(KeyCode.U))
-            {
-                Time.timeScale += 0.1f;
             }
         }
     }

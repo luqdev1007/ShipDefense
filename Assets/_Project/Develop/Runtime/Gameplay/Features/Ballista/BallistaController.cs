@@ -5,6 +5,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Ballista
 {
     public class BallistaController : MonoBehaviour
     {
+        [field:SerializeField] public Transform ProjectileParent { get; private set; }
+
         [Header("Parts References")]
         [SerializeField] private Transform _horizontalPivot; 
         [SerializeField] private Transform _verticalPivot; 

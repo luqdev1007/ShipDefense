@@ -9,10 +9,12 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.InputFeature
 
         public bool IsEnabled { get; set; } = true;
 
-        public bool IsAttackKeyPressed => Input.GetKeyDown(KeyCode.Mouse0);
+        public bool IsAttackKeyPressed => Input.GetKeyDown(KeyCode.Space);
 
         public Vector2 MoveDirection => new Vector2(Input.GetAxis(HorizontalAxisName), Input.GetAxis(VerticalAxisName));
 
         public Vector2 RotateDirection { get; set; }
+
+        public bool IsAttackKeyReleased => Input.GetKeyUp(KeyCode.Space);
     }
 }
