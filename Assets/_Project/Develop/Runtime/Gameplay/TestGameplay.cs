@@ -76,7 +76,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay
                 */
             }
 
-            if (Input.GetKeyDown(KeyCode.S))
+            if (Input.GetKeyDown(KeyCode.E))
             {
                 _entitiesFactory.CreateShip(Teams.Enemies);
             }
