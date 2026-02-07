@@ -41,15 +41,9 @@ namespace Assets._Project.Develop.Runtime.UI.Gameplay
         }
 
 
-        public void SubscribeHealthView(IReadOnlyVariable<float> currentHealth)
+        public void SubscribeHealthView(IReadOnlyVariable<float> currentHealth, IReadOnlyVariable<float> maxHealth)
         {
-            _disposables.Add(currentHealth.Subscribe(OnCurrentHealthChanged));
-            _view.HealthDisplay.SetText(currentHealth.Value.ToString());
-        }
-
-        private void OnCurrentHealthChanged(float oldValue, float newValue)
-        {
-            _view.HealthDisplay.SetText(newValue.ToString());
+            _view.ProgressFilledImageView.Init(currentHealth, maxHealth);
         }
     }
 }

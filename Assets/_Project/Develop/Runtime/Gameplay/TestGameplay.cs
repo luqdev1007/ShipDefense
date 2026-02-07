@@ -40,7 +40,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay
             _isRunning = true;
 
             _mainShip = _entitiesFactory.CreateMainShip();
-            _container.Resolve<GameplayScreenPresenter>().SubscribeHealthView(_mainShip.CurrentHealth);
+            _container.Resolve<GameplayScreenPresenter>().SubscribeHealthView(_mainShip.CurrentHealth, _mainShip.MaxHealth);
 
             _ballista = _mainShip.Transform.GetComponentInChildren<BallistaController>();
             _projectileParent = _ballista.ProjectileParent;

@@ -27,13 +27,15 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.ExplosionFeature
         {
             if (transform.parent != null) transform.SetParent(null);
 
+            AttachedRigidbody.GetComponent<Collider>().enabled = false;
+
             // 1. Активируем регдолл
             ToggleRagdoll(true);
 
             // 2. ОТКЛЮЧАЕМ главный коллайдер и физику родителя
             // Чтобы они не "якорили" персонажа и не конфликтовали с костями
             if (TryGetComponent(out Collider parentCollider)) parentCollider.enabled = false;
-            Rigidbody.isKinematic = true;
+            AttachedRigidbody.isKinematic = true;
 
             // 3. Толкаем КАЖДУЮ кость (или только таз, но лучше каждую по чуть-чуть)
             // Используем VelocityChange, чтобы забить на массу 50

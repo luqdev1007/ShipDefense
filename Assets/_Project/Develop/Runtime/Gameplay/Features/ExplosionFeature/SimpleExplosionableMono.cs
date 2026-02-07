@@ -12,8 +12,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.ExplosionFeature
         {
             if (transform.parent != null) transform.SetParent(null);
 
-            Rigidbody.isKinematic = false;
-            Rigidbody.useGravity = true;
+            AttachedRigidbody.isKinematic = false;
+            AttachedRigidbody.useGravity = true;
 
             // РАСЧЕТ ВЕКТОРА
             Vector3 dir = transform.position - sourcePosition;
@@ -24,12 +24,12 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.ExplosionFeature
 
             // ГЛАВНЫЙ СЕКРЕТ: Умножаем силу на массу (или используем ForceMode.VelocityChange)
             // Это гарантирует, что объект массой 50 и массой 1 полетят с одинаковой скоростью
-            float massFactor = Rigidbody.mass;
+            float massFactor = AttachedRigidbody.mass;
             // В SimpleExplosionableMono измени строку AddForce:
-            Rigidbody.AddForce(explosionVector.normalized * power, ForceMode.VelocityChange);
+            AttachedRigidbody.AddForce(explosionVector.normalized * power, ForceMode.VelocityChange);
 
             // Закручиваем (тоже с учетом массы)
-            Rigidbody.AddTorque(Random.insideUnitSphere * power * massFactor, ForceMode.Impulse);
+            AttachedRigidbody.AddTorque(Random.insideUnitSphere * power * massFactor, ForceMode.Impulse);
 
             Debug.Log($"{gameObject.name} (Mass: {massFactor}) подлетел!");
         }
