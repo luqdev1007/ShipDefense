@@ -298,7 +298,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
             Transform[] spawners = Object.FindObjectsByType<Transform>(FindObjectsSortMode.None)
                 .Where(i => i.gameObject.layer == LayersAPI.LayerSpawner).ToArray(); // game input args?
 
-            Vector3 randomOfsset = new Vector3(Random.Range(-10, 10), 0, Random.Range(-10, 10));
+            Vector3 randomOfsset = new Vector3(Random.Range(-30, 10), 0, Random.Range(-30, 10));
             Transform randomSpawner = spawners[Random.Range(0, spawners.Length)];
 
             MonoEntity mono = _monoEntitiesFactory.Create(entity, randomSpawner, "Entities/SmallShip");
@@ -314,7 +314,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
             }
 
             entity
-                .AddMoveSpeed(new ReactiveVariable<float>(5))
+                .AddMoveSpeed(new ReactiveVariable<float>(Random.Range(2, 4)))
+                .AddRotationSpeed(new ReactiveVariable<float>(Random.Range(10, 30)))
                 .AddMoveDirection(new ReactiveVariable<Vector3>())
 
                 .AddMaxHealth(new ReactiveVariable<float>(10))
@@ -370,8 +371,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
                 ;
 
             entity
-                .AddSystem(new TransformMoveTowardsTargetSystem(_entitiesLifeContext))
-                .AddSystem(new TransformDirectionalRotatorSystem())
+                .AddSystem(new RigidbodyDirectionalRotatorSystem())
+                .AddSystem(new RigidbodyMoveTowardsTargetSystem(_entitiesLifeContext))
 
                 .AddSystem(new ApplyDamageSystem())
 

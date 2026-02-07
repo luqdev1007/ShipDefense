@@ -6,18 +6,18 @@ using UnityEngine;
 
 namespace Assets._Project.Develop.Runtime.Gameplay.Features.MovementFeature
 {
-    public class TransformMoveTowardsTargetSystem : IInitializableSystem, IUpdatableSystem
+    public class RigidbodyMoveTowardsTargetSystem : IInitializableSystem, IUpdatableSystem
     {
         private ReactiveVariable<Vector3> _moveDirection;
         private ReactiveVariable<float> _moveSpeed;
         private ICompositeCondition _canMove;
-        private Transform _transform;
+        private Rigidbody _rigidbody; 
 
         private ITargetSelector _targetSelector;
         private EntitiesLifeContext _entitiesLifeContext;
         private ReactiveVariable<Entity> _target;
 
-        public TransformMoveTowardsTargetSystem(EntitiesLifeContext entitiesLifeContext)
+        public RigidbodyMoveTowardsTargetSystem(EntitiesLifeContext entitiesLifeContext)
         {
             _entitiesLifeContext = entitiesLifeContext;
         }
@@ -28,7 +28,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.MovementFeature
             _moveDirection = entity.MoveDirection;
             _moveSpeed = entity.MoveSpeed;
             _canMove = entity.CanMove;
-            _transform = entity.Transform;
+            _rigidbody = entity.Rigidbody;
 
             _targetSelector = new NearestDamagableTargetSelector(entity);
         }
@@ -38,24 +38,28 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.MovementFeature
             if (_target.Value == null)
             {
                 _target.Value = _targetSelector.SelectTargetFrom(_entitiesLifeContext.Entities);
+                _moveDirection.Value = Vector3.zero;
                 return;
             }
 
-            if (_target == null || _transform == null || _canMove.Evaluate() == false) 
+            if (_rigidbody == null || _canMove.Evaluate() == false)
                 return;
 
+            Vector3 currentPos = _rigidbody.position;
+            Vector3 targetPos = _target.Value.Transform.position;
 
             Vector3 nextStep = Vector3.MoveTowards(
-                _transform.position,
-                _target.Value.Transform.position,
+                currentPos,
+                targetPos,
                 _moveSpeed.Value * deltaTime
             );
 
-            nextStep.y = _transform.position.y;
-            _transform.position = nextStep;
+            nextStep.y = currentPos.y;
 
-            Vector3 directionToTarget = (_target.Value.Transform.position - _transform.position).normalized;
-            directionToTarget.y = 0; 
+            _rigidbody.MovePosition(nextStep);
+
+            Vector3 directionToTarget = (targetPos - currentPos).normalized;
+            directionToTarget.y = 0;
             _moveDirection.Value = directionToTarget;
         }
     }
