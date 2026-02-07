@@ -23,4 +23,9 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Common
     {
         public ReactiveVariable<Entity> Value;
     }
+
+    public class AnimatorComponent : IEntityComponent
+    {
+        public Animator Value;
+    }
 }

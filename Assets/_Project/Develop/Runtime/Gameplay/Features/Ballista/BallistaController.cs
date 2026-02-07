@@ -26,6 +26,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Ballista
 
         public void Init(IInputService inputService)
         {
+            // _verticalPivot.transform.eulerAngles = new Vector3(0, 0, 0); // anim in the start?
+
             _inputService = inputService;
 
             // Получаем текущие ЛОКАЛЬНЫЕ углы

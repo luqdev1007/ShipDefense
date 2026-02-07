@@ -13763,8 +13763,9 @@ MonoBehaviour:
   _controller: {fileID: 2477518028801104545}
   _animator: {fileID: 5692966200660534797}
   _visualRoot: {fileID: 8723078366520563676}
-  _recoilDistance: 1.5
-  _recoilBackDuration: 0.1
+  _recoilDistance: 1
+  _jumpHeight: 0.4
+  _recoilBackDuration: 0.25
   _recoilReturnDuration: 0.5
   _returnEase: 24
 --- !u!95 &5692966200660534797
@@ -16262,9 +16263,9 @@ MonoBehaviour:
   <ProjectileParent>k__BackingField: {fileID: 324798575597124484}
   _horizontalPivot: {fileID: 2755916276326337373}
   _verticalPivot: {fileID: 1293399427944455892}
-  _rotationSpeed: 50
-  _verticalLimits: {x: -20, y: 45}
-  _horizontalLimits: {x: -60, y: 60}
+  _rotationSpeed: 100
+  _verticalLimits: {x: -180, y: 180}
+  _horizontalLimits: {x: -65, y: 65}
 --- !u!1 &8834406851979926496
 GameObject:
   m_ObjectHideFlags: 0

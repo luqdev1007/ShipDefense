@@ -4,11 +4,13 @@ using UnityEngine;
 
 namespace Assets._Project.Develop.Runtime.Gameplay.Common
 {
-    public class CharacterControllerEntityRegistrator : MonoEntityRegistrator
+    public class AnimatorEntityRegistrator : MonoEntityRegistrator
     {
+        [SerializeField] private Animator _animator;
+
         public override void Register(Entity entity)
         {
-            entity.AddCharacterController(GetComponent<CharacterController>());
+            entity.AddAnimator(_animator);
         }
     }
 }

@@ -9,6 +9,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.MovementFeature
         private Transform _transform;
         private Rigidbody _rigidbody;
 
+        private const float MinThresholdVelocityValue = 1f;
+
         public void OnInit(Entity entity)
         {
             _transform = entity.Transform;
@@ -19,7 +21,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.MovementFeature
 
         public void OnUpdate(float deltaTime)
         {
-            if (_rigidbody.linearVelocity.sqrMagnitude <= 0.1f)
+            if (_rigidbody.linearVelocity.sqrMagnitude <= MinThresholdVelocityValue)
                 return;
 
             _transform.rotation = Quaternion.LookRotation(_rigidbody.linearVelocity);

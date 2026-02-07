@@ -13,6 +13,7 @@ using Assets._Project.Develop.Runtime.Gameplay.Features.TeamsFeature;
 using Assets._Project.Develop.Runtime.Meta.Features.ShipUpgrades;
 using Assets._Project.Develop.Runtime.Utilites;
 using Assets._Project.Develop.Runtime.Utilites.Conditions;
+using Assets._Project.Develop.Runtime.Utilites.CoroutinesManagment;
 using Assets._Project.Develop.Runtime.Utilites.Reactive;
 using System.Linq;
 using UnityEngine;
@@ -223,7 +224,6 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
                 .AddTeam(new ReactiveVariable<Teams>(owner.Team.Value))
                 ;
 
-
             ICompositeCondition mustDie = new CompositeCondition(LogicOperations.Or)
                 .Add(new FuncCondition(() => entity.IsTouchDeathMask.Value == true))
                 .Add(new FuncCondition(() => entity.IsTouchAnotherTeam.Value == true));
@@ -239,7 +239,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
             entity
                   .AddSystem(new RigidbodyGravityApplySystem()) // 1
                    //.AddSystem(new RigidbodyMovementSystem()) // 2            
-                  .AddSystem(new AddInstantPushPowerSystem()) // 2
+                  .AddSystem(new AddDelayedForceSystem(0.2f, _container.Resolve<ICoroutinesPerformer>())) // 2
+                  .AddSystem(new SlowApearEntityViewSystem(0.25f, _container.Resolve<ICoroutinesPerformer>()))
                   .AddSystem(new TransformRotateWithLinearVelocitySystem()) // 3
 
                   .AddSystem(new DeathSystem())
@@ -254,7 +255,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
                   .AddSystem(new SelfExplodeSystem(_container.Resolve<ExplosionsFactory>()))
                   ;
 
-            mono.transform.SetParent(null);
+            // mono.transform.SetParent(null);
             _entitiesLifeContext.Add(entity);
 
             return entity;
