@@ -27,8 +27,6 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.ExplosionFeature
         {
             if (transform.parent != null) transform.SetParent(null);
 
-            AttachedRigidbody.GetComponent<Collider>().enabled = false;
-
             // 1. Активируем регдолл
             ToggleRagdoll(true);
 

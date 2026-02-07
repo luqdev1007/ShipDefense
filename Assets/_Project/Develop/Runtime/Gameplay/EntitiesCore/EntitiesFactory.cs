@@ -303,6 +303,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
 
             MonoEntity mono = _monoEntitiesFactory.Create(entity, randomSpawner, "Entities/SmallShip");
             mono.transform.position += randomOfsset;
+            mono.transform.SetParent(null);
+
             ShipPlace driverPlace = null;
 
             foreach (ShipPlace i in mono.GetComponentsInChildren<ShipPlace>())

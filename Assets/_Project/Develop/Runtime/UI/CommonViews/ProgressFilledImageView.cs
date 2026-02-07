@@ -36,6 +36,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.UI
             _maxValue = maxValue;
 
             UpdateFillAmount(true);
+            CheckUpdateIcon();
 
             _currentValue.Subscribe(OnProgressChanged);
             _maxValue.Subscribe(OnProgressChanged);

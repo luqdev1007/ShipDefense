@@ -2349,7 +2349,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5331f5462ebcfbe4187996d4384491dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Rigidbody>k__BackingField: {fileID: 631031892557081334}
+  <AttachedRigidbody>k__BackingField: {fileID: 631031892557081334}
   UpwardForceMultiplier: 1.5
   OutwardForceMultiplier: 1
   _ragdollRigidbodies:
@@ -2365,7 +2365,7 @@ MonoBehaviour:
   - {fileID: 4620260288902435877}
   - {fileID: 6262527164684455649}
   _animator: {fileID: 7176542034451161651}
-  _mainBone: {fileID: 631031892557081334}
+  _mainBone: {fileID: 4320294096282718490}
 --- !u!114 &291600925897943570
 MonoBehaviour:
   m_ObjectHideFlags: 0
