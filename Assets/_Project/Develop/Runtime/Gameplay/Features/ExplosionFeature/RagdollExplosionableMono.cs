@@ -25,6 +25,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.ExplosionFeature
 
         public override void Explode(float power, Vector3 sourcePosition, IExplosion source)
         {
+            if (transform.parent != null) transform.SetParent(null);
+
             // 1. Активируем регдолл
             ToggleRagdoll(true);
 

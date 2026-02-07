@@ -54,7 +54,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay
             if (_input.IsAttackKeyReleased)
             {
                 float power = _ballista.ChargeProgress < 0.5f ? 1f : _ballista.ChargeProgress * 2f;
-                _entitiesFactory.CreateArrowProjectile(_projectileParent, _projectileParent.forward, 1, _mainShip, power);
+                _entitiesFactory.CreateArrowProjectile(_projectileParent, 1, _mainShip, power);
             }
 
             if (Input.GetKeyDown(KeyCode.E))
