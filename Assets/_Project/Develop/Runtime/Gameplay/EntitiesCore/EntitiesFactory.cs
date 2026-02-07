@@ -315,11 +315,10 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
 
             entity
                 .AddMoveSpeed(new ReactiveVariable<float>(Random.Range(2, 4)))
-                .AddRotationSpeed(new ReactiveVariable<float>(Random.Range(10, 30)))
                 .AddMoveDirection(new ReactiveVariable<Vector3>())
 
-                .AddMaxHealth(new ReactiveVariable<float>(10))
-                .AddCurrentHealth(new ReactiveVariable<float>(10))
+                .AddMaxHealth(new ReactiveVariable<float>(5))
+                .AddCurrentHealth(new ReactiveVariable<float>(5))
 
                 .AddBodyContactDamage(new ReactiveVariable<float>(2))
                 .AddContactsDetectingMask(LayersAPI.LayerMaskHittable)
@@ -344,9 +343,6 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
                 .Add(new FuncCondition(() => entity.IsDead.Value == false))
                 .Add(new FuncCondition(() => driverPlace.transform.childCount > 0));
 
-            ICompositeCondition canRotate = new CompositeCondition()
-                .Add(new FuncCondition(() => entity.IsDead.Value == false))
-                .Add(new FuncCondition(() => driverPlace.transform.childCount > 0));
 
             ICompositeCondition canApplyDamage = new CompositeCondition()
                 .Add(new FuncCondition(() => entity.IsDead.Value == false));
@@ -363,7 +359,6 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
 
             entity
                 .AddCanMove(canMove)
-                .AddCanRotate(canRotate)
                 .AddMustDie(mustDie)
                 .AddMustSelfRelease(mustSelfRelease)
                 .AddCanApplyDamage(canApplyDamage)
@@ -371,7 +366,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
                 ;
 
             entity
-                .AddSystem(new RigidbodyDirectionalRotatorSystem())
+                //.AddSystem(new RigidbodyDirectionalRotatorSystem())
                 .AddSystem(new RigidbodyMoveTowardsTargetSystem(_entitiesLifeContext))
 
                 .AddSystem(new ApplyDamageSystem())
