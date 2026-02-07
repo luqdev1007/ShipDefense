@@ -17,26 +17,34 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Ballista
         [SerializeField] private Vector2 _verticalLimits = new Vector2(-20f, 45f);
         [SerializeField] private Vector2 _horizontalLimits = new Vector2(-60f, 60f);
 
+        [Header("Rate of Fire Settings")]
+        [SerializeField] private float _fireRate = 1f;
+
         private IInputService _inputService;
         private float _currentXRotation;
         private float _currentYRotation;
+        private float _lastFireTime;
+
+        private Vector3 _recoilPosOffset;
+        private float _recoilPitchOffset;
 
         public bool IsCharging { get; private set; }
         public float ChargeProgress { get; private set; }
+        public float FireCycleDuration => 1f / _fireRate;
 
         public void Init(IInputService inputService)
         {
-            // _verticalPivot.transform.eulerAngles = new Vector3(0, 0, 0); // anim in the start?
-
             _inputService = inputService;
-
-            // Получаем текущие ЛОКАЛЬНЫЕ углы
             Vector3 localH = _horizontalPivot.transform.localEulerAngles;
             Vector3 localV = _verticalPivot.transform.localEulerAngles;
-
-            // Функция для перевода из 0..360 в -180..180
             _currentYRotation = FixAngle(localH.y);
             _currentXRotation = FixAngle(localV.x);
+        }
+
+        public void SetRecoilOffsets(Vector3 posOffset, float pitchOffset)
+        {
+            _recoilPosOffset = posOffset;
+            _recoilPitchOffset = pitchOffset;
         }
 
         private float FixAngle(float angle)
@@ -47,17 +55,13 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Ballista
 
         private void Update()
         {
-            if (_inputService == null || !_inputService.IsEnabled)
-                return;
-
+            if (_inputService == null || !_inputService.IsEnabled) return;
             HandleCharge();
         }
 
         private void FixedUpdate()
         {
-            if (_inputService == null || !_inputService.IsEnabled)
-                return;
-
+            if (_inputService == null || !_inputService.IsEnabled) return;
             HandlePhysicsRotation();
         }
 
@@ -65,38 +69,40 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Ballista
         {
             Vector2 input = _inputService.MoveDirection;
 
-            // 1. Считаем дельту (изменение), а не абсолютное значение
             _currentYRotation += input.x * _rotationSpeed * Time.fixedDeltaTime;
             _currentYRotation = Mathf.Clamp(_currentYRotation, _horizontalLimits.x, _horizontalLimits.y);
 
             _currentXRotation += input.y * _rotationSpeed * Time.fixedDeltaTime;
             _currentXRotation = Mathf.Clamp(_currentXRotation, _verticalLimits.x, _verticalLimits.y);
 
-            // 2. ВАЖНО: Используем вращение КОРНЯ (самой баллисты), а не пивотов друг друга
-            // Это предотвращает накопление ошибок поворота
             Quaternion rootRotation = transform.rotation;
 
-            // Горизонталь: поворот корня + наш Y
+            // Сдвигаем всё основание баллисты (прыжок и откат)
+            _horizontalPivot.MovePosition(transform.position + rootRotation * _recoilPosOffset);
+
+            // Поворачиваем горизонталь
             Quaternion horizTarget = rootRotation * Quaternion.Euler(0, _currentYRotation, 0);
             _horizontalPivot.MoveRotation(horizTarget);
 
-            // Вертикаль: поворот корня + наш Y + наш X
-            // Мы складываем их последовательно относительно корня
-            Quaternion vertTarget = rootRotation * Quaternion.Euler(_currentXRotation, _currentYRotation, 0);
+            // Поворачиваем вертикаль + добавляем задирание носа
+            Quaternion vertTarget = rootRotation * Quaternion.Euler(_currentXRotation + _recoilPitchOffset, _currentYRotation, 0);
             _verticalPivot.MoveRotation(vertTarget);
         }
 
         private void HandleCharge()
         {
-            IsCharging = _inputService.IsAttackKeyHold;
-
-            if (IsCharging)
+            if (Time.time < _lastFireTime + FireCycleDuration)
             {
-                ChargeProgress = Mathf.Clamp01(ChargeProgress + Time.deltaTime / 2f);
+                IsCharging = false;
+                return;
             }
 
-            if (_inputService.IsAttackKeyReleased)
+            IsCharging = _inputService.IsAttackKeyHold;
+            if (IsCharging) ChargeProgress = Mathf.Clamp01(ChargeProgress + Time.deltaTime / 2f);
+
+            if (_inputService.IsAttackKeyReleased && ChargeProgress > 0)
             {
+                _lastFireTime = Time.time;
                 OnFired?.Invoke(ChargeProgress);
                 ChargeProgress = 0;
             }

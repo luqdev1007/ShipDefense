@@ -13762,11 +13762,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _controller: {fileID: 2477518028801104545}
   _animator: {fileID: 5692966200660534797}
-  _visualRoot: {fileID: 8723078366520563676}
   _recoilDistance: 1
   _jumpHeight: 0.4
-  _recoilBackDuration: 0.25
-  _recoilReturnDuration: 0.5
+  _maxPitch: 12
+  _minRecoilPower: 0.35
+  _backWeight: 0.232
+  _returnWeight: 0.295
   _returnEase: 24
 --- !u!95 &5692966200660534797
 Animator:
@@ -16266,6 +16267,7 @@ MonoBehaviour:
   _rotationSpeed: 100
   _verticalLimits: {x: -180, y: 180}
   _horizontalLimits: {x: -65, y: 65}
+  _fireRate: 1
 --- !u!1 &8834406851979926496
 GameObject:
   m_ObjectHideFlags: 0
