@@ -59,7 +59,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay
 
             if (Input.GetKeyDown(KeyCode.E))
             {
-                _entitiesFactory.CreateShip(Teams.Enemies);
+                _entitiesFactory.CreateSmallShip(Teams.Enemies);
             }
         }
     }

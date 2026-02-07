@@ -10,6 +10,7 @@ using Assets._Project.Develop.Runtime.Gameplay.Features.LifeCycle;
 using Assets._Project.Develop.Runtime.Gameplay.Features.MovementFeature;
 using Assets._Project.Develop.Runtime.Gameplay.Features.Sensors;
 using Assets._Project.Develop.Runtime.Gameplay.Features.TeamsFeature;
+using Assets._Project.Develop.Runtime.Gameplay.Features.Vehicles;
 using Assets._Project.Develop.Runtime.Meta.Features.ShipUpgrades;
 using Assets._Project.Develop.Runtime.Utilites;
 using Assets._Project.Develop.Runtime.Utilites.Conditions;
@@ -110,7 +111,68 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
             return entity;
         }
 
-        public Entity CreateShip(Teams team)
+        public Entity CreateSoldier(Transform parent, Teams team)
+        {
+            Entity entity = CreateEmpty();
+
+            MonoEntity mono = _monoEntitiesFactory.Create(entity, parent, "Entities/Enemies/Soldier");
+
+            entity
+                .AddMaxHealth(new ReactiveVariable<float>(10))
+                .AddCurrentHealth(new ReactiveVariable<float>(10))
+
+                .AddTeam(new ReactiveVariable<Teams>(team))
+
+                .AddContactCollidersBuffer(new Buffer<Collider>(64))
+                .AddDeathMask(LayersAPI.LayerMaskWater)
+                .AddIsTouchDeathMask()
+
+                .AddIsDead(new ReactiveVariable<bool>())
+                .AddInDeathProcess()
+                .AddDeathProcessCurrentTime(new ReactiveVariable<float>(2))
+                .AddDeathProcessInitialTime(new ReactiveVariable<float>(2))
+
+                .AddTakeDamageRequest()
+                .AddTakeDamageEvent()
+
+                .AddCurrentTarget()
+                ;
+
+            ICompositeCondition canApplyDamage = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.IsDead.Value == false));
+
+            ICompositeCondition mustDie = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.IsTouchDeathMask.Value == true))
+                .Add(new FuncCondition(() => entity.Rigidbody.linearVelocity.y < -10))
+                .Add(new FuncCondition(() => entity.CurrentHealth.Value <= 0));
+
+
+            ICompositeCondition mustSelfRelease = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.IsDead.Value == true))
+                .Add(new FuncCondition(() => entity.InDeathProcess.Value == false));
+
+            entity
+                .AddMustDie(mustDie)
+                .AddMustSelfRelease(mustSelfRelease)
+                .AddCanApplyDamage(canApplyDamage)
+                ;
+
+            entity
+
+                .AddSystem(new ApplyDamageSystem())
+                .AddSystem(new DeathMaskTouchDetectorSystem())
+                .AddSystem(new DeathSystem())
+                .AddSystem(new DeathProcessTimerSystem())
+                .AddSystem(new DisableCollidersOnDeathSystem())
+                .AddSystem(new SelfReleaseSystem(_entitiesLifeContext))
+            ;
+
+            _entitiesLifeContext.Add(entity);
+
+            return entity;
+        }
+
+        public Entity CreateSmallShip(Teams team)
         {
             Entity entity = CreateEmpty();
 
@@ -197,6 +259,19 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
             ;
 
             _entitiesLifeContext.Add(entity);
+
+            // unity logic
+            ShipPlace[] places = mono.transform.GetComponentsInChildren<ShipPlace>();
+
+            foreach (ShipPlace i in places)
+            {
+                switch (i.PlaceType)
+                {
+                    case ShipPlaceType.MeleeSmall:
+                        Entity soldier = CreateSoldier(i.transform, team);
+                        break;
+                }
+            }
 
             return entity;
         }

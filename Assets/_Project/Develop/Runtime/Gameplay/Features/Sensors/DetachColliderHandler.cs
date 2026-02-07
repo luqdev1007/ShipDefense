@@ -19,7 +19,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Sensors
             _rigidbody.useGravity = false;
         }
 
-        public void Explode(float power, Vector3 sourcePosition)
+        public void Explode(float power, Vector3 sourcePosition, IExplosion source)
         {
             if (_attachedCollider is MeshCollider meshCollider)
             {

@@ -887,5 +887,43 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
 			return AddComponent(new Assets._Project.Develop.Runtime.Gameplay.Common.AnimatorComponent() {Value = value}); 
 		}
 
+		public Assets._Project.Develop.Runtime.Gameplay.Common.ExplosionableComponent ExplosionableC => GetComponent<Assets._Project.Develop.Runtime.Gameplay.Common.ExplosionableComponent>();
+
+		public Assets._Project.Develop.Runtime.Gameplay.Features.ExplosionFeature.IExplosionable Explosionable => ExplosionableC.Value;
+
+		public bool TryGetExplosionable(out Assets._Project.Develop.Runtime.Gameplay.Features.ExplosionFeature.IExplosionable value)
+		{
+			bool result = TryGetComponent(out Assets._Project.Develop.Runtime.Gameplay.Common.ExplosionableComponent component);
+			if (result)
+				value = component.Value;
+			else
+				value = default(Assets._Project.Develop.Runtime.Gameplay.Features.ExplosionFeature.IExplosionable);
+			return result;
+		}
+
+		public Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddExplosionable(Assets._Project.Develop.Runtime.Gameplay.Features.ExplosionFeature.IExplosionable value)
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Gameplay.Common.ExplosionableComponent() {Value = value}); 
+		}
+
+		public Assets._Project.Develop.Runtime.Gameplay.Common.ExplosionableMonoComponent ExplosionableMonoC => GetComponent<Assets._Project.Develop.Runtime.Gameplay.Common.ExplosionableMonoComponent>();
+
+		public Assets._Project.Develop.Runtime.Gameplay.Features.ExplosionFeature.ExplosionableMono ExplosionableMono => ExplosionableMonoC.Value;
+
+		public bool TryGetExplosionableMono(out Assets._Project.Develop.Runtime.Gameplay.Features.ExplosionFeature.ExplosionableMono value)
+		{
+			bool result = TryGetComponent(out Assets._Project.Develop.Runtime.Gameplay.Common.ExplosionableMonoComponent component);
+			if (result)
+				value = component.Value;
+			else
+				value = default(Assets._Project.Develop.Runtime.Gameplay.Features.ExplosionFeature.ExplosionableMono);
+			return result;
+		}
+
+		public Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddExplosionableMono(Assets._Project.Develop.Runtime.Gameplay.Features.ExplosionFeature.ExplosionableMono value)
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Gameplay.Common.ExplosionableMonoComponent() {Value = value}); 
+		}
+
 	}
 }

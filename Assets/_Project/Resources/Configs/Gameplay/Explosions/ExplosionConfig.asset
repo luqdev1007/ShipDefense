@@ -15,4 +15,4 @@ MonoBehaviour:
   <Type>k__BackingField: 2
   <ViewPrefab>k__BackingField: {fileID: 1632044854893707072, guid: 545a3d616a45aa44abc096e70fb7f53b, type: 3}
   <Range>k__BackingField: 5
-  <Damage>k__BackingField: 1
+  <Power>k__BackingField: 10

@@ -5,7 +5,8 @@ using UnityEngine;
 namespace Assets._Project.Develop.Runtime.Gameplay.Features.ExplosionFeature
 {
 
-    public class Explosion
+
+    public class Explosion : IExplosion
     {
         private float _range;
         private float _power;
@@ -26,7 +27,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.ExplosionFeature
 
                 if (actor != null)
                 {
-                    actor.Explode(_power, at);
+                    actor.Explode(_power, at, this);
                 }
 
                 MonoEntity monoEntity = target.GetComponent<MonoEntity>();
