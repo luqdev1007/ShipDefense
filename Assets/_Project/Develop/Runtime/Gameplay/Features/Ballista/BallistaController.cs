@@ -10,8 +10,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Ballista
 
         [field: SerializeField] public Transform ProjectileParent { get; private set; }
 
-        [SerializeField] private Transform _horizontalPivot;
-        [SerializeField] private Transform _verticalPivot;
+        [SerializeField] private Rigidbody _horizontalPivot;
+        [SerializeField] private Rigidbody _verticalPivot;
 
         [SerializeField] private float _rotationSpeed = 50f;
         [SerializeField] private Vector2 _verticalLimits = new Vector2(-20f, 45f);
@@ -27,6 +27,20 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Ballista
         public void Init(IInputService inputService)
         {
             _inputService = inputService;
+
+            // Получаем текущие ЛОКАЛЬНЫЕ углы
+            Vector3 localH = _horizontalPivot.transform.localEulerAngles;
+            Vector3 localV = _verticalPivot.transform.localEulerAngles;
+
+            // Функция для перевода из 0..360 в -180..180
+            _currentYRotation = FixAngle(localH.y);
+            _currentXRotation = FixAngle(localV.x);
+        }
+
+        private float FixAngle(float angle)
+        {
+            if (angle > 180) angle -= 360;
+            return angle;
         }
 
         private void Update()
@@ -34,21 +48,40 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Ballista
             if (_inputService == null || !_inputService.IsEnabled)
                 return;
 
-            HandleRotation();
             HandleCharge();
         }
 
-        private void HandleRotation()
+        private void FixedUpdate()
+        {
+            if (_inputService == null || !_inputService.IsEnabled)
+                return;
+
+            HandlePhysicsRotation();
+        }
+
+        private void HandlePhysicsRotation()
         {
             Vector2 input = _inputService.MoveDirection;
 
-            _currentYRotation += input.x * _rotationSpeed * Time.deltaTime;
+            // 1. Считаем дельту (изменение), а не абсолютное значение
+            _currentYRotation += input.x * _rotationSpeed * Time.fixedDeltaTime;
             _currentYRotation = Mathf.Clamp(_currentYRotation, _horizontalLimits.x, _horizontalLimits.y);
-            _horizontalPivot.localRotation = Quaternion.Euler(0, _currentYRotation, 0);
 
-            _currentXRotation += input.y * _rotationSpeed * Time.deltaTime;
+            _currentXRotation += input.y * _rotationSpeed * Time.fixedDeltaTime;
             _currentXRotation = Mathf.Clamp(_currentXRotation, _verticalLimits.x, _verticalLimits.y);
-            _verticalPivot.localRotation = Quaternion.Euler(_currentXRotation, 0, 0);
+
+            // 2. ВАЖНО: Используем вращение КОРНЯ (самой баллисты), а не пивотов друг друга
+            // Это предотвращает накопление ошибок поворота
+            Quaternion rootRotation = transform.rotation;
+
+            // Горизонталь: поворот корня + наш Y
+            Quaternion horizTarget = rootRotation * Quaternion.Euler(0, _currentYRotation, 0);
+            _horizontalPivot.MoveRotation(horizTarget);
+
+            // Вертикаль: поворот корня + наш Y + наш X
+            // Мы складываем их последовательно относительно корня
+            Quaternion vertTarget = rootRotation * Quaternion.Euler(_currentXRotation, _currentYRotation, 0);
+            _verticalPivot.MoveRotation(vertTarget);
         }
 
         private void HandleCharge()
