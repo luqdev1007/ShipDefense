@@ -1,6 +1,7 @@
 ﻿using Assets._Project.Develop.Infrastructure.DI;
 using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore;
 using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Mono;
+using Assets._Project.Develop.Runtime.Gameplay.Features.AI;
 using Assets._Project.Develop.Runtime.Gameplay.Features.ExplosionFeature;
 using Assets._Project.Develop.Runtime.Gameplay.Features.InputFeature;
 using Assets._Project.Develop.Runtime.UI;
@@ -33,8 +34,22 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Infrastructure
             container.RegisterAsSingle(CreateGameplayUIRoot).NonLazy();
             container.RegisterAsSingle(CreateGameplayPresentersFactory);
             container.RegisterAsSingle(CreateGameplayPopupService);
+
+            // AI
+            container.RegisterAsSingle(CreateBrainsFactory);
+            container.RegisterAsSingle(CreateAIBrainsContext);
+
         }
 
+        private static AIBrainsContext CreateAIBrainsContext(DIContainer container)
+        {
+            return new AIBrainsContext();
+        }
+
+        private static BrainsFactory CreateBrainsFactory(DIContainer container)
+        {
+            return new BrainsFactory(container);
+        }
 
         private static GameplayPopupService CreateGameplayPopupService(DIContainer container)
         {

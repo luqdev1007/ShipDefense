@@ -1,111 +1,134 @@
 using UnityEngine;
+using UnityEngine.AI;
 using Assets._Project.Develop.Runtime.Utilites.RaycastManagment;
 
+[RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(LineRenderer))]
 public class ShipAndCameraControl : MonoBehaviour
 {
     [Header("Ship Settings")]
-    [SerializeField] private Transform _shipTransform;
-    [SerializeField] private float _moveSpeed = 5f;
-    [SerializeField] private float _rotationSpeed = 300f;
+    [SerializeField] private NavMeshAgent _agent;
     [SerializeField] private LayerMask _waterMask;
+    [SerializeField] private float _lineYOffset = 0.5f;
+    [SerializeField] private float _navMeshSampleRadius = 5f;
 
     [Header("Camera Settings")]
     [SerializeField] private Camera _camera;
-    [SerializeField] private float _dragSensitivity = 1.5f; // Чуть увеличил для отзывчивости
+    [SerializeField] private float _dragSensitivity = 1.5f;
 
     private SurfaceRaycaster _raycaster = new SurfaceRaycaster();
-    private Vector3 _targetPosition;
-    private bool _isMoving = false;
+    private LineRenderer _lineRenderer;
+    private NavMeshPath _previewPath; // Путь для предпросмотра
+
+    private Vector3 _pendingTarget;
+    private bool _hasPendingPath = false;
     private Vector3 _lastMousePosition;
-    private float _fixedShipY;
     private float _fixedCameraY;
 
     void Start()
     {
-        if (_shipTransform != null)
-        {
-            _fixedShipY = _shipTransform.position.y;
-            _targetPosition = _shipTransform.position;
-        }
+        _agent = GetComponent<NavMeshAgent>();
+        _lineRenderer = GetComponent<LineRenderer>();
+        _previewPath = new NavMeshPath();
 
-        if (_camera != null)
-        {
-            _fixedCameraY = _camera.transform.position.y;
-        }
+        if (_camera == null) _camera = Camera.main;
+        _fixedCameraY = _camera.transform.position.y;
+
+        // Принудительная настройка LineRenderer
+        _lineRenderer.useWorldSpace = true;
+        _lineRenderer.positionCount = 0;
     }
 
     void Update()
     {
         HandleShipInput();
         HandleCameraMovement();
-        MoveShip();
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            ExecuteMove();
+        }
+
+        UpdatePathVisualization();
     }
 
     private void HandleShipInput()
     {
-        if (Input.GetMouseButtonDown(1)) // ПКМ
+        // ПКМ — Выбор цели и моментальный расчет "умного" пути
+        if (Input.GetMouseButtonDown(1))
         {
             if (_raycaster.TryGetHitInfo(_camera, _waterMask, out RaycastHit hit))
             {
-                // Сразу фиксируем Y точки назначения на уровне корабля
-                _targetPosition = new Vector3(hit.point.x, _fixedShipY, hit.point.z);
-                _isMoving = true;
+                // Проверяем ближайшую точку на NavMesh, чтобы путь строился по сетке
+                if (NavMesh.SamplePosition(hit.point, out NavMeshHit navHit, _navMeshSampleRadius, NavMesh.AllAreas))
+                {
+                    _pendingTarget = navHit.position;
+
+                    // Сразу рассчитываем путь, который пойдет через AI
+                    if (_agent.CalculatePath(_pendingTarget, _previewPath))
+                    {
+                        _hasPendingPath = true;
+                        Debug.Log("Маршрут построен. Нажмите Space для движения.");
+                    }
+                }
             }
+        }
+    }
+
+    private void ExecuteMove()
+    {
+        if (_hasPendingPath)
+        {
+            _agent.SetDestination(_pendingTarget);
+            _hasPendingPath = false;
+        }
+    }
+
+    private void UpdatePathVisualization()
+    {
+        Vector3[] corners;
+
+        // 1. Если корабль уже в движении — берем его актуальный путь
+        if (_agent.hasPath)
+        {
+            corners = _agent.path.corners;
+        }
+        // 2. Если мы только наметили цель — берем предрассчитанный путь
+        else if (_hasPendingPath && _previewPath.status == NavMeshPathStatus.PathComplete)
+        {
+            corners = _previewPath.corners;
+        }
+        else
+        {
+            _lineRenderer.positionCount = 0;
+            return;
+        }
+
+        // Отрисовка линии по точкам (corners)
+        _lineRenderer.positionCount = corners.Length;
+        for (int i = 0; i < corners.Length; i++)
+        {
+            Vector3 point = corners[i];
+            point.y = _lineYOffset; // Фиксируем высоту над водой
+            _lineRenderer.SetPosition(i, point);
         }
     }
 
     private void HandleCameraMovement()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            _lastMousePosition = Input.mousePosition;
-        }
+        if (Input.GetMouseButtonDown(0)) _lastMousePosition = Input.mousePosition;
 
         if (Input.GetMouseButton(0))
         {
             Vector3 delta = Input.mousePosition - _lastMousePosition;
 
-            // Вычисляем смещение. Используем коэффициент относительно экрана, 
-            // чтобы скорость не зависела от FPS (Time.deltaTime здесь не нужен, если мы считаем дельту мыши)
-            float moveX = -delta.x * _dragSensitivity * 0.01f;
-            float moveZ = -delta.y * _dragSensitivity * 0.01f;
+            // Движение по X и Z без изменения Y
+            Vector3 move = new Vector3(-delta.x * _dragSensitivity * 0.01f, 0, -delta.y * _dragSensitivity * 0.01f);
 
-            Vector3 newPos = _camera.transform.position + new Vector3(moveX, 0, moveZ);
-
-            // Жесткая фиксация Y камеры
-            newPos.y = _fixedCameraY;
-            _camera.transform.position = newPos;
+            _camera.transform.position += move;
+            _camera.transform.position = new Vector3(_camera.transform.position.x, _fixedCameraY, _camera.transform.position.z);
 
             _lastMousePosition = Input.mousePosition;
-        }
-    }
-
-    private void MoveShip()
-    {
-        if (!_isMoving || _shipTransform == null) return;
-
-        Vector3 currentPos = _shipTransform.position;
-
-        // 1. Поворот (смотрим только в плоскости XZ)
-        Vector3 direction = (_targetPosition - currentPos).normalized;
-        direction.y = 0; // На всякий случай обнуляем
-
-        if (direction != Vector3.zero)
-        {
-            Quaternion targetRotation = Quaternion.LookRotation(direction);
-            _shipTransform.rotation = Quaternion.RotateTowards(_shipTransform.rotation, targetRotation, _rotationSpeed * Time.deltaTime);
-        }
-
-        // 2. Движение с фиксацией Y
-        Vector3 nextPos = Vector3.MoveTowards(currentPos, _targetPosition, _moveSpeed * Time.deltaTime);
-        nextPos.y = _fixedShipY; // Игнорируем любые изменения высоты
-        _shipTransform.position = nextPos;
-
-        // Остановка
-        if (Vector3.Distance(new Vector3(currentPos.x, 0, currentPos.z),
-                             new Vector3(_targetPosition.x, 0, _targetPosition.z)) < 0.05f)
-        {
-            _isMoving = false;
         }
     }
 }

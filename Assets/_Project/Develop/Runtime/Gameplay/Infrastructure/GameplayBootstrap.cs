@@ -6,6 +6,7 @@ using Assets._Project.Develop.Runtime.Utilites.SceneManagement;
 using System;
 using System.Collections;
 using UnityEngine;
+using Assets._Project.Develop.Runtime.Gameplay.Features.AI;
 
 namespace Assets._Project.Develop.Runtime.Gameplay.Infrastructure
 {
@@ -17,7 +18,10 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Infrastructure
         private WalletService _walletService;
 
         [SerializeField] private TestGameplay _testGameplay;
+
         private EntitiesLifeContext _entitiesLifeContext;
+
+        private AIBrainsContext _brainsContext;
 
         public override void ProcessRegistrations(DIContainer container, IInputSceneArgs sceneArgs = null)
         {
@@ -40,6 +44,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Infrastructure
             _walletService = _container.Resolve<WalletService>();
 
             _entitiesLifeContext = _container.Resolve<EntitiesLifeContext>();
+            _brainsContext = _container.Resolve<AIBrainsContext>();
 
             _testGameplay.Initialize(_container);
 
@@ -55,6 +60,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Infrastructure
 
         private void Update()
         {
+            _brainsContext?.Update(Time.deltaTime);
             _entitiesLifeContext?.Update(Time.deltaTime);
 
             /*

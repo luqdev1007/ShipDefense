@@ -3,7 +3,9 @@ using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore;
 using Assets._Project.Develop.Runtime.Gameplay.Features.Ballista;
 using Assets._Project.Develop.Runtime.Gameplay.Features.InputFeature;
 using Assets._Project.Develop.Runtime.Gameplay.Features.TeamsFeature;
+using Assets._Project.Develop.Runtime.Gameplay.Features.Vehicles;
 using Assets._Project.Develop.Runtime.UI.Gameplay;
+using System.Linq;
 using UnityEngine;
 
 namespace Assets._Project.Develop.Runtime.Gameplay
@@ -20,7 +22,9 @@ namespace Assets._Project.Develop.Runtime.Gameplay
 
         private bool _isRunning;
 
+        // Entities
         private Entity _mainShip;
+        private Entity _captain;
 
         private BallistaController _ballista;
 
@@ -44,6 +48,10 @@ namespace Assets._Project.Develop.Runtime.Gameplay
 
             _ballista = _mainShip.Transform.GetComponentInChildren<BallistaController>();
             _projectileParent = _ballista.ProjectileParent;
+
+            ShipPlace[] shipPlaces = _mainShip.Transform.GetComponentsInChildren<ShipPlace>();
+            Transform captainSpawnPointParent = shipPlaces.First(i => i.PlaceType == ShipPlaceType.Driver).transform;
+            _captain = _entitiesFactory.CreateTit(captainSpawnPointParent);
         }
 
         private void Update()

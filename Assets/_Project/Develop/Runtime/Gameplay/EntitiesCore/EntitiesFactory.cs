@@ -39,11 +39,11 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
             _collidersRegistryService = container.Resolve<CollidersRegistryService>();
         }
 
-        public Entity CreateTit(Vector3 position)
+        public Entity CreateTit(Transform parent)
         {
             Entity entity = CreateEmpty();
 
-            _monoEntitiesFactory.Create(entity, position, "Entities/Tit");
+            _monoEntitiesFactory.Create(entity, parent, "Entities/Tit");
 
             entity
                 .AddMoveDirection()
