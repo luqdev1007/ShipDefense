@@ -1,5 +1,6 @@
 ﻿using Assets._Project.Develop.Infrastructure.DI;
 using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore;
+using Assets._Project.Develop.Runtime.Gameplay.Features.AI;
 using Assets._Project.Develop.Runtime.Gameplay.Features.Ballista;
 using Assets._Project.Develop.Runtime.Gameplay.Features.InputFeature;
 using Assets._Project.Develop.Runtime.Gameplay.Features.TeamsFeature;
@@ -16,7 +17,9 @@ namespace Assets._Project.Develop.Runtime.Gameplay
         [SerializeField] private LayerMask _hittableLayers;
 
         private DIContainer _container;
+
         private EntitiesFactory _entitiesFactory;
+        private BrainsFactory _brainsFactory;
 
         private IInputService _input;
 
@@ -25,6 +28,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay
         // Entities
         private Entity _mainShip;
         private Entity _captain;
+        private Entity _wizard;
 
         private BallistaController _ballista;
 
@@ -36,6 +40,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay
             _container = container;
 
             _entitiesFactory = _container.Resolve<EntitiesFactory>();
+            _brainsFactory = _container.Resolve<BrainsFactory>();
+
             _input = _container.Resolve<IInputService>();
         }
 
@@ -50,8 +56,14 @@ namespace Assets._Project.Develop.Runtime.Gameplay
             _projectileParent = _ballista.ProjectileParent;
 
             ShipPlace[] shipPlaces = _mainShip.Transform.GetComponentsInChildren<ShipPlace>();
+
             Transform captainSpawnPointParent = shipPlaces.First(i => i.PlaceType == ShipPlaceType.Driver).transform;
-            _captain = _entitiesFactory.CreateTit(captainSpawnPointParent);
+            _captain = _entitiesFactory.CreateCaptain(captainSpawnPointParent);
+            _brainsFactory.CreateCaptainBrain(_captain);
+
+            Transform wizardSpawnPointParent = shipPlaces.First(i => i.PlaceType == ShipPlaceType.Mast).transform;
+            _wizard = _entitiesFactory.CreateWizard(wizardSpawnPointParent);
+            _brainsFactory.CreateWizardBrain(_wizard);
         }
 
         private void Update()

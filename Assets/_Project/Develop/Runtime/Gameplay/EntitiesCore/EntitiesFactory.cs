@@ -39,14 +39,35 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
             _collidersRegistryService = container.Resolve<CollidersRegistryService>();
         }
 
-        public Entity CreateTit(Transform parent)
+        public Entity CreateWizard(Transform parent)
         {
             Entity entity = CreateEmpty();
 
-            _monoEntitiesFactory.Create(entity, parent, "Entities/Tit");
+            _monoEntitiesFactory.Create(entity, parent, "Entities/Wizard");
 
             entity
                 .AddMoveDirection()
+                .AddRotationDirection()
+                .AddCurrentTarget()
+                .AddMoveSpeed(new ReactiveVariable<float>(10));
+
+            entity
+                .AddSystem(new RigidbodyMovementSystem());
+
+            _entitiesLifeContext.Add(entity);
+
+            return entity;
+        }
+
+        public Entity CreateCaptain(Transform parent)
+        {
+            Entity entity = CreateEmpty();
+
+            _monoEntitiesFactory.Create(entity, parent, "Entities/Captain");
+
+            entity
+                .AddMoveDirection()
+                .AddRotationDirection()
                 .AddMoveSpeed(new ReactiveVariable<float>(10));
 
             entity

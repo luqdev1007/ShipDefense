@@ -62,30 +62,6 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Infrastructure
         {
             _brainsContext?.Update(Time.deltaTime);
             _entitiesLifeContext?.Update(Time.deltaTime);
-
-            /*
-            if (Input.GetKeyDown(KeyCode.F))
-            {
-                SceneSwitcherService sceneSwitcherService = _container.Resolve<SceneSwitcherService>();
-                ICoroutinesPerformer coroutinesPerformer = _container.Resolve<ICoroutinesPerformer>();
-                coroutinesPerformer.StartPerform(sceneSwitcherService.ProcessSwitchTo(Scenes.MainMenu));
-            }
-
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                _walletService.Add(CurrencyTypes.Gold, 10);
-                Debug.Log("Золота осталось: " + _walletService.GetCurrency(CurrencyTypes.Gold).Value);
-            }
-
-            if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                if (_walletService.Enough(CurrencyTypes.Gold, 10))
-                {
-                    _walletService.Spend(CurrencyTypes.Gold, 10);
-                    Debug.Log("Золота осталось: " + _walletService.GetCurrency(CurrencyTypes.Gold).Value);
-                }
-            }
-            */
         }
     }
 }

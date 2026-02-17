@@ -20,11 +20,6 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Common
         public CharacterController Value;
     }
 
-    public class CurrentTarget : IEntityComponent
-    {
-        public ReactiveVariable<Entity> Value;
-    }
-
     public class AnimatorComponent : IEntityComponent
     {
         public Animator Value;

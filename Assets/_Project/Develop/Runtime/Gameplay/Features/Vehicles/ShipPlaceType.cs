@@ -6,5 +6,6 @@
         Any = 1,
         RangeSmall = 2,
         MeleeSmall = 3,
+        Mast = 4,
     }
 }

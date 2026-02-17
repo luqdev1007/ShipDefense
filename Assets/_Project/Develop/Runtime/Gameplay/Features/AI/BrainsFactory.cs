@@ -27,6 +27,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.AI
             _inputService = _container.Resolve<IInputService>();
             _entitiesLifeContext = _container.Resolve<EntitiesLifeContext>();
         }
+
         private AIStateMachine CreateRandomMovementStateMachine(Entity entity)
         {
             List<IDisposable> disposables = new List<IDisposable>();
@@ -56,7 +57,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.AI
             return stateMachine;
         }
 
-        public StateMachineBrain CreateGhostBrain(Entity entity)
+        public StateMachineBrain CreateCaptainBrain(Entity entity)
         {
             AIStateMachine stateMachine = CreateRandomMovementStateMachine(entity);
             StateMachineBrain brain = new StateMachineBrain(stateMachine);
@@ -66,8 +67,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.AI
             return brain;
         }
 
-        /*
-        public StateMachineBrain CreateMainHeroBrain(Entity entity, ITargetSelector targetSelector)
+        public StateMachineBrain CreateWizardBrain(Entity entity) //, ITargetSelector targetSelector)
         {
             AIStateMachine combatState = CreateAutoAttackStateMachine(entity);
 
@@ -77,11 +77,11 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.AI
 
             ICompositeCondition fromMovementToCombatStateCondition = new CompositeCondition()
                 .Add(new FuncCondition(() => currentTarget.Value != null))
-                .Add(new FuncCondition(() => _inputService.MoveDirection == Vector3.zero));
+                .Add(new FuncCondition(() => _inputService.MoveDirection == Vector2.zero));
 
             ICompositeCondition fromCombatToMovementStateCondition = new CompositeCondition(LogicOperations.Or)
                 .Add(new FuncCondition(() => currentTarget.Value == null))
-                .Add(new FuncCondition(() => _inputService.MoveDirection != Vector3.zero));
+                .Add(new FuncCondition(() => _inputService.MoveDirection != Vector2.zero));
 
             AIStateMachine behaviour = new AIStateMachine();
 
@@ -91,6 +91,12 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.AI
             behaviour.AddTransition(movementState, combatState, fromMovementToCombatStateCondition);
             behaviour.AddTransition(combatState, movementState, fromCombatToMovementStateCondition);
 
+            StateMachineBrain brain = new StateMachineBrain(behaviour);
+            _brainsContext.SetFor(entity, brain);
+
+            return brain;
+
+            /*
             FindTargetState findTargetState = new FindTargetState(targetSelector, _entitiesLifeContext, entity);
             AIParallelState parallelState = new AIParallelState(findTargetState, behaviour);
 
@@ -101,42 +107,9 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.AI
             _brainsContext.SetFor(entity, brain);
 
             return brain;
+            */
         }
-        */
 
-        /*
-        public StateMachineBrain CreateMagicOrbBrain(Entity entity)
-        {
-            TeleportSystem teleportSystem = new TeleportSystem(entity);
-
-            ChooseRandomPointTeleportState randomTeleportState = new ChooseRandomPointTeleportState(entity, teleportSystem);
-            ChooseLowestHealthTargetTeleportState chooseLowestHealthTargetTeleportState = new ChooseLowestHealthTargetTeleportState(
-                entity,
-                teleportSystem,
-                new LowestHealthTargetSelector(entity),
-                0.4f,
-                _entitiesLifeContext
-                );
-
-            AIStateMachine stateMachine = new AIStateMachine();
-
-            stateMachine.AddState(randomTeleportState);
-            stateMachine.AddState(chooseLowestHealthTargetTeleportState);
-
-            FuncCondition firstPhaseCondition = new FuncCondition(() => entity.CurrentHealth.Value > entity.MaxHealth.Value * 0.5f);
-            FuncCondition secondPhaseCondition = new FuncCondition(() => entity.CurrentHealth.Value <= entity.MaxHealth.Value * 0.5f);
-
-            stateMachine.AddTransition(randomTeleportState, chooseLowestHealthTargetTeleportState, secondPhaseCondition);
-            stateMachine.AddTransition(chooseLowestHealthTargetTeleportState, randomTeleportState, firstPhaseCondition);
-
-            StateMachineBrain brain = new StateMachineBrain(stateMachine);
-            _brainsContext.SetFor(entity, brain);
-
-            return brain;
-        }
-        */
-
-        /*
         private AIStateMachine CreateAutoAttackStateMachine(Entity entity)
         {
             RotateToTargetState rotateToTargetState = new RotateToTargetState(entity);
@@ -156,13 +129,15 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.AI
                     if (target == null)
                         return false;
 
-                    float angleToTarget = Quaternion.Angle(transform.rotation, Quaternion.LookRotation(target.Transform.position - transform.position));
+                    float angleToTarget = Quaternion.Angle(transform.rotation, 
+                        Quaternion.LookRotation(target.Transform.position - transform.position));
 
-                    return angleToTarget < 3f;
+                    float minThreshold = 3f;
+
+                    return angleToTarget < minThreshold;
                 }));
 
             ReactiveVariable<bool> inAttackProcess = entity.InAttackProcess;
-
             ICondition fromAttackToRotateStateCondition = new FuncCondition(() => inAttackProcess.Value == false);
 
             AIStateMachine stateMachine = new AIStateMachine();
@@ -175,7 +150,6 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.AI
 
             return stateMachine;
         }
-        */
     }
 }
 
