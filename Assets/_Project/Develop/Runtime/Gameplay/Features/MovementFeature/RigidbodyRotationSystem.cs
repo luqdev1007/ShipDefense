@@ -31,12 +31,18 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.MovementFeature
             if (_canRotate.Evaluate() == false)
                 return;
 
-            if (_direction.Value == Vector3.zero)
+            Vector3 direction = _direction.Value;
+
+            direction.y = 0;
+
+            if (direction == Vector3.zero)
                 return;
 
-            Quaternion lookRotation = Quaternion.LookRotation(_direction.Value);
+            Quaternion lookRotation = Quaternion.LookRotation(direction);
+
             float step = _rotationSpeed.Value * deltaTime;
             Quaternion rotation = Quaternion.RotateTowards(_rigidbody.rotation, lookRotation, step);
+
             _rigidbody.MoveRotation(rotation);
         }
     }

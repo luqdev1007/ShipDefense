@@ -67,36 +67,28 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.AI
             return brain;
         }
 
-        public StateMachineBrain CreateWizardBrain(Entity entity) //, ITargetSelector targetSelector)
+        public StateMachineBrain CreateWizardBrain(Entity entity, ITargetSelector targetSelector)
         {
             AIStateMachine combatState = CreateAutoAttackStateMachine(entity);
 
-            PlayerInputMovementState movementState = new PlayerInputMovementState(entity, _inputService);
+            EmptyState idleState = new EmptyState();
 
             ReactiveVariable<Entity> currentTarget = entity.CurrentTarget;
 
-            ICompositeCondition fromMovementToCombatStateCondition = new CompositeCondition()
-                .Add(new FuncCondition(() => currentTarget.Value != null))
-                .Add(new FuncCondition(() => _inputService.MoveDirection == Vector2.zero));
+            ICompositeCondition fromIdleToCombatStateCondition = new CompositeCondition()
+                .Add(new FuncCondition(() => currentTarget.Value != null));
 
-            ICompositeCondition fromCombatToMovementStateCondition = new CompositeCondition(LogicOperations.Or)
-                .Add(new FuncCondition(() => currentTarget.Value == null))
-                .Add(new FuncCondition(() => _inputService.MoveDirection != Vector2.zero));
+            ICompositeCondition fromCombatToIdleStateCondition = new CompositeCondition()
+                .Add(new FuncCondition(() => currentTarget.Value == null));
 
             AIStateMachine behaviour = new AIStateMachine();
 
-            behaviour.AddState(movementState);
+            behaviour.AddState(idleState);
             behaviour.AddState(combatState);
 
-            behaviour.AddTransition(movementState, combatState, fromMovementToCombatStateCondition);
-            behaviour.AddTransition(combatState, movementState, fromCombatToMovementStateCondition);
+            behaviour.AddTransition(idleState, combatState, fromIdleToCombatStateCondition);
+            behaviour.AddTransition(combatState, idleState, fromCombatToIdleStateCondition);
 
-            StateMachineBrain brain = new StateMachineBrain(behaviour);
-            _brainsContext.SetFor(entity, brain);
-
-            return brain;
-
-            /*
             FindTargetState findTargetState = new FindTargetState(targetSelector, _entitiesLifeContext, entity);
             AIParallelState parallelState = new AIParallelState(findTargetState, behaviour);
 
@@ -107,7 +99,6 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.AI
             _brainsContext.SetFor(entity, brain);
 
             return brain;
-            */
         }
 
         private AIStateMachine CreateAutoAttackStateMachine(Entity entity)

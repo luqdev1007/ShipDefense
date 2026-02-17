@@ -1,18 +1,13 @@
 ﻿using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore;
 using Assets._Project.Develop.Runtime.Gameplay.Features.ApplyDamage;
-using Assets._Project.Develop.Runtime.Gameplay.Features.TeamsFeature;
 using Assets._Project.Develop.Runtime.Utilites.Conditions;
-using Assets._Project.Develop.Runtime.Utilites.Reactive;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 
-namespace Assets._Project.Develop.Runtime.Gameplay.Features
+namespace Assets._Project.Develop.Runtime.Gameplay.Features.AI.States
 {
-
     public class NearestDamagableTargetSelector : ITargetSelector
     {
         private Entity _source;
@@ -26,6 +21,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features
 
         public Entity SelectTargetFrom(IEnumerable<Entity> targets)
         {
+            Debug.Log("Ищу цель среди: " + targets.Count() + " entities");
+
             IEnumerable<Entity> selectedTargets = targets.Where(target =>
             {
                 bool result = target.HasComponent<TakeDamageRequest>();
@@ -33,12 +30,6 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features
                 if (target.TryGetCanApplyDamage(out ICompositeCondition canApplyDamage))
                 {
                     result = result && canApplyDamage.Evaluate();
-                }
-
-                if (_source.TryGetTeam(out ReactiveVariable<Teams> sourceTeam)
-                && target.TryGetTeam(out ReactiveVariable<Teams> targetTeam))
-                {
-                    result = result && (sourceTeam.Value != targetTeam.Value);
                 }
 
                 result = result && EntitiesHelper.IsSameTeam(_source, target) == false;
@@ -52,11 +43,14 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features
                 return null;
 
             Entity closestTarget = selectedTargets.First();
-            float minDistance = GetDistanceTo(closestTarget);
+
+            if (TryGetDistanceTo(closestTarget, out float minDistance) == false)
+                return null;
 
             foreach (Entity target in selectedTargets)
             {
-                float distance = GetDistanceTo(target);
+                if (TryGetDistanceTo(target, out float distance) == false)
+                    continue;
 
                 if (distance < minDistance)
                 {
@@ -68,6 +62,17 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features
             return closestTarget;
         }
 
-        private float GetDistanceTo(Entity target) => (_sourceTransform.position - target.Transform.position).magnitude;
+        private bool TryGetDistanceTo(Entity target, out float result)
+        {
+            if (target == null || target.Transform == null)
+            {
+                result = 0;
+                return false;
+            }
+
+            result = (_sourceTransform.position - target.Transform.position).magnitude;
+
+            return true;
+        }
     }
 }

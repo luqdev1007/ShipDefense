@@ -35,6 +35,8 @@ namespace Assets._Project.Develop.Runtime.Meta.Infrastructure
             MainMenuUIRoot mainMenuUIRoot = resourcesAssetsLoader
                 .Load<MainMenuUIRoot>("UI/MainMenu/MainMenuUIRoot");
 
+            Debug.Log("Create main menu ui root");
+
             return Object.Instantiate(mainMenuUIRoot);
         }
 
@@ -52,6 +54,8 @@ namespace Assets._Project.Develop.Runtime.Meta.Infrastructure
                 .Create<MainMenuScreenView>(ViewIDs.MainMenuScreenView, uiRoot.HUDLayer);
 
             MainMenuScreenPresenter presenter = container.Resolve<MainMenuPresentersFactory>().CreateMainMenuScreen(view);
+
+            Debug.Log("Create main menu screen presenter");
 
             return presenter;
         }

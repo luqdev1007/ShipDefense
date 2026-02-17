@@ -1,6 +1,7 @@
 ﻿using Assets._Project.Develop.Infrastructure.DI;
 using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore;
 using Assets._Project.Develop.Runtime.Gameplay.Features.AI;
+using Assets._Project.Develop.Runtime.Gameplay.Features.AI.States;
 using Assets._Project.Develop.Runtime.Gameplay.Features.Ballista;
 using Assets._Project.Develop.Runtime.Gameplay.Features.InputFeature;
 using Assets._Project.Develop.Runtime.Gameplay.Features.TeamsFeature;
@@ -63,7 +64,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay
 
             Transform wizardSpawnPointParent = shipPlaces.First(i => i.PlaceType == ShipPlaceType.Mast).transform;
             _wizard = _entitiesFactory.CreateWizard(wizardSpawnPointParent);
-            _brainsFactory.CreateWizardBrain(_wizard);
+            _brainsFactory.CreateWizardBrain(_wizard, new NearestDamagableTargetSelector(_wizard));
         }
 
         private void Update()

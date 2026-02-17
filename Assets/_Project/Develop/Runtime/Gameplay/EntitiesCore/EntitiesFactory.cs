@@ -18,7 +18,6 @@ using Assets._Project.Develop.Runtime.Utilites.CoroutinesManagment;
 using Assets._Project.Develop.Runtime.Utilites.Reactive;
 using System.Linq;
 using UnityEngine;
-using static UnityEngine.Rendering.STP;
 
 namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
 {
@@ -46,13 +45,25 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
             _monoEntitiesFactory.Create(entity, parent, "Entities/Wizard");
 
             entity
-                .AddMoveDirection()
+                .AddStartAttackRequest()
+                .AddInAttackProcess(new ReactiveVariable<bool>(false))
                 .AddRotationDirection()
+                .AddRotationSpeed(new ReactiveVariable<float>(900))
                 .AddCurrentTarget()
-                .AddMoveSpeed(new ReactiveVariable<float>(10));
+                .AddIsDead()
+                .AddTeam(new ReactiveVariable<Teams>(Teams.Allies));
 
-            entity
-                .AddSystem(new RigidbodyMovementSystem());
+            ICompositeCondition canStartAttack = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.IsDead.Value == false));
+
+            ICompositeCondition canRotate = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.IsDead.Value == false))
+                .Add(new FuncCondition(() => entity.InAttackProcess.Value == false));
+
+            entity.AddCanStartAttack(canStartAttack);
+            entity.AddCanRotate(canRotate);
+
+            entity.AddSystem(new RigidbodyRotationSystem());
 
             _entitiesLifeContext.Add(entity);
 
@@ -68,7 +79,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
             entity
                 .AddMoveDirection()
                 .AddRotationDirection()
-                .AddMoveSpeed(new ReactiveVariable<float>(10));
+                .AddMoveSpeed(new ReactiveVariable<float>(3));
 
             entity
                 .AddSystem(new RigidbodyMovementSystem());
@@ -469,10 +480,10 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
                 .AddMustSelfRelease(mustSelfRelease);
 
             entity
-                  .AddSystem(new RigidbodyGravityApplySystem())      
-                  .AddSystem(new AddDelayedForceSystem(0.2f, _container.Resolve<ICoroutinesPerformer>())) 
+                  .AddSystem(new RigidbodyGravityApplySystem())
+                  .AddSystem(new AddDelayedForceSystem(0.2f, _container.Resolve<ICoroutinesPerformer>()))
                   .AddSystem(new SlowApearEntityViewSystem(0.25f, _container.Resolve<ICoroutinesPerformer>()))
-                  .AddSystem(new TransformRotateWithLinearVelocitySystem()) 
+                  .AddSystem(new TransformRotateWithLinearVelocitySystem())
 
                   .AddSystem(new DeathSystem())
                   .AddSystem(new DisableCollidersOnDeathSystem())
