@@ -5405,10 +5405,10 @@ MonoBehaviour:
   _normalColor: {r: 1, g: 1, b: 1, a: 1}
   _blockedColor: {r: 0.81, g: 0, b: 0.12, a: 1}
   _camera: {fileID: 947143604}
-  _dragSensitivity: 5
-  _zoomSpeed: 10
-  _minHeight: 5
-  _maxHeight: 40
+  _dragSensitivity: 0.2
+  _zoomSpeed: 45
+  _minHeight: 50
+  _maxHeight: 140
 --- !u!136 &1850575459
 CapsuleCollider:
   m_ObjectHideFlags: 0
