@@ -1,0 +1,3087 @@
+fileFormatVersion: 2
+guid: a33cbcf4609915b4089f0958f46ee115
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 2
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: GUI_Pirates_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 503
+        width: 978
+        height: 577
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d098a0d9c8d3a6c4a9efb25bdf3bee61
+      internalID: 1819591746
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1068
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe4cef194e05fff46a9f44dc87106325
+      internalID: -1913292959
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_2
+      rect:
+        serializedVersion: 2
+        x: 106
+        y: 1068
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ef03e413486c6204ca83bb29c205e963
+      internalID: 1753292658
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_3
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 1074
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b54e9a35ec17355458e306055da7308c
+      internalID: 262223725
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_4
+      rect:
+        serializedVersion: 2
+        x: 871
+        y: 1068
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a244dd9112f73243b0ee7dcdd35b189
+      internalID: -478355037
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_5
+      rect:
+        serializedVersion: 2
+        x: 948
+        y: 1068
+        width: 5
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4ee293bb098cb2549a5826ceedca61ac
+      internalID: 417829799
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_6
+      rect:
+        serializedVersion: 2
+        x: 978
+        y: 810
+        width: 294
+        height: 252
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db9c224df7b1fd446b9b75b6fba9395a
+      internalID: 81039111
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_7
+      rect:
+        serializedVersion: 2
+        x: 1296
+        y: 815
+        width: 334
+        height: 234
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76f57193f9fd92e449f12752a5fea108
+      internalID: -1437755110
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_8
+      rect:
+        serializedVersion: 2
+        x: 1645
+        y: 822
+        width: 245
+        height: 223
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5567e566e2e63544492d33d9be3106ec
+      internalID: 1053630928
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_9
+      rect:
+        serializedVersion: 2
+        x: 972
+        y: 524
+        width: 330
+        height: 274
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9630e576c89ce3f48a8e977aa6f55509
+      internalID: 1895422243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_10
+      rect:
+        serializedVersion: 2
+        x: 1338
+        y: 512
+        width: 24
+        height: 291
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9683fc24262ad6141aea173c0283cd4a
+      internalID: 1071351106
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_11
+      rect:
+        serializedVersion: 2
+        x: 1379
+        y: 510
+        width: 25
+        height: 293
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 192, z: 0, w: 68}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 18f777a824f24de4c944b3414b31adae
+      internalID: 1954591143
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_12
+      rect:
+        serializedVersion: 2
+        x: 1420
+        y: 714
+        width: 460
+        height: 96
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ba6ae7b470862d47bbfb98bfa5dcc9e
+      internalID: -676413963
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_13
+      rect:
+        serializedVersion: 2
+        x: 1654
+        y: 708
+        width: 10
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 77623c28a1ff62b45b2f4b79dfdf7b04
+      internalID: 496087477
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_14
+      rect:
+        serializedVersion: 2
+        x: 1416
+        y: 618
+        width: 464
+        height: 90
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b46f688ea2b1c3b4d870aa0049b824e1
+      internalID: 67193256
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_15
+      rect:
+        serializedVersion: 2
+        x: 1518
+        y: 615
+        width: 6
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae4cf0cecd2e8474eabbf0ed8962e9b4
+      internalID: 1253677936
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_16
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 408
+        width: 282
+        height: 96
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe309888dc5432548b728201322598c1
+      internalID: -216279435
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_17
+      rect:
+        serializedVersion: 2
+        x: 118
+        y: 493
+        width: 14
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 92668ece369d426419c7fac070b0a9ca
+      internalID: -1920261980
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_18
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 494
+        width: 16
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 527583538c48c6446902a1c60b36e4ca
+      internalID: 1673689751
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_19
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 494
+        width: 23
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3ef0a41ead1ea6c478527d0566e72d4d
+      internalID: 1807028032
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_20
+      rect:
+        serializedVersion: 2
+        x: 174
+        y: 494
+        width: 34
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1cd9137cc1bf8a34cb15edcb4dbf1ecb
+      internalID: -608715783
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_21
+      rect:
+        serializedVersion: 2
+        x: 358
+        y: 493
+        width: 49
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b381af24f20dd4c43b1d2f123d8446e6
+      internalID: -1369879020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_22
+      rect:
+        serializedVersion: 2
+        x: 409
+        y: 494
+        width: 16
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b137c8dc9e9a8e84e89e7c161f0f25a9
+      internalID: -1934547071
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_23
+      rect:
+        serializedVersion: 2
+        x: 427
+        y: 492
+        width: 70
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1402c8eea008764479537674a68e03f7
+      internalID: 1848058870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_24
+      rect:
+        serializedVersion: 2
+        x: 528
+        y: 492
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bd18cd943ac068c40981675ac84b97fd
+      internalID: -1435661728
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_25
+      rect:
+        serializedVersion: 2
+        x: 1008
+        y: 492
+        width: 4
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e0c091f145b3204f8bed4a5c0f24477
+      internalID: 632641301
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_26
+      rect:
+        serializedVersion: 2
+        x: 1420
+        y: 504
+        width: 459
+        height: 108
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1aed142ef68d8dd4c90a90dc093422df
+      internalID: -762624994
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_27
+      rect:
+        serializedVersion: 2
+        x: 822
+        y: 414
+        width: 258
+        height: 84
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a9d9cc9472b1a71498624bcd1ff0f708
+      internalID: -1137202967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_28
+      rect:
+        serializedVersion: 2
+        x: 858
+        y: 498
+        width: 6
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9ffe4438c388617488e648677794a0db
+      internalID: -2146808546
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_29
+      rect:
+        serializedVersion: 2
+        x: 1242
+        y: 389
+        width: 126
+        height: 109
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 271cb6b2ea611ac46b1a1fc9a68770f0
+      internalID: 1183076944
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_30
+      rect:
+        serializedVersion: 2
+        x: 1554
+        y: 258
+        width: 321
+        height: 245
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 78a63b504405cdb4280fadde9cb87ff0
+      internalID: -683511788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_31
+      rect:
+        serializedVersion: 2
+        x: 294
+        y: 468
+        width: 12
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a8e336fa82ccc44dbac029b323bc075
+      internalID: -879478553
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_32
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 408
+        width: 257
+        height: 84
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 79646560973e84b4aaabc47b9d10ae67
+      internalID: -766452903
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_33
+      rect:
+        serializedVersion: 2
+        x: 570
+        y: 414
+        width: 240
+        height: 78
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 27, y: 14, z: 23, w: 15}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 54247b88d5bd0ca42a6ca9acc8fd0c47
+      internalID: 293822522
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_34
+      rect:
+        serializedVersion: 2
+        x: 1093
+        y: 389
+        width: 127
+        height: 107
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c190e288e901abf438c947f219402e2b
+      internalID: -1140657628
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_35
+      rect:
+        serializedVersion: 2
+        x: 1387
+        y: 387
+        width: 131
+        height: 108
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c4ceaa23194903840ab96b5605b1e0ae
+      internalID: 163104229
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_36
+      rect:
+        serializedVersion: 2
+        x: 294
+        y: 432
+        width: 12
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 503caa687ecf1624187dbd5af4bc55d7
+      internalID: 707971180
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_37
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 282
+        width: 300
+        height: 118
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 117b0777301f3d14bab12b0f94c7c51d
+      internalID: -1650351296
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_38
+      rect:
+        serializedVersion: 2
+        x: 118
+        y: 390
+        width: 90
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b883c7d18ebf5ea42a7ef86f5095df48
+      internalID: -2073820224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_39
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 390
+        width: 23
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 203b3426c7731184fa274b273ddff254
+      internalID: -784653090
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_40
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 312
+        width: 248
+        height: 84
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bb600056a81af47488ac7678adeca815
+      internalID: -456744449
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_41
+      rect:
+        serializedVersion: 2
+        x: 342
+        y: 390
+        width: 24
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d93dde906af2b984c97b84f020d9cd69
+      internalID: -420520319
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_42
+      rect:
+        serializedVersion: 2
+        x: 368
+        y: 390
+        width: 4
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 772542a079880114d8bd46b205423450
+      internalID: -1972724035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_43
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 391
+        width: 88
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 62acec55544633e4b9f3b48a7c20c57a
+      internalID: -1265270813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_44
+      rect:
+        serializedVersion: 2
+        x: 492
+        y: 390
+        width: 4
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 86efbb9dc2171644c9398247556f8470
+      internalID: 254026429
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_45
+      rect:
+        serializedVersion: 2
+        x: 505
+        y: 390
+        width: 4
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aadd8b11322ba2a4a88336e0a8d7bb11
+      internalID: 1935544017
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_46
+      rect:
+        serializedVersion: 2
+        x: 520
+        y: 390
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3c7c94980fdc66a46b46687b44cf80ec
+      internalID: -132654787
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_47
+      rect:
+        serializedVersion: 2
+        x: 570
+        y: 318
+        width: 240
+        height: 84
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 544087a6012bd6942a187caab5ea0e49
+      internalID: -1235735768
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_48
+      rect:
+        serializedVersion: 2
+        x: 834
+        y: 324
+        width: 234
+        height: 91
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: decb7a6066372c1448650226766ab194
+      internalID: -2126479844
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_49
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 384
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a39fef518fa2114abbde76083aed282
+      internalID: -864905541
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_50
+      rect:
+        serializedVersion: 2
+        x: 1110
+        y: 366
+        width: 89
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 72d638f00e26b0640be875cfd0ec0036
+      internalID: -789357138
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_51
+      rect:
+        serializedVersion: 2
+        x: 1236
+        y: 366
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1637757498961054cada8194c540c059
+      internalID: -2057590140
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_52
+      rect:
+        serializedVersion: 2
+        x: 1252
+        y: 363
+        width: 49
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 33c384aebd7f9114f91f3bab0668926b
+      internalID: 1126868231
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_53
+      rect:
+        serializedVersion: 2
+        x: 1302
+        y: 370
+        width: 68
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e6f2f8e8523a46c4593fc88c3d9d1ba9
+      internalID: -739876151
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_54
+      rect:
+        serializedVersion: 2
+        x: 1410
+        y: 366
+        width: 60
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 78b0c764add7f904ea98031aff7d5fdd
+      internalID: 954790712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_55
+      rect:
+        serializedVersion: 2
+        x: 1467
+        y: 366
+        width: 30
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b5d84daf8b96a4d4e97534ec43a8e2be
+      internalID: 1683963029
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_56
+      rect:
+        serializedVersion: 2
+        x: 1518
+        y: 384
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b8c974a654c72024eb1e94cc20cfa3de
+      internalID: 1275581390
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_57
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 372
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a36e6fd8d26b5b489385dc258e63f0f
+      internalID: 1888901304
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_58
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 324
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 280aceef115491c4db62a8ac3e85248b
+      internalID: -1847810455
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_59
+      rect:
+        serializedVersion: 2
+        x: 1093
+        y: 256
+        width: 126
+        height: 111
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ff7a0c26f53f36e4bb598e1ff8ee3fe1
+      internalID: 307863508
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_60
+      rect:
+        serializedVersion: 2
+        x: 1242
+        y: 252
+        width: 126
+        height: 110
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 42de4fb2ca1995a46b09984df2c71c9c
+      internalID: -1058286343
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_61
+      rect:
+        serializedVersion: 2
+        x: 1386
+        y: 256
+        width: 129
+        height: 110
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a1b1bcb208ca3840af453c376fb4508
+      internalID: -1962647808
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_62
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 120
+        width: 294
+        height: 185
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e19bf53a444f4d49ae1923bfe1458fe
+      internalID: 1399015009
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_63
+      rect:
+        serializedVersion: 2
+        x: 366
+        y: 283
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 07dbc25a5501d114d8cb641afda5f213
+      internalID: 628308323
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_64
+      rect:
+        serializedVersion: 2
+        x: 386
+        y: 287
+        width: 4
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 677881655a0c75649a0d831cb5bc5292
+      internalID: 614106981
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_65
+      rect:
+        serializedVersion: 2
+        x: 391
+        y: 286
+        width: 44
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 20b2c49f0a42aff43a719f70abcc4cc9
+      internalID: 1719637415
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_66
+      rect:
+        serializedVersion: 2
+        x: 436
+        y: 283
+        width: 14
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c3839ed5ba801840a8d60f5aac38238
+      internalID: 1280994723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_67
+      rect:
+        serializedVersion: 2
+        x: 451
+        y: 288
+        width: 16
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d8d341ea47dd13949bb53b2c4b293dbd
+      internalID: -1754719820
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_68
+      rect:
+        serializedVersion: 2
+        x: 468
+        y: 282
+        width: 14
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 544529908b6d47848bcde7bc3e4c5490
+      internalID: 989292506
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_69
+      rect:
+        serializedVersion: 2
+        x: 571
+        y: 234
+        width: 239
+        height: 77
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d53088f704e111840be4920ac42b3f4e
+      internalID: 1836848349
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_70
+      rect:
+        serializedVersion: 2
+        x: 834
+        y: 222
+        width: 252
+        height: 96
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8e30ef159c50740409c95b9faaa43f16
+      internalID: -1824980397
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_71
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 256
+        width: 24
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bb2fd31a8a9050744b9ce2cd1515e8fb
+      internalID: 318085378
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_72
+      rect:
+        serializedVersion: 2
+        x: 305
+        y: 120
+        width: 259
+        height: 160
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bb2a773a1b361c144aed43f3ab109791
+      internalID: 192984208
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_73
+      rect:
+        serializedVersion: 2
+        x: 1599
+        y: 236
+        width: 69
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a1b390c532649b5459130021087f89ad
+      internalID: -1030768120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_74
+      rect:
+        serializedVersion: 2
+        x: 1734
+        y: 234
+        width: 138
+        height: 23
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 49b0f6a309c43024e98a53609300714c
+      internalID: -2122006037
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_75
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 236
+        width: 24
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 81c51aa8f690eb4458702a50a14b91f7
+      internalID: 2002779020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_76
+      rect:
+        serializedVersion: 2
+        x: 546
+        y: 242
+        width: 12
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a0742e849056b204bbb23f6c041a8e61
+      internalID: 1541680356
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_77
+      rect:
+        serializedVersion: 2
+        x: 1113
+        y: 236
+        width: 86
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f77b36407a1d5414fa9eb2b154e60ced
+      internalID: 1663727402
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_78
+      rect:
+        serializedVersion: 2
+        x: 1236
+        y: 235
+        width: 35
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a425645e7ac02f74b955c956a49991e5
+      internalID: 1250731960
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_79
+      rect:
+        serializedVersion: 2
+        x: 1272
+        y: 235
+        width: 29
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b5f2576aa405ac04794450dcefa882cb
+      internalID: 938716528
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_80
+      rect:
+        serializedVersion: 2
+        x: 1303
+        y: 235
+        width: 67
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bfe2b02f780a71b45801329d8c0d4be5
+      internalID: 1725784689
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_81
+      rect:
+        serializedVersion: 2
+        x: 1411
+        y: 237
+        width: 13
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2427f54d5f85e534bb56c560ac196b0a
+      internalID: 169888050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_82
+      rect:
+        serializedVersion: 2
+        x: 1426
+        y: 234
+        width: 44
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a7726641ca8c9d14f8f23c401bb57d53
+      internalID: 1850412484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_83
+      rect:
+        serializedVersion: 2
+        x: 1471
+        y: 236
+        width: 27
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3871dcb2441cc1f469e3866aff09b919
+      internalID: 1618164898
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_84
+      rect:
+        serializedVersion: 2
+        x: 1584
+        y: 235
+        width: 13
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ccf70c3f2fda334a8b8bc9b7fd9f610
+      internalID: 1471133802
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_85
+      rect:
+        serializedVersion: 2
+        x: 834
+        y: 177
+        width: 59
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 085365fb79f3de74283a4f03cc03f10f
+      internalID: 1708668761
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_86
+      rect:
+        serializedVersion: 2
+        x: 864
+        y: 216
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 45d751086737c314bbfbe6a70e58d49e
+      internalID: -1857507
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_87
+      rect:
+        serializedVersion: 2
+        x: 929
+        y: 228
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26c0cedd781c01d42a807527253baef6
+      internalID: 769382125
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_88
+      rect:
+        serializedVersion: 2
+        x: 944
+        y: 228
+        width: 4
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0be80e3b5c7fb834db3d788b2848644a
+      internalID: 1087488414
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_89
+      rect:
+        serializedVersion: 2
+        x: 950
+        y: 222
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f2e48f4241c60ec4c9c420c0954617a9
+      internalID: 879128434
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_90
+      rect:
+        serializedVersion: 2
+        x: 1110
+        y: 145
+        width: 90
+        height: 89
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6724c528496422b4086926431e00dc68
+      internalID: -1591811429
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_91
+      rect:
+        serializedVersion: 2
+        x: 1265
+        y: 165
+        width: 77
+        height: 65
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 12, y: 12, z: 14, w: 11}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c8a2ff524419644babc44d4fa15341f
+      internalID: 1706265816
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_92
+      rect:
+        serializedVersion: 2
+        x: 1415
+        y: 163
+        width: 75
+        height: 66
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c4b0a959889bc3842880d948fa114211
+      internalID: -1381647455
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_93
+      rect:
+        serializedVersion: 2
+        x: 1590
+        y: 144
+        width: 84
+        height: 91
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e0e500638bc5a8846825a0f8fc565e1a
+      internalID: 977428927
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_94
+      rect:
+        serializedVersion: 2
+        x: 1737
+        y: 144
+        width: 135
+        height: 85
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 710331c86e1f4834aae6aeb62e6ba80b
+      internalID: -2147289211
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_95
+      rect:
+        serializedVersion: 2
+        x: 573
+        y: 147
+        width: 221
+        height: 73
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 96a9b23bafdb59142966b007067bf864
+      internalID: 1138080093
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_96
+      rect:
+        serializedVersion: 2
+        x: 573
+        y: 202
+        width: 13
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e95f8d979c5ecee4e87c8f2db4410cc7
+      internalID: 1066052066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_97
+      rect:
+        serializedVersion: 2
+        x: 848
+        y: 144
+        width: 205
+        height: 76
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03b8ae269c579d84bb35f0590dce89ca
+      internalID: -1645090282
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_98
+      rect:
+        serializedVersion: 2
+        x: 1032
+        y: 216
+        width: 5
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 030d3af4c4315a14fa3739239f20c340
+      internalID: -1049728194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_99
+      rect:
+        serializedVersion: 2
+        x: 546
+        y: 204
+        width: 12
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a2719266b9751064189b6e7fd1253eb0
+      internalID: 1106754825
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_100
+      rect:
+        serializedVersion: 2
+        x: 1037
+        y: 178
+        width: 31
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4746f318c43340a44a5313ce233319cb
+      internalID: -994226674
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_101
+      rect:
+        serializedVersion: 2
+        x: 1220
+        y: 181
+        width: 27
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6e6fe66aa19408049ada193cf9a80bc8
+      internalID: -1137654986
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_102
+      rect:
+        serializedVersion: 2
+        x: 1369
+        y: 180
+        width: 29
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8955cc2be96f0fc46a136362457766a4
+      internalID: -2075906052
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_103
+      rect:
+        serializedVersion: 2
+        x: 1553
+        y: 181
+        width: 24
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7177706e3c9cdd3488ffecc46d9333a7
+      internalID: 1044826390
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_104
+      rect:
+        serializedVersion: 2
+        x: 546
+        y: 174
+        width: 12
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8742afbe31a1ac54282995666aa49ccf
+      internalID: 1224670991
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_105
+      rect:
+        serializedVersion: 2
+        x: 792
+        y: 148
+        width: 19
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: daf2c5c2ceeb387449a9115d11970b72
+      internalID: 2107865696
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_106
+      rect:
+        serializedVersion: 2
+        x: 836
+        y: 162
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 79b1355ec38f9e04c99025c91ffac452
+      internalID: 547440058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_107
+      rect:
+        serializedVersion: 2
+        x: 1056
+        y: 173
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e0b6c77e5acb514b86524d9b5160d33
+      internalID: 1644160633
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_108
+      rect:
+        serializedVersion: 2
+        x: 1062
+        y: 169
+        width: 4
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ed3e70f4a54298343999fc4db3f5e3c5
+      internalID: -101860024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_109
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 152
+        width: 24
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b6a39f29835ba5469a8e1e90ce5855f
+      internalID: -1133289735
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_110
+      rect:
+        serializedVersion: 2
+        x: 1028
+        y: 150
+        width: 33
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 099832a4159e8de4381bca2b4889ce8c
+      internalID: -950608846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_111
+      rect:
+        serializedVersion: 2
+        x: 1150
+        y: 144
+        width: 50
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 53dd6c288d73b93439f6e1eb2a989d56
+      internalID: 1365380268
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_112
+      rect:
+        serializedVersion: 2
+        x: 1263
+        y: 144
+        width: 81
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 75bcb5f5f98178a4eb0932293926d5bd
+      internalID: -73480959
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_113
+      rect:
+        serializedVersion: 2
+        x: 1413
+        y: 144
+        width: 82
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5429d298a300562418d42b9789310262
+      internalID: 940074366
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_114
+      rect:
+        serializedVersion: 2
+        x: 1548
+        y: 6
+        width: 166
+        height: 155
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 905f59faf0024f04ea3a6dd686d8e3da
+      internalID: 1403060228
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_115
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 126
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7fefd149ef35f1f498ff37a22c656e8d
+      internalID: 1680383706
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_116
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 19
+        width: 136
+        height: 113
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 79b07d9718ba90b43a805f798e809486
+      internalID: 1204121189
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_117
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 18
+        width: 135
+        height: 112
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f2673c023d026a348a5f04715a4f3c6f
+      internalID: -2015755427
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_118
+      rect:
+        serializedVersion: 2
+        x: 342
+        y: 18
+        width: 137
+        height: 126
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 37be6a6c90cac0e44981ec92945212ba
+      internalID: -952361885
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_119
+      rect:
+        serializedVersion: 2
+        x: 487
+        y: 120
+        width: 8
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5da8cf6be375c604d99a8a27c6d2ed9f
+      internalID: 128503242
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_120
+      rect:
+        serializedVersion: 2
+        x: 494
+        y: 19
+        width: 136
+        height: 125
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 673323a31e3b86f45a8523f2fc51922f
+      internalID: 1545831921
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_121
+      rect:
+        serializedVersion: 2
+        x: 642
+        y: 18
+        width: 138
+        height: 112
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 424b8b09b2d05ee4a91af1a8b3d743ba
+      internalID: 497577070
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_122
+      rect:
+        serializedVersion: 2
+        x: 792
+        y: 19
+        width: 138
+        height: 111
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af608c80008cbeb42be1e9beffdc3c02
+      internalID: 813462951
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_123
+      rect:
+        serializedVersion: 2
+        x: 943
+        y: 18
+        width: 133
+        height: 112
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0660a0b7c7dc2dc4b8c2d6ffc1b47525
+      internalID: -2069922649
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_124
+      rect:
+        serializedVersion: 2
+        x: 1090
+        y: 19
+        width: 134
+        height: 119
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10d24f2b78d6992458e9c8b14370d0c3
+      internalID: -631928337
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_125
+      rect:
+        serializedVersion: 2
+        x: 1236
+        y: 18
+        width: 138
+        height: 112
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f77819358e6a2854a8bf22dc20e0472f
+      internalID: 919239379
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_126
+      rect:
+        serializedVersion: 2
+        x: 1392
+        y: 19
+        width: 138
+        height: 112
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0eed05bf4aeb27d419d1f16c1821a5da
+      internalID: -376636128
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_Pirates_127
+      rect:
+        serializedVersion: 2
+        x: 1722
+        y: 10
+        width: 161
+        height: 137
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d1cbf33842589f14984854a502729dbe
+      internalID: 1364729424
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 8f38ce341f0eb2f4187a3360b79afd4e
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      GUI_Pirates_0: 1819591746
+      GUI_Pirates_1: -1913292959
+      GUI_Pirates_10: 1071351106
+      GUI_Pirates_100: -994226674
+      GUI_Pirates_101: -1137654986
+      GUI_Pirates_102: -2075906052
+      GUI_Pirates_103: 1044826390
+      GUI_Pirates_104: 1224670991
+      GUI_Pirates_105: 2107865696
+      GUI_Pirates_106: 547440058
+      GUI_Pirates_107: 1644160633
+      GUI_Pirates_108: -101860024
+      GUI_Pirates_109: -1133289735
+      GUI_Pirates_11: 1954591143
+      GUI_Pirates_110: -950608846
+      GUI_Pirates_111: 1365380268
+      GUI_Pirates_112: -73480959
+      GUI_Pirates_113: 940074366
+      GUI_Pirates_114: 1403060228
+      GUI_Pirates_115: 1680383706
+      GUI_Pirates_116: 1204121189
+      GUI_Pirates_117: -2015755427
+      GUI_Pirates_118: -952361885
+      GUI_Pirates_119: 128503242
+      GUI_Pirates_12: -676413963
+      GUI_Pirates_120: 1545831921
+      GUI_Pirates_121: 497577070
+      GUI_Pirates_122: 813462951
+      GUI_Pirates_123: -2069922649
+      GUI_Pirates_124: -631928337
+      GUI_Pirates_125: 919239379
+      GUI_Pirates_126: -376636128
+      GUI_Pirates_127: 1364729424
+      GUI_Pirates_13: 496087477
+      GUI_Pirates_14: 67193256
+      GUI_Pirates_15: 1253677936
+      GUI_Pirates_16: -216279435
+      GUI_Pirates_17: -1920261980
+      GUI_Pirates_18: 1673689751
+      GUI_Pirates_19: 1807028032
+      GUI_Pirates_2: 1753292658
+      GUI_Pirates_20: -608715783
+      GUI_Pirates_21: -1369879020
+      GUI_Pirates_22: -1934547071
+      GUI_Pirates_23: 1848058870
+      GUI_Pirates_24: -1435661728
+      GUI_Pirates_25: 632641301
+      GUI_Pirates_26: -762624994
+      GUI_Pirates_27: -1137202967
+      GUI_Pirates_28: -2146808546
+      GUI_Pirates_29: 1183076944
+      GUI_Pirates_3: 262223725
+      GUI_Pirates_30: -683511788
+      GUI_Pirates_31: -879478553
+      GUI_Pirates_32: -766452903
+      GUI_Pirates_33: 293822522
+      GUI_Pirates_34: -1140657628
+      GUI_Pirates_35: 163104229
+      GUI_Pirates_36: 707971180
+      GUI_Pirates_37: -1650351296
+      GUI_Pirates_38: -2073820224
+      GUI_Pirates_39: -784653090
+      GUI_Pirates_4: -478355037
+      GUI_Pirates_40: -456744449
+      GUI_Pirates_41: -420520319
+      GUI_Pirates_42: -1972724035
+      GUI_Pirates_43: -1265270813
+      GUI_Pirates_44: 254026429
+      GUI_Pirates_45: 1935544017
+      GUI_Pirates_46: -132654787
+      GUI_Pirates_47: -1235735768
+      GUI_Pirates_48: -2126479844
+      GUI_Pirates_49: -864905541
+      GUI_Pirates_5: 417829799
+      GUI_Pirates_50: -789357138
+      GUI_Pirates_51: -2057590140
+      GUI_Pirates_52: 1126868231
+      GUI_Pirates_53: -739876151
+      GUI_Pirates_54: 954790712
+      GUI_Pirates_55: 1683963029
+      GUI_Pirates_56: 1275581390
+      GUI_Pirates_57: 1888901304
+      GUI_Pirates_58: -1847810455
+      GUI_Pirates_59: 307863508
+      GUI_Pirates_6: 81039111
+      GUI_Pirates_60: -1058286343
+      GUI_Pirates_61: -1962647808
+      GUI_Pirates_62: 1399015009
+      GUI_Pirates_63: 628308323
+      GUI_Pirates_64: 614106981
+      GUI_Pirates_65: 1719637415
+      GUI_Pirates_66: 1280994723
+      GUI_Pirates_67: -1754719820
+      GUI_Pirates_68: 989292506
+      GUI_Pirates_69: 1836848349
+      GUI_Pirates_7: -1437755110
+      GUI_Pirates_70: -1824980397
+      GUI_Pirates_71: 318085378
+      GUI_Pirates_72: 192984208
+      GUI_Pirates_73: -1030768120
+      GUI_Pirates_74: -2122006037
+      GUI_Pirates_75: 2002779020
+      GUI_Pirates_76: 1541680356
+      GUI_Pirates_77: 1663727402
+      GUI_Pirates_78: 1250731960
+      GUI_Pirates_79: 938716528
+      GUI_Pirates_8: 1053630928
+      GUI_Pirates_80: 1725784689
+      GUI_Pirates_81: 169888050
+      GUI_Pirates_82: 1850412484
+      GUI_Pirates_83: 1618164898
+      GUI_Pirates_84: 1471133802
+      GUI_Pirates_85: 1708668761
+      GUI_Pirates_86: -1857507
+      GUI_Pirates_87: 769382125
+      GUI_Pirates_88: 1087488414
+      GUI_Pirates_89: 879128434
+      GUI_Pirates_9: 1895422243
+      GUI_Pirates_90: -1591811429
+      GUI_Pirates_91: 1706265816
+      GUI_Pirates_92: -1381647455
+      GUI_Pirates_93: 977428927
+      GUI_Pirates_94: -2147289211
+      GUI_Pirates_95: 1138080093
+      GUI_Pirates_96: 1066052066
+      GUI_Pirates_97: -1645090282
+      GUI_Pirates_98: -1049728194
+      GUI_Pirates_99: 1106754825
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
