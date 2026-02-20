@@ -83,6 +83,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.UI
 
         public Tween Hide()
         {
+            gameObject.SetActive(false);
             transform.DOKill();
 
             return DOTween.Sequence();
@@ -90,6 +91,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.UI
 
         public Tween Show()
         {
+            gameObject.SetActive(true);
             transform.DOKill();
 
             return transform

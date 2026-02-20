@@ -36,8 +36,6 @@ namespace Assets._Project.Develop.Runtime.UI.MainMenu
 
         public void Initialize()
         {
-            _view.StartGameButtonClicked += OnStartGameButtonClicked;
-
             CreateWallet();
 
             foreach (IPresenter presenter in _childPresenters)
@@ -46,8 +44,6 @@ namespace Assets._Project.Develop.Runtime.UI.MainMenu
 
         public void Dispose()
         {
-            _view.StartGameButtonClicked -= OnStartGameButtonClicked;
-
             foreach (var disposable in _disposables)
                 disposable.Dispose();
 
@@ -55,11 +51,6 @@ namespace Assets._Project.Develop.Runtime.UI.MainMenu
                 presenter.Dispose();
 
             _disposables.Clear();
-        }
-
-        private void OnStartGameButtonClicked()
-        {
-            _popupService.OpenLevelsMenuPopup();
         }
 
         private void CreateWallet()

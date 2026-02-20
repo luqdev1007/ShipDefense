@@ -35,11 +35,11 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.AI
             RandomMovementState randomMovementState = new RandomMovementState(entity, 0.5f);
             EmptyState emptyState = new EmptyState();
 
-            TimerService movementTimer = _timerServiceFactory.Create(2f);
+            TimerService movementTimer = _timerServiceFactory.Create(0.5f);
             disposables.Add(movementTimer);
             disposables.Add(randomMovementState.Entered.Subscribe(movementTimer.Restart));
 
-            TimerService idleTimer = _timerServiceFactory.Create(3f);
+            TimerService idleTimer = _timerServiceFactory.Create(10f);
             disposables.Add(idleTimer);
             disposables.Add(emptyState.Entered.Subscribe(idleTimer.Restart));
 

@@ -79,7 +79,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
             entity
                 .AddMoveDirection()
                 .AddRotationDirection()
-                .AddMoveSpeed(new ReactiveVariable<float>(3));
+                .AddMoveSpeed(new ReactiveVariable<float>(1));
 
             entity
                 .AddSystem(new RigidbodyMovementSystem());
@@ -347,7 +347,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
             }
 
             entity
-                .AddMoveSpeed(new ReactiveVariable<float>(Random.Range(2, 4)))
+                .AddMoveSpeed(new ReactiveVariable<float>(Random.Range(4, 8)))
                 .AddMoveDirection(new ReactiveVariable<Vector3>())
 
                 .AddMaxHealth(new ReactiveVariable<float>(5))
