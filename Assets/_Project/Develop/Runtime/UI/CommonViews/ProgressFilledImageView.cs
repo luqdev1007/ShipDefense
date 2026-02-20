@@ -4,10 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System;
+using Assets._Project.Develop.Runtime.UI.Core;
 
 namespace Assets._Project.Develop.Runtime.Gameplay.UI
 {
-    public class ProgressFilledImageView : MonoBehaviour
+    public class ProgressFilledImageView : MonoBehaviour, IShowableView
     {
         [SerializeField] private Image _filledImage;
         [SerializeField] private Image _iconImage;
@@ -78,6 +79,24 @@ namespace Assets._Project.Develop.Runtime.Gameplay.UI
         private void OnDestroy()
         {
             _fillTween?.Kill();
+        }
+
+        public Tween Hide()
+        {
+            transform.DOKill();
+
+            return DOTween.Sequence();
+        }
+
+        public Tween Show()
+        {
+            transform.DOKill();
+
+            return transform
+                .DOScale(1, 0.1f)
+                .From(0)
+                .SetUpdate(true)
+                .Play();
         }
     }
 }

@@ -7,6 +7,7 @@ using Assets._Project.Develop.Runtime.Gameplay.Features.InputFeature;
 using Assets._Project.Develop.Runtime.Gameplay.Features.TeamsFeature;
 using Assets._Project.Develop.Runtime.Gameplay.Features.Vehicles;
 using Assets._Project.Develop.Runtime.UI.Gameplay;
+using Assets._Project.Develop.Runtime.Utilites.Timer;
 using System.Linq;
 using UnityEngine;
 
@@ -21,6 +22,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay
 
         private EntitiesFactory _entitiesFactory;
         private BrainsFactory _brainsFactory;
+        private GameplayScreenPresenter _gameplayScreenPresenter;
 
         private IInputService _input;
 
@@ -42,6 +44,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay
 
             _entitiesFactory = _container.Resolve<EntitiesFactory>();
             _brainsFactory = _container.Resolve<BrainsFactory>();
+            _gameplayScreenPresenter = _container.Resolve<GameplayScreenPresenter>();
 
             _input = _container.Resolve<IInputService>();
         }
@@ -51,7 +54,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay
             _isRunning = true;
 
             _mainShip = _entitiesFactory.CreateMainShip();
-            _container.Resolve<GameplayScreenPresenter>().SubscribeHealthView(_mainShip.CurrentHealth, _mainShip.MaxHealth);
+
+            _gameplayScreenPresenter.SubscribeHealthViewToEntity(_mainShip);
 
             _ballista = _mainShip.Transform.GetComponentInChildren<BallistaController>();
             _projectileParent = _ballista.ProjectileParent;
@@ -77,6 +81,17 @@ namespace Assets._Project.Develop.Runtime.Gameplay
                 float power = _ballista.ChargeProgress < 0.5f ? 1f : _ballista.ChargeProgress * 2f;
                 _entitiesFactory.CreateArrowProjectile(_projectileParent, 1, _mainShip, power);
             }
+
+            if (Input.GetKeyDown(KeyCode.I))
+            {
+                _gameplayScreenPresenter.ShowAnnouncement();
+            }
+
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                _gameplayScreenPresenter.ShowPreperationTimer(_container.Resolve<TimerServiceFactory>().Create(30));
+            }
+
 
             if (Input.GetKeyDown(KeyCode.E))
             {

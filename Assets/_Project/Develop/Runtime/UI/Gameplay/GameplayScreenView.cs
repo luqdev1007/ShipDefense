@@ -2,13 +2,17 @@
 using Assets._Project.Develop.Runtime.Meta.Features.ShipUpgrades;
 using Assets._Project.Develop.Runtime.UI.CommonViews;
 using Assets._Project.Develop.Runtime.UI.Core;
+using TMPro;
 using UnityEngine;
 
 namespace Assets._Project.Develop.Runtime.UI.Gameplay
 {
     public class GameplayScreenView : MonoBehaviour, IView
     {
-        [field: SerializeField] public ProgressFilledImageView ProgressFilledImageView;
+        [field: SerializeField] public ProgressFilledImageView HealthView { get; private set; }
+        [field: SerializeField] public Animator AnouncementView { get; private set; }
+        [field: SerializeField] public Animator PrepTimerView { get; private set; }
+        [field: SerializeField] public TMP_Text TimerText { get; private set; }
 
         public void Init()
         {

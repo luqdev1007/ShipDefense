@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System;
 using Assets._Project.Develop.Runtime.Utilites.Reactive;
-using UnityEngine;
-using Unity.Collections.LowLevel.Unsafe;
+using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore;
+using Assets._Project.Develop.Runtime.Utilites.Timer;
 
 namespace Assets._Project.Develop.Runtime.UI.Gameplay
 {
@@ -41,9 +41,35 @@ namespace Assets._Project.Develop.Runtime.UI.Gameplay
         }
 
 
-        public void SubscribeHealthView(IReadOnlyVariable<float> currentHealth, IReadOnlyVariable<float> maxHealth)
+        public void SubscribeHealthViewToEntity(Entity entity)
         {
-            _view.ProgressFilledImageView.Init(currentHealth, maxHealth);
+            _view.HealthView.Init(entity.CurrentHealth, entity.MaxHealth);
+            _view.HealthView.Show();
+        }
+
+        public void ShowAnnouncement()
+        {
+            _view.AnouncementView.SetTrigger("Show");
+        }
+
+        public void ShowPreperationTimer(TimerService timerService)
+        {
+            _view.PrepTimerView.SetTrigger("Show");
+
+            timerService.CurrentTime.Subscribe(OnTimerChanged);
+            timerService.CooldownEnded.Subscribe(OnTimerEnded);
+
+            timerService.Restart();
+        }
+
+        private void OnTimerEnded()
+        {
+            _view.PrepTimerView.SetTrigger("Hide");
+        }
+
+        private void OnTimerChanged(float arg1, float timeLeft)
+        {
+            _view.TimerText.text = ((int)timeLeft).ToString();
         }
     }
 }
