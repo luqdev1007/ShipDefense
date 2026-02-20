@@ -11,6 +11,8 @@ namespace Assets._Project.Develop.Runtime.Meta.Infrastructure
 {
     public class MainMenuBootstrap : SceneBootstrap
     {
+        [SerializeField] private ShipStartCombatManager _shipStartCombatManager; // tests
+
         private DIContainer _container;
         private ICoroutinesPerformer _coroutinesPerformer;
         private PlayerDataProvider _playerDataProvider;
@@ -28,6 +30,10 @@ namespace Assets._Project.Develop.Runtime.Meta.Infrastructure
 
             _playerDataProvider = _container.Resolve<PlayerDataProvider>();
             _coroutinesPerformer = _container.Resolve<ICoroutinesPerformer>();
+
+            _shipStartCombatManager.Init(
+                _container.Resolve<SceneSwitcherService>(), 
+                _container.Resolve<ICoroutinesPerformer>());
 
             yield break;
         }

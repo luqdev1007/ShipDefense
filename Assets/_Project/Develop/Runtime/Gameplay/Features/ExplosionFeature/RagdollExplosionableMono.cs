@@ -8,48 +8,59 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.ExplosionFeature
         [SerializeField] private Rigidbody[] _ragdollRigidbodies;
         [SerializeField] private Animator _animator;
 
-        [Tooltip("Главная кость (обычно Pelvis/Hips). Если не задана, возьмет основной Rigidbody")]
-        [SerializeField] private Rigidbody _mainBone;
+        [Header("Explosion Tuning")]
+        [Range(0f, 1f)][SerializeField] private float _randomnessFactor = 0.3f;
+        [SerializeField] private float _explosionRadius = 5f;
 
         private void Awake()
         {
-            if (_animator == null) TryGetComponent(out _animator);
+            if (_animator == null) _animator = GetComponentInChildren<Animator>();
             if (_ragdollRigidbodies == null || _ragdollRigidbodies.Length == 0)
                 _ragdollRigidbodies = GetComponentsInChildren<Rigidbody>();
-
-            // Если главная кость не назначена, пытаемся найти типичный Hips или берем первый из списка
-            if (_mainBone == null && _ragdollRigidbodies.Length > 0) _mainBone = _ragdollRigidbodies[0];
 
             ToggleRagdoll(false);
         }
 
-        public override void Explode(float power, Vector3 sourcePosition, IExplosion source)
+        public override void Explode(float power, Vector3 sourcePosition, IExplosion effect)
         {
-            if (transform.parent != null) transform.SetParent(null);
+            // Находим самый верхний объект (Root), чтобы не оставлять "пустышек" на корабле
+            Transform rootTransform = transform.root;
 
-            // 1. Активируем регдолл
+            // 1. ПОЛНОСТЬЮ отвязываем всё дерево объектов от корабля
+            if (rootTransform.parent != null) rootTransform.SetParent(null);
+
+            // 2. Активируем регдолл (кости оживают)
             ToggleRagdoll(true);
 
-            // 2. ОТКЛЮЧАЕМ главный коллайдер и физику родителя
-            // Чтобы они не "якорили" персонажа и не конфликтовали с костями
-            if (TryGetComponent(out Collider parentCollider)) parentCollider.enabled = false;
-            AttachedRigidbody.isKinematic = true;
+            // 3. Работаем с главным Rigidbody персонажа
+            if (AttachedRigidbody != null)
+            {
+                // ВАЖНО: Вместо isKinematic = true, мы просто отключаем главный коллайдер.
+                // Если оставить isKinematic = false, корень будет падать по гравитации вместе с регдоллом.
+                if (TryGetComponent(out Collider mainCollider)) mainCollider.enabled = false;
 
-            // 3. Толкаем КАЖДУЮ кость (или только таз, но лучше каждую по чуть-чуть)
-            // Используем VelocityChange, чтобы забить на массу 50
+                // Чтобы корень не "улетал" отдельно от регдолла, делаем его легким 
+                // или действительно кинематичным, НО тогда он будет висеть. 
+                // Лучший вариант для воды — оставить его падать, но без коллизий.
+                AttachedRigidbody.useGravity = true;
+                AttachedRigidbody.isKinematic = false;
+                AttachedRigidbody.linearVelocity = AttachedRigidbody.linearVelocity; // Сохраняем инерцию корабля
+            }
+
+            // 4. Разбрасываем кости
             foreach (var rb in _ragdollRigidbodies)
             {
-                Vector3 dir = rb.position - sourcePosition;
-                Vector3 lateralDir = new Vector3(dir.x, 0, dir.z).normalized;
+                float randomModifier = 1f + Random.Range(-_randomnessFactor, _randomnessFactor);
 
-                // Смешиваем направление: вбок + акцентированно ВВЕРХ
-                Vector3 explosionVector = (lateralDir * OutwardForceMultiplier) + (Vector3.up * UpwardForceMultiplier);
+                rb.AddExplosionForce(
+                    power * randomModifier,
+                    sourcePosition,
+                    _explosionRadius,
+                    UpwardForceMultiplier,
+                    ForceMode.Impulse
+                );
 
-                // Применяем VelocityChange — это гарантированный подлет
-                rb.AddForce(explosionVector.normalized * power, ForceMode.VelocityChange);
-
-                // Рандомная закрутка для каждой кости
-                rb.AddTorque(Random.insideUnitSphere * 10f, ForceMode.VelocityChange);
+                rb.AddTorque(Random.insideUnitSphere * power * 0.1f, ForceMode.Impulse);
             }
         }
 
@@ -60,11 +71,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.ExplosionFeature
             foreach (var rb in _ragdollRigidbodies)
             {
                 rb.isKinematic = !isActive;
-                if (isActive)
-                {
-                    rb.useGravity = true;
-                    // Чтобы конечности болтались сочно, убери у них Drag в инспекторе (поставь 0.01)
-                }
+                rb.useGravity = isActive;
+                if (isActive) rb.interpolation = RigidbodyInterpolation.Interpolate;
             }
         }
     }

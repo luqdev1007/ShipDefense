@@ -23,6 +23,18 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.AI.States
         {
             Debug.Log("Ищу цель среди: " + targets.Count() + " entities");
 
+            string list = "";
+
+            foreach (var target in targets)
+            {
+                if (target.Transform == null)
+                    continue;
+
+                list += target.Transform.gameObject.name + " ";
+            }
+
+            Debug.Log("Targets: " + list);
+
             IEnumerable<Entity> selectedTargets = targets.Where(target =>
             {
                 bool result = target.HasComponent<TakeDamageRequest>();
