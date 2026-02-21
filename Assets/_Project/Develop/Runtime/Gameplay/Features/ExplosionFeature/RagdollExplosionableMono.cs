@@ -14,7 +14,9 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.ExplosionFeature
 
         private void Awake()
         {
-            if (_animator == null) _animator = GetComponentInChildren<Animator>();
+            if (_animator == null) 
+                _animator = GetComponentInChildren<Animator>();
+
             if (_ragdollRigidbodies == null || _ragdollRigidbodies.Length == 0)
                 _ragdollRigidbodies = GetComponentsInChildren<Rigidbody>();
 
@@ -27,7 +29,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.ExplosionFeature
             Transform rootTransform = transform.root;
 
             // 1. ПОЛНОСТЬЮ отвязываем всё дерево объектов от корабля
-            if (rootTransform.parent != null) rootTransform.SetParent(null);
+            if (rootTransform.parent != null) 
+                rootTransform.SetParent(null);
 
             // 2. Активируем регдолл (кости оживают)
             ToggleRagdoll(true);
@@ -66,7 +69,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.ExplosionFeature
 
         private void ToggleRagdoll(bool isActive)
         {
-            if (_animator != null) _animator.enabled = !isActive;
+            if (_animator != null) 
+                _animator.enabled = !isActive;
 
             foreach (var rb in _ragdollRigidbodies)
             {

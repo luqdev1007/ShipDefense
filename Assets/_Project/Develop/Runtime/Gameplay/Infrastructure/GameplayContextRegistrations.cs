@@ -2,8 +2,10 @@
 using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore;
 using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Mono;
 using Assets._Project.Develop.Runtime.Gameplay.Features.AI;
+using Assets._Project.Develop.Runtime.Gameplay.Features.Enemies;
 using Assets._Project.Develop.Runtime.Gameplay.Features.ExplosionFeature;
 using Assets._Project.Develop.Runtime.Gameplay.Features.InputFeature;
+using Assets._Project.Develop.Runtime.Gameplay.Features.MainHero;
 using Assets._Project.Develop.Runtime.UI;
 using Assets._Project.Develop.Runtime.UI.Core;
 using Assets._Project.Develop.Runtime.UI.Gameplay;
@@ -23,11 +25,18 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Infrastructure
             container.RegisterAsSingle(CreateEntitiesLifeContext);
             container.RegisterAsSingle(CreateCollidersRegistryService);
 
+            // main heroes
+            container.RegisterAsSingle(CreateMainHeroHolderService);
+            container.RegisterAsSingle(CreateMainHeroesFactory);
+
             // input
             container.RegisterAsSingle<IInputService>(CreateDesktopInput);
 
             // factories
             container.RegisterAsSingle(CreateExplosionFactory);
+            container.RegisterAsSingle(CreateEnemiesFactory);
+            container.RegisterAsSingle(CreateVehiclesFactory);
+            container.RegisterAsSingle(CreateProjectilesFactory);
 
             // UI
             container.RegisterAsSingle(CreateGameplayScreenPresenter).NonLazy();
@@ -38,7 +47,31 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Infrastructure
             // AI
             container.RegisterAsSingle(CreateBrainsFactory);
             container.RegisterAsSingle(CreateAIBrainsContext);
+        }
 
+        private static ProjectilesFactory CreateProjectilesFactory(DIContainer container)
+        {
+            return new ProjectilesFactory(container);
+        }
+
+        private static VehiclesFactory CreateVehiclesFactory(DIContainer container)
+        {
+            return new VehiclesFactory(container);
+        }
+
+        private static EnemiesFactory CreateEnemiesFactory(DIContainer container)
+        {
+            return new EnemiesFactory(container);
+        }
+
+        private static MainHeroHolderService CreateMainHeroHolderService(DIContainer container)
+        {
+            return new MainHeroHolderService(container.Resolve<EntitiesLifeContext>());
+        }
+
+        private static MainHeroesFactory CreateMainHeroesFactory(DIContainer container)
+        {
+            return new MainHeroesFactory(container);
         }
 
         private static AIBrainsContext CreateAIBrainsContext(DIContainer container)

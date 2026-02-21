@@ -20,17 +20,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.MovementFeature
 
         public void OnUpdate(float deltaTime)
         {
-            float currentYVelocity = _rigidbody.linearVelocity.y;
-
-            Vector3 baseVelocity = _moveDirection.Value.normalized * _moveSpeed.Value;
-
-            // ВАРИАНТ А: Если мы хотим, чтобы MoveSpeed задавал только "толчок вперед"
-            // а гравитация была единственной силой по Y:
-            // Vector3 horizontalMove = new Vector3(baseVelocity.x, 0, baseVelocity.z);
-            // _rigidbody.linearVelocity = horizontalMove + Vector3.up * currentYVelocity;
-
-            // ВАРИАНТ Б (Твой случай): Стрела летит туда, куда смотрит баллиста
-            _rigidbody.linearVelocity = baseVelocity + Vector3.up * (currentYVelocity - baseVelocity.y);
+            _rigidbody.linearVelocity = _moveDirection.Value * _moveSpeed.Value;
         }
     }
 }

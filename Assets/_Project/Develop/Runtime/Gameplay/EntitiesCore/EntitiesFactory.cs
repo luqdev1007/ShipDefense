@@ -1,22 +1,23 @@
 ﻿using Assets._Project.Develop.Infrastructure.DI;
+using Assets._Project.Develop.Runtime.Configs.Gameplay.Entities.MainHeroes;
+using Assets._Project.Develop.Runtime.Configs.Gameplay.Entities.Projectiles;
 using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Mono;
 using Assets._Project.Develop.Runtime.Gameplay.Features.ApplyDamage;
 using Assets._Project.Develop.Runtime.Gameplay.Features.Ballista;
 using Assets._Project.Develop.Runtime.Gameplay.Features.ContactTakeDamage;
 using Assets._Project.Develop.Runtime.Gameplay.Features.CustomPhysics;
+using Assets._Project.Develop.Runtime.Gameplay.Features.Enemies;
 using Assets._Project.Develop.Runtime.Gameplay.Features.ExplosionFeature;
 using Assets._Project.Develop.Runtime.Gameplay.Features.InputFeature;
 using Assets._Project.Develop.Runtime.Gameplay.Features.LifeCycle;
 using Assets._Project.Develop.Runtime.Gameplay.Features.MovementFeature;
 using Assets._Project.Develop.Runtime.Gameplay.Features.Sensors;
 using Assets._Project.Develop.Runtime.Gameplay.Features.TeamsFeature;
-using Assets._Project.Develop.Runtime.Gameplay.Features.Vehicles;
 using Assets._Project.Develop.Runtime.Meta.Features.ShipUpgrades;
 using Assets._Project.Develop.Runtime.Utilites;
 using Assets._Project.Develop.Runtime.Utilites.Conditions;
 using Assets._Project.Develop.Runtime.Utilites.CoroutinesManagment;
 using Assets._Project.Develop.Runtime.Utilites.Reactive;
-using System.Linq;
 using UnityEngine;
 
 namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
@@ -38,20 +39,21 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
             _collidersRegistryService = container.Resolve<CollidersRegistryService>();
         }
 
-        public Entity CreateWizard(Transform parent)
+
+        // main heroes
+        public Entity CreateWizard(Transform parent, WizardConfig config)
         {
             Entity entity = CreateEmpty();
 
-            _monoEntitiesFactory.Create(entity, parent, "Entities/Wizard");
+            _monoEntitiesFactory.Create(entity, parent, config.PrefabPath);
 
             entity
                 .AddStartAttackRequest()
                 .AddInAttackProcess(new ReactiveVariable<bool>(false))
                 .AddRotationDirection()
-                .AddRotationSpeed(new ReactiveVariable<float>(900))
+                .AddRotationSpeed(new ReactiveVariable<float>(config.RotationSpeed))
                 .AddCurrentTarget()
-                .AddIsDead()
-                .AddTeam(new ReactiveVariable<Teams>(Teams.Allies));
+                .AddIsDead();
 
             ICompositeCondition canStartAttack = new CompositeCondition()
                 .Add(new FuncCondition(() => entity.IsDead.Value == false));
@@ -65,95 +67,38 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
 
             entity.AddSystem(new RigidbodyRotationSystem());
 
-            _entitiesLifeContext.Add(entity);
-
             return entity;
         }
 
-        public Entity CreateCaptain(Transform parent)
+        public Entity CreateCaptain(Transform parent, CaptainConfig config)
         {
             Entity entity = CreateEmpty();
 
-            _monoEntitiesFactory.Create(entity, parent, "Entities/Captain");
+            _monoEntitiesFactory.Create(entity, parent, config.PrefabPath);
 
             entity
                 .AddMoveDirection()
                 .AddRotationDirection()
-                .AddMoveSpeed(new ReactiveVariable<float>(1));
+                .AddMoveSpeed(new ReactiveVariable<float>(config.MoveSpeed));
 
             entity
                 .AddSystem(new RigidbodyMovementSystem());
 
-            _entitiesLifeContext.Add(entity);
-
             return entity;
         }
+        // main heroes
 
-        public Entity CreateMainShip()
+
+        // enemies
+        public Entity CreateSoldier(Transform parent, SoldierConfig config)
         {
             Entity entity = CreateEmpty();
 
-            _monoEntitiesFactory.Create(entity, Vector3.up * 10, "Entities/MainShip")
-                .GetComponentInChildren<BallistaController>().Init(_container.Resolve<IInputService>());
-
-            PlayerMainShipDataProvider shipData = _container.Resolve<PlayerMainShipDataProvider>();
+            MonoEntity mono = _monoEntitiesFactory.Create(entity, parent, config.PrefabPath);
 
             entity
-                .AddMaxHealth(new ReactiveVariable<float>(shipData.MaxHealth))
-                .AddCurrentHealth(new ReactiveVariable<float>(shipData.MaxHealth))
-
-                .AddTeam(new ReactiveVariable<Teams>(Teams.Allies))
-
-                .AddIsDead(new ReactiveVariable<bool>())
-                .AddInDeathProcess()
-                .AddDeathProcessCurrentTime(new ReactiveVariable<float>(2))
-                .AddDeathProcessInitialTime(new ReactiveVariable<float>(2))
-
-                .AddTakeDamageRequest()
-                .AddTakeDamageEvent()
-                ;
-
-
-            ICompositeCondition canApplyDamage = new CompositeCondition()
-                .Add(new FuncCondition(() => entity.IsDead.Value == false));
-
-            ICompositeCondition mustDie = new CompositeCondition()
-                .Add(new FuncCondition(() => entity.CurrentHealth.Value <= 0));
-
-            ICompositeCondition mustSelfRelease = new CompositeCondition()
-                .Add(new FuncCondition(() => entity.IsDead.Value == true))
-                .Add(new FuncCondition(() => entity.InDeathProcess.Value == false));
-
-            entity
-                .AddMustDie(mustDie)
-                .AddMustSelfRelease(mustSelfRelease)
-                .AddCanApplyDamage(canApplyDamage)
-                ;
-
-            entity
-                .AddSystem(new DeathSystem())
-                .AddSystem(new DeathProcessTimerSystem())
-                .AddSystem(new SelfReleaseSystem(_entitiesLifeContext))
-
-                .AddSystem(new ApplyDamageSystem())
-                ;
-
-            _entitiesLifeContext.Add(entity);
-
-            return entity;
-        }
-
-        public Entity CreateSoldier(Transform parent, Teams team)
-        {
-            Entity entity = CreateEmpty();
-
-            MonoEntity mono = _monoEntitiesFactory.Create(entity, parent, "Entities/Enemies/Soldier");
-
-            entity
-                .AddMaxHealth(new ReactiveVariable<float>(10))
-                .AddCurrentHealth(new ReactiveVariable<float>(10))
-
-                .AddTeam(new ReactiveVariable<Teams>(team))
+                .AddMaxHealth(new ReactiveVariable<float>(config.MaxHealth))
+                .AddCurrentHealth(new ReactiveVariable<float>(config.MaxHealth))
 
                 .AddContactCollidersBuffer(new Buffer<Collider>(64))
                 .AddDeathMask(LayersAPI.LayerMaskWater)
@@ -161,8 +106,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
 
                 .AddIsDead(new ReactiveVariable<bool>())
                 .AddInDeathProcess()
-                .AddDeathProcessCurrentTime(new ReactiveVariable<float>(2))
-                .AddDeathProcessInitialTime(new ReactiveVariable<float>(2))
+                .AddDeathProcessCurrentTime(new ReactiveVariable<float>(config.DeathProcessTime))
+                .AddDeathProcessInitialTime(new ReactiveVariable<float>(config.DeathProcessTime))
 
                 .AddTakeDamageRequest()
                 .AddTakeDamageEvent()
@@ -198,22 +143,18 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
                 .AddSystem(new SelfReleaseSystem(_entitiesLifeContext))
             ;
 
-            _entitiesLifeContext.Add(entity);
-
             return entity;
         }
 
-        public Entity CreateDriver(Transform parent, Teams team)
+        public Entity CreateDriver(Transform parent, DriverConfig config)
         {
             Entity entity = CreateEmpty();
 
-            MonoEntity mono = _monoEntitiesFactory.Create(entity, parent, "Entities/Enemies/Driver");
+            MonoEntity mono = _monoEntitiesFactory.Create(entity, parent, config.PrefabPath);
 
             entity
-                .AddMaxHealth(new ReactiveVariable<float>(10))
-                .AddCurrentHealth(new ReactiveVariable<float>(10))
-
-                .AddTeam(new ReactiveVariable<Teams>(team))
+                .AddMaxHealth(new ReactiveVariable<float>(config.MaxHealth))
+                .AddCurrentHealth(new ReactiveVariable<float>(config.MaxHealth))
 
                 .AddContactCollidersBuffer(new Buffer<Collider>(64))
                 .AddDeathMask(LayersAPI.LayerMaskWater)
@@ -221,8 +162,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
 
                 .AddIsDead(new ReactiveVariable<bool>())
                 .AddInDeathProcess()
-                .AddDeathProcessCurrentTime(new ReactiveVariable<float>(2))
-                .AddDeathProcessInitialTime(new ReactiveVariable<float>(2))
+                .AddDeathProcessCurrentTime(new ReactiveVariable<float>(config.DeathProcessTime))
+                .AddDeathProcessInitialTime(new ReactiveVariable<float>(config.DeathProcessTime))
 
                 .AddTakeDamageRequest()
                 .AddTakeDamageEvent()
@@ -249,7 +190,6 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
                 ;
 
             entity
-
                 .AddSystem(new ApplyDamageSystem())
                 .AddSystem(new DeathMaskTouchDetectorSystem())
                 .AddSystem(new DeathSystem())
@@ -258,22 +198,18 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
                 .AddSystem(new SelfReleaseSystem(_entitiesLifeContext))
             ;
 
-            _entitiesLifeContext.Add(entity);
-
             return entity;
         }
 
-        public Entity CreateArcher(Transform parent, Teams team)
+        public Entity CreateArcher(Transform parent, ArcherConfig config)
         {
             Entity entity = CreateEmpty();
 
-            MonoEntity mono = _monoEntitiesFactory.Create(entity, parent, "Entities/Enemies/Archer");
+            MonoEntity mono = _monoEntitiesFactory.Create(entity, parent, config.PrefabPath);
 
             entity
-                .AddMaxHealth(new ReactiveVariable<float>(10))
-                .AddCurrentHealth(new ReactiveVariable<float>(10))
-
-                .AddTeam(new ReactiveVariable<Teams>(team))
+                .AddMaxHealth(new ReactiveVariable<float>(config.MaxHealth))
+                .AddCurrentHealth(new ReactiveVariable<float>(config.MaxHealth))
 
                 .AddContactCollidersBuffer(new Buffer<Collider>(64))
                 .AddDeathMask(LayersAPI.LayerMaskWater)
@@ -281,8 +217,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
 
                 .AddIsDead(new ReactiveVariable<bool>())
                 .AddInDeathProcess()
-                .AddDeathProcessCurrentTime(new ReactiveVariable<float>(2))
-                .AddDeathProcessInitialTime(new ReactiveVariable<float>(2))
+                .AddDeathProcessCurrentTime(new ReactiveVariable<float>(config.DeathProcessTime))
+                .AddDeathProcessInitialTime(new ReactiveVariable<float>(config.DeathProcessTime))
 
                 .AddTakeDamageRequest()
                 .AddTakeDamageEvent()
@@ -308,7 +244,6 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
                 ;
 
             entity
-
                 .AddSystem(new ApplyDamageSystem())
                 .AddSystem(new DeathMaskTouchDetectorSystem())
                 .AddSystem(new DeathSystem())
@@ -317,54 +252,91 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
                 .AddSystem(new SelfReleaseSystem(_entitiesLifeContext))
             ;
 
-            _entitiesLifeContext.Add(entity);
+            return entity;
+        }
+        // enemies
+
+
+        // vehicles
+        public Entity CreateMainShip(Transform parent, MainShipConfig config)
+        {
+            Entity entity = CreateEmpty();
+            Vector3 basePosition = Vector3.up * 10;
+
+            _monoEntitiesFactory.Create(entity, parent == null ? basePosition : parent.position, config.PrefabPath)
+                .GetComponentInChildren<BallistaController>().Init(_container.Resolve<IInputService>());
+
+            // saved data
+            PlayerMainShipDataProvider shipData = _container.Resolve<PlayerMainShipDataProvider>();
+
+            entity
+                .AddMaxHealth(new ReactiveVariable<float>(shipData.MaxHealth))
+                .AddCurrentHealth(new ReactiveVariable<float>(shipData.MaxHealth))
+
+                .AddIsDead(new ReactiveVariable<bool>())
+                .AddInDeathProcess()
+                .AddDeathProcessCurrentTime(new ReactiveVariable<float>(config.DeathProcessTime))
+                .AddDeathProcessInitialTime(new ReactiveVariable<float>(config.DeathProcessTime))
+
+                .AddTakeDamageRequest()
+                .AddTakeDamageEvent()
+                ;
+
+            ICompositeCondition canApplyDamage = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.IsDead.Value == false));
+
+            ICompositeCondition mustDie = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.CurrentHealth.Value <= 0));
+
+            ICompositeCondition mustSelfRelease = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.IsDead.Value == true))
+                .Add(new FuncCondition(() => entity.InDeathProcess.Value == false));
+
+            entity
+                .AddMustDie(mustDie)
+                .AddMustSelfRelease(mustSelfRelease)
+                .AddCanApplyDamage(canApplyDamage)
+                ;
+
+            entity
+                .AddSystem(new DeathSystem())
+                .AddSystem(new DeathProcessTimerSystem())
+                .AddSystem(new SelfReleaseSystem(_entitiesLifeContext))
+
+                .AddSystem(new ApplyDamageSystem())
+                ;
 
             return entity;
         }
-
-        public Entity CreateSmallShip(Teams team)
+        
+        public Entity CreateSmallShip(Transform at, SmallShipConfig config)
         {
             Entity entity = CreateEmpty();
 
-            Transform[] spawners = Object.FindObjectsByType<Transform>(FindObjectsSortMode.None)
-                .Where(i => i.gameObject.layer == LayersAPI.LayerSpawner).ToArray(); // game input args?
+            MonoEntity mono = _monoEntitiesFactory.Create(entity, at, config.PrefabPath);
 
             Vector3 randomOfsset = new Vector3(Random.Range(-30, 10), 0, Random.Range(-30, 10));
-            Transform randomSpawner = spawners[Random.Range(0, spawners.Length)];
-
-            MonoEntity mono = _monoEntitiesFactory.Create(entity, randomSpawner, "Entities/SmallShip");
             mono.transform.position += randomOfsset;
             mono.transform.SetParent(null);
 
-            ShipPlace driverPlace = null;
-
-            foreach (ShipPlace i in mono.GetComponentsInChildren<ShipPlace>())
-            {
-                if (i.PlaceType == ShipPlaceType.Driver)
-                {
-                    driverPlace = i;
-                }
-            }
-
             entity
-                .AddMoveSpeed(new ReactiveVariable<float>(Random.Range(4, 8)))
+                .AddMoveSpeed(new ReactiveVariable<float>(config.MoveSpeed))
                 .AddMoveDirection(new ReactiveVariable<Vector3>())
 
-                .AddMaxHealth(new ReactiveVariable<float>(5))
-                .AddCurrentHealth(new ReactiveVariable<float>(5))
+                .AddMaxHealth(new ReactiveVariable<float>(config.MaxHealth))
+                .AddCurrentHealth(new ReactiveVariable<float>(config.MaxHealth))
 
-                .AddBodyContactDamage(new ReactiveVariable<float>(2))
+                .AddBodyContactDamage(new ReactiveVariable<float>(config.BodyContactDamage))
                 .AddContactsDetectingMask(LayersAPI.LayerMaskHittable)
                 .AddContactCollidersBuffer(new Buffer<Collider>(64))
                 .AddContactEntitiesBuffer(new Buffer<Entity>(64))
 
-                .AddTeam(new ReactiveVariable<Teams>(team))
                 .AddIsTouchAnotherTeam()
 
                 .AddIsDead(new ReactiveVariable<bool>())
                 .AddInDeathProcess()
-                .AddDeathProcessCurrentTime(new ReactiveVariable<float>(2))
-                .AddDeathProcessInitialTime(new ReactiveVariable<float>(2))
+                .AddDeathProcessCurrentTime(new ReactiveVariable<float>(config.DeathProcessTime))
+                .AddDeathProcessInitialTime(new ReactiveVariable<float>(config.DeathProcessTime))
 
                 .AddTakeDamageRequest()
                 .AddTakeDamageEvent()
@@ -373,9 +345,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
                 ;
 
             ICompositeCondition canMove = new CompositeCondition()
-                .Add(new FuncCondition(() => entity.IsDead.Value == false))
-                .Add(new FuncCondition(() => driverPlace.transform.childCount > 0));
-
+                .Add(new FuncCondition(() => entity.IsDead.Value == false));
 
             ICompositeCondition canApplyDamage = new CompositeCondition()
                 .Add(new FuncCondition(() => entity.IsDead.Value == false));
@@ -399,7 +369,6 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
                 ;
 
             entity
-                //.AddSystem(new RigidbodyDirectionalRotatorSystem())
                 .AddSystem(new RigidbodyMoveTowardsTargetSystem(_entitiesLifeContext))
 
                 .AddSystem(new ApplyDamageSystem())
@@ -417,53 +386,35 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
                 .AddSystem(new SelfExplodeSystem(_container.Resolve<ExplosionsFactory>()))
             ;
 
-            _entitiesLifeContext.Add(entity);
-
-            // unity logic
-            ShipPlace[] places = mono.transform.GetComponentsInChildren<ShipPlace>();
-
-            foreach (ShipPlace i in places)
-            {
-                switch (i.PlaceType)
-                {
-                    case ShipPlaceType.MeleeSmall:
-                        CreateSoldier(i.transform, team);
-                        break;
-
-                    case ShipPlaceType.RangeSmall:
-                        CreateArcher(i.transform, team);
-                        break;
-
-                    case ShipPlaceType.Driver:
-                        CreateDriver(i.transform, team);
-                        break;
-                }
-            }
-
             return entity;
         }
+        // vehicles
 
-        public Entity CreateArrowProjectile(Transform parent, float damage, Entity owner, float tintPower)
+        // projectiles
+        public Entity CreateSimpleProjectile(
+            Transform parent, 
+            ProjectileCreationContext ctx, 
+            SimpleProjectileConfig config)
         {
             Entity entity = CreateEmpty();
 
-            MonoEntity mono = _monoEntitiesFactory.Create(entity, parent, "Entities/ArrowProjectile");
+            MonoEntity mono = _monoEntitiesFactory.Create(entity, parent, config.PrefabPath);
             Vector3 shootDirection = parent.forward;
 
             entity
                 .AddPushDirection(new ReactiveVariable<Vector3>(shootDirection))
-                .AddPushForce(new ReactiveVariable<float>(25 * tintPower))
-                .AddGravityScale(new ReactiveVariable<float>(10))
+                .AddPushForce(new ReactiveVariable<float>(ctx.LaunchPower))
+                .AddGravityScale(new ReactiveVariable<float>(config.GravityScale))
 
                 .AddIsDead()
                 .AddContactsDetectingMask(LayersAPI.LayerMaskWater)
                 .AddContactCollidersBuffer(new Buffer<Collider>(64))
                 .AddContactEntitiesBuffer(new Buffer<Entity>(64))
-                .AddBodyContactDamage(new ReactiveVariable<float>(damage))
+                .AddBodyContactDamage(new ReactiveVariable<float>(ctx.FinalDamage))
                 .AddDeathMask(LayersAPI.LayerMaskWater)
                 .AddIsTouchDeathMask()
                 .AddIsTouchAnotherTeam()
-                .AddTeam(new ReactiveVariable<Teams>(owner.Team.Value))
+                .AddTeam(new ReactiveVariable<Teams>(ctx.Owner.Team.Value))
                 ;
 
             ICompositeCondition mustDie = new CompositeCondition(LogicOperations.Or)
@@ -480,8 +431,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
 
             entity
                   .AddSystem(new RigidbodyGravityApplySystem())
-                  .AddSystem(new AddDelayedForceSystem(0.2f, _container.Resolve<ICoroutinesPerformer>()))
-                  .AddSystem(new SlowApearEntityViewSystem(0.25f, _container.Resolve<ICoroutinesPerformer>()))
+                  .AddSystem(new AddDelayedForceSystem(ctx.LaunchDelay, _container.Resolve<ICoroutinesPerformer>()))
+                  .AddSystem(new SlowApearEntityViewSystem(ctx.LaunchDelay * 1.25f, _container.Resolve<ICoroutinesPerformer>()))
                   .AddSystem(new TransformRotateWithLinearVelocitySystem())
 
                   .AddSystem(new DeathSystem())
@@ -496,10 +447,9 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
                   .AddSystem(new SelfExplodeSystem(_container.Resolve<ExplosionsFactory>()))
                   ;
 
-            _entitiesLifeContext.Add(entity);
-
             return entity;
         }
+        // projectiles
 
         private Entity CreateEmpty() => new Entity();
     }

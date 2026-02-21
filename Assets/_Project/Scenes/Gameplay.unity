@@ -432,10 +432,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03329e1776f54b147bef325a15cc50a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _spawners:
+  - {fileID: 221068262}
+  - {fileID: 1250152635}
+  - {fileID: 1302211495}
   _mainCamera: {fileID: 635422877}
-  _hittableLayers:
-    serializedVersion: 2
-    m_Bits: 80
+  _baseProjLaunchPower: 25
 --- !u!1 &1096858678
 GameObject:
   m_ObjectHideFlags: 0

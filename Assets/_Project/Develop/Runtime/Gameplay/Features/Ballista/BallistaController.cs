@@ -14,6 +14,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Ballista
         [SerializeField] private Rigidbody _verticalPivot;
 
         [SerializeField] private float _rotationSpeed = 50f;
+        [SerializeField] private float _shootPower = 25;
         [SerializeField] private Vector2 _verticalLimits = new Vector2(-20f, 45f);
         [SerializeField] private Vector2 _horizontalLimits = new Vector2(-60f, 60f);
 
@@ -31,6 +32,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Ballista
         public bool IsCharging { get; private set; }
         public float ChargeProgress { get; private set; }
         public float FireCycleDuration => 1f / _fireRate;
+        public float ShootPower => _shootPower;
 
         public void Init(IInputService inputService)
         {

@@ -141,6 +141,11 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.AI
 
             return stateMachine;
         }
+
+        public void CreateEmptyBrain(Entity entity)
+        {
+            Debug.Log("no brains for " + entity.Transform.gameObject.name + " yet");
+        }
     }
 }
 

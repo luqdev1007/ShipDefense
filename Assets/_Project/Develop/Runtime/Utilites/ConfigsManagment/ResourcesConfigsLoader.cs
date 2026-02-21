@@ -1,3 +1,5 @@
+using Assets._Project.Develop.Runtime.Configs.Gameplay.Entities.MainHeroes;
+using Assets._Project.Develop.Runtime.Configs.Gameplay.Entities.Projectiles;
 using Assets._Project.Develop.Runtime.Configs.Gameplay.Explosions;
 using Assets._Project.Develop.Runtime.Configs.Gameplay.Levels;
 using Assets._Project.Develop.Runtime.Configs.Meta.Wallet;
@@ -17,8 +19,22 @@ namespace Assets._Project.Develop.Runtime.Utilites.ConfigsManagment
         {
             { typeof(StartWalletConfig), "Configs/Meta/Wallet/StartWalletConfig" },
             { typeof(CurrencyIconsConfig), "Configs/Meta/Wallet/CurrencyIconsConfig" },
+
             { typeof(LevelsListConfig), "Configs/Gameplay/Levels/LevelsListConfig" },
+
             { typeof(ExplosionsListConfig), "Configs/Gameplay/Explosions/ExplosionsListConfig" },
+
+            { typeof(ArcherConfig), "Configs/Gameplay/Entities/Enemies/ArcherConfig" },
+            { typeof(SoldierConfig), "Configs/Gameplay/Entities/Enemies/SoldierConfig" },
+            { typeof(DriverConfig), "Configs/Gameplay/Entities/Enemies/DriverConfig" },
+
+            { typeof(CaptainConfig), "Configs/Gameplay/Entities/MainHeroes/CaptainConfig" },
+            { typeof(WizardConfig), "Configs/Gameplay/Entities/MainHeroes/WizardConfig" },
+
+            { typeof(SimpleProjectileConfig), "Configs/Gameplay/Entities/Projectiles/SimpleProjectileConfig" },
+
+            { typeof(MainShipConfig), "Configs/Gameplay/Entities/Vehicles/MainShipConfig" },
+            { typeof(SmallShipConfig), "Configs/Gameplay/Entities/Vehicles/SmallShipConfig" },
         };
 
         public ResourcesConfigsLoader(ResourcesAssetsLoader resources)
