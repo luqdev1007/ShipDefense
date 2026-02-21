@@ -8,7 +8,9 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Ballista
     {
         public event Action<float> OnFired;
 
+        [field: SerializeField] public Transform CameraPivot { get; private set; }
         [field: SerializeField] public Transform ProjectileParent { get; private set; }
+        [field: SerializeField] public Rigidbody EngineerPivot { get; private set; }
 
         [SerializeField] private Rigidbody _horizontalPivot;
         [SerializeField] private Rigidbody _verticalPivot;
@@ -37,8 +39,10 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Ballista
         public void Init(IInputService inputService)
         {
             _inputService = inputService;
+
             Vector3 localH = _horizontalPivot.transform.localEulerAngles;
             Vector3 localV = _verticalPivot.transform.localEulerAngles;
+
             _currentYRotation = FixAngle(localH.y);
             _currentXRotation = FixAngle(localV.x);
         }
@@ -51,19 +55,25 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Ballista
 
         private float FixAngle(float angle)
         {
-            if (angle > 180) angle -= 360;
+            if (angle > 180) 
+                angle -= 360;
+
             return angle;
         }
 
         private void Update()
         {
-            if (_inputService == null || !_inputService.IsEnabled) return;
+            if (_inputService == null || !_inputService.IsEnabled)
+                return;
+
             HandleCharge();
         }
 
         private void FixedUpdate()
         {
-            if (_inputService == null || !_inputService.IsEnabled) return;
+            if (_inputService == null || !_inputService.IsEnabled) 
+                return;
+
             HandlePhysicsRotation();
         }
 
@@ -100,13 +110,16 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Ballista
             }
 
             IsCharging = _inputService.IsAttackKeyHold;
-            if (IsCharging) ChargeProgress = Mathf.Clamp01(ChargeProgress + Time.deltaTime / 2f);
+
+            if (IsCharging) 
+                ChargeProgress = Mathf.Clamp01(ChargeProgress + Time.deltaTime / 2f);
 
             if (_inputService.IsAttackKeyReleased && ChargeProgress > 0)
             {
                 _lastFireTime = Time.time;
-                OnFired?.Invoke(ChargeProgress);
                 ChargeProgress = 0;
+
+                OnFired?.Invoke(ChargeProgress);
             }
         }
     }

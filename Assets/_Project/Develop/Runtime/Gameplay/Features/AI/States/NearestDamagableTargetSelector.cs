@@ -25,7 +25,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.AI.States
 
             string list = "";
 
-            foreach (var target in targets)
+            foreach (Entity target in targets)
             {
                 if (target.Transform == null)
                     continue;
@@ -51,13 +51,20 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.AI.States
                 return result;
             });
 
+            Debug.Log("Selected targets count: " + selectedTargets.Count());
+
             if (selectedTargets.Any() == false)
+            {
+                Debug.Log("no selected targets");
                 return null;
+            }
 
             Entity closestTarget = selectedTargets.First();
 
             if (TryGetDistanceTo(closestTarget, out float minDistance) == false)
+            {
                 return null;
+            }
 
             foreach (Entity target in selectedTargets)
             {

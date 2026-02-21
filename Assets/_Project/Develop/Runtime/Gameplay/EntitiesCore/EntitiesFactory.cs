@@ -1,4 +1,5 @@
 ﻿using Assets._Project.Develop.Infrastructure.DI;
+using Assets._Project.Develop.Runtime.Configs.Gameplay.Entities;
 using Assets._Project.Develop.Runtime.Configs.Gameplay.Entities.MainHeroes;
 using Assets._Project.Develop.Runtime.Configs.Gameplay.Entities.Projectiles;
 using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Mono;
@@ -19,6 +20,7 @@ using Assets._Project.Develop.Runtime.Utilites.Conditions;
 using Assets._Project.Develop.Runtime.Utilites.CoroutinesManagment;
 using Assets._Project.Develop.Runtime.Utilites.Reactive;
 using UnityEngine;
+using static UnityEngine.Rendering.STP;
 
 namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
 {
@@ -50,10 +52,21 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
             entity
                 .AddStartAttackRequest()
                 .AddInAttackProcess(new ReactiveVariable<bool>(false))
+                .AddCurrentTarget()
+
                 .AddRotationDirection()
                 .AddRotationSpeed(new ReactiveVariable<float>(config.RotationSpeed))
-                .AddCurrentTarget()
-                .AddIsDead();
+
+                .AddMaxHealth(new ReactiveVariable<float>(config.MaxHealth))
+                .AddCurrentHealth(new ReactiveVariable<float>(config.MaxHealth))
+
+                .AddIsDead(new ReactiveVariable<bool>())
+                .AddInDeathProcess()
+                .AddDeathProcessCurrentTime(new ReactiveVariable<float>(config.DeathProcessTime))
+                .AddDeathProcessInitialTime(new ReactiveVariable<float>(config.DeathProcessTime))
+
+                .AddTakeDamageRequest()
+                .AddTakeDamageEvent();
 
             ICompositeCondition canStartAttack = new CompositeCondition()
                 .Add(new FuncCondition(() => entity.IsDead.Value == false));
@@ -62,10 +75,75 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
                 .Add(new FuncCondition(() => entity.IsDead.Value == false))
                 .Add(new FuncCondition(() => entity.InAttackProcess.Value == false));
 
-            entity.AddCanStartAttack(canStartAttack);
-            entity.AddCanRotate(canRotate);
+            ICompositeCondition canApplyDamage = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.IsDead.Value == false));
 
-            entity.AddSystem(new RigidbodyRotationSystem());
+            ICompositeCondition mustDie = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.CurrentHealth.Value <= 0));
+
+            ICompositeCondition mustSelfRelease = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.IsDead.Value == true))
+                .Add(new FuncCondition(() => entity.InDeathProcess.Value == false));
+
+            entity
+                .AddMustDie(mustDie)
+                .AddMustSelfRelease(mustSelfRelease)
+                .AddCanApplyDamage(canApplyDamage)
+                .AddCanStartAttack(canStartAttack)
+                .AddCanRotate(canRotate);
+
+            entity
+                .AddSystem(new ApplyDamageSystem())
+                .AddSystem(new DeathSystem())
+                .AddSystem(new DeathProcessTimerSystem())
+                .AddSystem(new DisableCollidersOnDeathSystem())
+                .AddSystem(new SelfReleaseSystem(_entitiesLifeContext))
+                .AddSystem(new RigidbodyRotationSystem());
+
+            return entity;
+        }
+
+        public Entity CreateEngineer(Transform parent, EngineerConfig config)
+        {
+            Entity entity = CreateEmpty();
+
+            _monoEntitiesFactory.Create(entity, parent, config.PrefabPath);
+
+            entity
+                .AddMaxHealth(new ReactiveVariable<float>(config.MaxHealth))
+                .AddCurrentHealth(new ReactiveVariable<float>(config.MaxHealth))
+
+                .AddIsDead(new ReactiveVariable<bool>())
+                .AddInDeathProcess()
+                .AddDeathProcessCurrentTime(new ReactiveVariable<float>(config.DeathProcessTime))
+                .AddDeathProcessInitialTime(new ReactiveVariable<float>(config.DeathProcessTime))
+
+                .AddTakeDamageRequest()
+                .AddTakeDamageEvent();
+
+            ICompositeCondition canApplyDamage = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.IsDead.Value == false));
+
+            ICompositeCondition mustDie = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.CurrentHealth.Value <= 0));
+
+            ICompositeCondition mustSelfRelease = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.IsDead.Value == true))
+                .Add(new FuncCondition(() => entity.InDeathProcess.Value == false));
+
+            entity
+                .AddMustDie(mustDie)
+                .AddMustSelfRelease(mustSelfRelease)
+                .AddCanApplyDamage(canApplyDamage)
+                ;
+
+            entity
+                .AddSystem(new ApplyDamageSystem())
+                .AddSystem(new DeathSystem())
+                .AddSystem(new DeathProcessTimerSystem())
+                .AddSystem(new DisableCollidersOnDeathSystem())
+                .AddSystem(new SelfReleaseSystem(_entitiesLifeContext))
+            ;
 
             return entity;
         }
@@ -77,12 +155,50 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
             _monoEntitiesFactory.Create(entity, parent, config.PrefabPath);
 
             entity
+                .AddMaxHealth(new ReactiveVariable<float>(config.MaxHealth))
+                .AddCurrentHealth(new ReactiveVariable<float>(config.MaxHealth))
+
+                .AddIsDead(new ReactiveVariable<bool>())
+                .AddInDeathProcess()
+                .AddDeathProcessCurrentTime(new ReactiveVariable<float>(config.DeathProcessTime))
+                .AddDeathProcessInitialTime(new ReactiveVariable<float>(config.DeathProcessTime))
+
+                .AddTakeDamageRequest()
+                .AddTakeDamageEvent()
+
                 .AddMoveDirection()
                 .AddRotationDirection()
                 .AddMoveSpeed(new ReactiveVariable<float>(config.MoveSpeed));
 
+            ICompositeCondition canMove = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.IsDead.Value == false))
+                .Add(new FuncCondition(() => entity.InDeathProcess.Value == false));
+
+            ICompositeCondition canApplyDamage = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.IsDead.Value == false));
+
+            ICompositeCondition mustDie = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.CurrentHealth.Value <= 0));
+
+            ICompositeCondition mustSelfRelease = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.IsDead.Value == true))
+                .Add(new FuncCondition(() => entity.InDeathProcess.Value == false));
+
             entity
-                .AddSystem(new RigidbodyMovementSystem());
+                .AddMustDie(mustDie)
+                .AddCanMove(canMove)
+                .AddMustSelfRelease(mustSelfRelease)
+                .AddCanApplyDamage(canApplyDamage)
+                ;
+
+            entity
+                .AddSystem(new RigidbodyMovementSystem())
+                .AddSystem(new ApplyDamageSystem())
+                .AddSystem(new DeathSystem())
+                .AddSystem(new DeathProcessTimerSystem())
+                .AddSystem(new DisableCollidersOnDeathSystem())
+                .AddSystem(new SelfReleaseSystem(_entitiesLifeContext))
+            ;
 
             return entity;
         }
@@ -261,10 +377,11 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
         public Entity CreateMainShip(Transform parent, MainShipConfig config)
         {
             Entity entity = CreateEmpty();
-            Vector3 basePosition = Vector3.up * 10;
 
-            _monoEntitiesFactory.Create(entity, parent == null ? basePosition : parent.position, config.PrefabPath)
-                .GetComponentInChildren<BallistaController>().Init(_container.Resolve<IInputService>());
+            float baseHeight = 12;
+            Vector3 basePosition = Vector3.up * baseHeight;
+
+            _monoEntitiesFactory.Create(entity, parent == null ? basePosition : parent.position, config.PrefabPath);
 
             // saved data
             PlayerMainShipDataProvider shipData = _container.Resolve<PlayerMainShipDataProvider>();
@@ -390,6 +507,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
         }
         // vehicles
 
+
         // projectiles
         public Entity CreateSimpleProjectile(
             Transform parent, 
@@ -450,6 +568,16 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
             return entity;
         }
         // projectiles
+
+
+        public Entity CreateBallista(Transform parent, BallistaConfig config)
+        {
+            Entity entity = CreateEmpty();
+
+            _monoEntitiesFactory.Create(entity, parent, config.PrefabPath);
+
+            return entity;
+        }
 
         private Entity CreateEmpty() => new Entity();
     }

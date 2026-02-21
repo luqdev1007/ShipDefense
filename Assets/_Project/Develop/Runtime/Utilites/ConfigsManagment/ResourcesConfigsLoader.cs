@@ -1,3 +1,4 @@
+using Assets._Project.Develop.Runtime.Configs.Gameplay.Entities;
 using Assets._Project.Develop.Runtime.Configs.Gameplay.Entities.MainHeroes;
 using Assets._Project.Develop.Runtime.Configs.Gameplay.Entities.Projectiles;
 using Assets._Project.Develop.Runtime.Configs.Gameplay.Explosions;
@@ -30,11 +31,14 @@ namespace Assets._Project.Develop.Runtime.Utilites.ConfigsManagment
 
             { typeof(CaptainConfig), "Configs/Gameplay/Entities/MainHeroes/CaptainConfig" },
             { typeof(WizardConfig), "Configs/Gameplay/Entities/MainHeroes/WizardConfig" },
+            { typeof(EngineerConfig), "Configs/Gameplay/Entities/MainHeroes/EngineerConfig" },
 
             { typeof(SimpleProjectileConfig), "Configs/Gameplay/Entities/Projectiles/SimpleProjectileConfig" },
 
             { typeof(MainShipConfig), "Configs/Gameplay/Entities/Vehicles/MainShipConfig" },
             { typeof(SmallShipConfig), "Configs/Gameplay/Entities/Vehicles/SmallShipConfig" },
+
+            { typeof(BallistaConfig), "Configs/Gameplay/Entities/Ballista/BallistaConfig" },
         };
 
         public ResourcesConfigsLoader(ResourcesAssetsLoader resources)

@@ -46,6 +46,23 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.MainHero
             return entity;
         }
 
+        public Entity CreateEngineer(Transform parent)
+        {
+            EngineerConfig config = _configsProviderService.GetConfig<EngineerConfig>();
+
+            Entity entity = _entitiesFactory.CreateEngineer(parent, config);
+
+            entity
+                .AddIsMainHero()
+                .AddTeam(new ReactiveVariable<Teams>(Teams.Allies));
+
+            _brainsFactory.CreateEmptyBrain(entity);
+
+            _entitiesLifeContext.Add(entity);
+
+            return entity;
+        }
+
         public Entity CreateWizard(Transform parent)
         {
             WizardConfig config = _configsProviderService.GetConfig<WizardConfig>();

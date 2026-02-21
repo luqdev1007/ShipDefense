@@ -1,4 +1,5 @@
 ﻿using Assets._Project.Develop.Infrastructure.DI;
+using Assets._Project.Develop.Runtime.Configs.Gameplay.Entities;
 using Assets._Project.Develop.Runtime.Configs.Gameplay.Entities.MainHeroes;
 using Assets._Project.Develop.Runtime.Configs.Gameplay.Entities.Projectiles;
 using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore;
@@ -13,6 +14,7 @@ using Assets._Project.Develop.Runtime.UI.Gameplay;
 using Assets._Project.Develop.Runtime.Utilites.ConfigsManagment;
 using Assets._Project.Develop.Runtime.Utilites.Timer;
 using System.Linq;
+using Unity.Cinemachine;
 using UnityEngine;
 
 namespace Assets._Project.Develop.Runtime.Gameplay
@@ -24,6 +26,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay
 
         private DIContainer _container;
 
+        private EntitiesFactory _entitiesFactory;
         private ProjectilesFactory _projectilesFactory;
         private EnemiesFactory _enemiesFactory;
         private VehiclesFactory _vehiclesFactory;
@@ -36,18 +39,18 @@ namespace Assets._Project.Develop.Runtime.Gameplay
 
         private bool _isRunning;
 
-        // Entities
+        // Main Entities
         private Entity _mainShip;
         private Entity _captain;
         private Entity _wizard;
-
+        private Entity _engineer;
         private BallistaController _ballista;
-
-        private Transform _projectileParent;
 
         public void Initialize(DIContainer container)
         {
             _container = container;
+
+            _entitiesFactory = _container.Resolve<EntitiesFactory>();
 
             _enemiesFactory = _container.Resolve<EnemiesFactory>();
             _vehiclesFactory = _container.Resolve<VehiclesFactory>();
@@ -72,8 +75,12 @@ namespace Assets._Project.Develop.Runtime.Gameplay
             ShipPlace[] shipPlaces = _mainShip.Transform.GetComponentsInChildren<ShipPlace>();
 
             // ballista
-            _ballista = _mainShip.Transform.GetComponentInChildren<BallistaController>(); // entity?
-            _projectileParent = _ballista.ProjectileParent;
+            BallistaConfig ballistaConfig = _container.Resolve<ConfigsProviderService>().GetConfig<BallistaConfig>();
+            Transform ballistaSpawnPointParent = shipPlaces.First(i => i.PlaceType == ShipPlaceType.Ballista).transform;
+            _ballista = _entitiesFactory.CreateBallista(ballistaSpawnPointParent, ballistaConfig)
+                .Transform.GetComponent<BallistaController>();
+            _ballista.Init(_container.Resolve<IInputService>());
+            _mainShip.Transform.GetComponentInChildren<CinemachineCamera>().Target.TrackingTarget = _ballista.CameraPivot;
 
             // captain
             Transform captainSpawnPointParent = shipPlaces.First(i => i.PlaceType == ShipPlaceType.Driver).transform;
@@ -82,6 +89,11 @@ namespace Assets._Project.Develop.Runtime.Gameplay
             // wizard
             Transform wizardSpawnPointParent = shipPlaces.First(i => i.PlaceType == ShipPlaceType.Mast).transform;
             _wizard = _mainHeroesFactory.CreateWizard(wizardSpawnPointParent);
+
+            // engineer
+            Transform engineerSpawnPointParent = shipPlaces.First(i => i.PlaceType == ShipPlaceType.Paluba).transform;
+            _engineer = _mainHeroesFactory.CreateEngineer(engineerSpawnPointParent);
+            _engineer.Transform.GetComponent<ConfigurableJoint>().connectedBody = _ballista.EngineerPivot;
 
             // UI
             _gameplayScreenPresenter.SubscribeHealthViewToEntity(_mainShip);
@@ -94,14 +106,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay
 
             if (_input.IsAttackKeyReleased)
             {
-                float ballistaPower = 25;
-                float launchPowerMultiplier = _ballista.ChargeProgress < 0.5f ? 1f : _ballista.ChargeProgress * 2f;
-
-                _projectilesFactory.Create(
-                    _projectileParent, 
-                    new ProjectileCreationContext(_mainShip, 
-                    launchPower: ballistaPower * launchPowerMultiplier, finalDamage: 2, launchDelay: 0.25f),
-                    _container.Resolve<ConfigsProviderService>().GetConfig<SimpleProjectileConfig>());
+                BallistaAttack();
             }
 
             if (Input.GetKeyDown(KeyCode.I))
@@ -111,30 +116,62 @@ namespace Assets._Project.Develop.Runtime.Gameplay
 
             if (Input.GetKeyDown(KeyCode.F))
             {
-                float prepTime = 10;
-                _gameplayScreenPresenter.ShowPreperationTimer(_container
-                    .Resolve<TimerServiceFactory>().Create(prepTime));
+                ShowPrepTimer();
             }
 
             if (Input.GetKeyDown(KeyCode.E))
             {
-                Transform randomSpawner = _spawners[Random.Range(0, _spawners.Length)];
+                CreateEnemySmallShip();
+            }
+        }
 
-                Entity entity = _vehiclesFactory.Create(randomSpawner, 
-                    Teams.Enemies, 
-                    _container.Resolve<ConfigsProviderService>().GetConfig<SmallShipConfig>());
+        private void BallistaAttack()
+        {
+            float ballistaPower = _ballista.ShootPower;
+            float launchPowerMultiplier = _ballista.ChargeProgress < 0.5f ? 1f : _ballista.ChargeProgress * 2f;
 
-                ShipPlace[] places = entity.Transform.GetComponentsInChildren<ShipPlace>();
+            _projectilesFactory.Create(
+                _ballista.ProjectileParent,
+                new ProjectileCreationContext(_mainShip,
+                launchPower: ballistaPower * launchPowerMultiplier, finalDamage: 2, launchDelay: 0.25f),
+                _container.Resolve<ConfigsProviderService>().GetConfig<SimpleProjectileConfig>());
+        }
 
-                foreach (ShipPlace place in places)
+        private void ShowPrepTimer()
+        {
+            float prepTime = 10;
+            _gameplayScreenPresenter.ShowPreperationTimer(_container
+                .Resolve<TimerServiceFactory>().Create(prepTime));
+        }
+
+        private void CreateEnemySmallShip()
+        {
+            Transform randomSpawner = _spawners[Random.Range(0, _spawners.Length)];
+
+            Entity entity = _vehiclesFactory.Create(randomSpawner,
+                Teams.Enemies,
+                _container.Resolve<ConfigsProviderService>().GetConfig<SmallShipConfig>());
+
+            ShipPlace[] places = entity.Transform.GetComponentsInChildren<ShipPlace>();
+
+            foreach (ShipPlace place in places)
+            {
+                switch (place.PlaceType)
                 {
-                    switch (place.PlaceType)
-                    {
-                        case ShipPlaceType.Driver:
-                            _enemiesFactory.Create(place.transform, 
-                                _container.Resolve<ConfigsProviderService>().GetConfig<DriverConfig>());
-                            break;
-                    }
+                    case ShipPlaceType.Driver:
+                        _enemiesFactory.Create(place.transform,
+                            _container.Resolve<ConfigsProviderService>().GetConfig<DriverConfig>());
+                        break;
+
+                    case ShipPlaceType.MeleeSmall:
+                        _enemiesFactory.Create(place.transform,
+                            _container.Resolve<ConfigsProviderService>().GetConfig<SoldierConfig>());
+                        break;
+
+                    case ShipPlaceType.RangeSmall:
+                        _enemiesFactory.Create(place.transform,
+                            _container.Resolve<ConfigsProviderService>().GetConfig<ArcherConfig>());
+                        break;
                 }
             }
         }
