@@ -11,7 +11,6 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.MovementFeature
         private ReactiveVariable<Vector3> _direction;
         private ReactiveVariable<float> _rotationSpeed;
         private Rigidbody _rigidbody;
-
         private ICompositeCondition _canRotate;
 
         public void OnInit(Entity entity)
@@ -19,11 +18,16 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.MovementFeature
             _direction = entity.RotationDirection;
             _rigidbody = entity.Rigidbody;
             _rotationSpeed = entity.RotationSpeed;
-
             _canRotate = entity.CanRotate;
 
-            if (_direction.Value != Vector3.zero)
-                _rigidbody.transform.rotation = Quaternion.LookRotation(_direction.Value.normalized);
+            // Исправлено: применяем те же правила при старте
+            Vector3 startDir = _direction.Value;
+            startDir.y = 0;
+
+            if (startDir.sqrMagnitude > 0.001f)
+            {
+                _rigidbody.rotation = Quaternion.LookRotation(startDir.normalized);
+            }
         }
 
         public void OnUpdate(float deltaTime)
@@ -33,14 +37,23 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.MovementFeature
 
             Vector3 direction = _direction.Value;
 
+            // Гарантируем "плоское" вращение
             direction.y = 0;
 
-            if (direction == Vector3.zero)
+            // Используем sqrMagnitude для производительности и точности
+            if (direction.sqrMagnitude < 0.0001f)
                 return;
 
-            Quaternion lookRotation = Quaternion.LookRotation(direction);
+            // Создаем целевой поворот
+            Quaternion lookRotation = Quaternion.LookRotation(direction.normalized);
+
+            // Если мы уже почти смотрим туда, куда надо, ничего не делаем
+            if (Quaternion.Angle(_rigidbody.rotation, lookRotation) < 0.1f)
+                return;
 
             float step = _rotationSpeed.Value * deltaTime;
+
+            // Плавный поворот физического тела
             Quaternion rotation = Quaternion.RotateTowards(_rigidbody.rotation, lookRotation, step);
 
             _rigidbody.MoveRotation(rotation);

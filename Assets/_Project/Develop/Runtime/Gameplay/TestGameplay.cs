@@ -44,7 +44,9 @@ namespace Assets._Project.Develop.Runtime.Gameplay
         private Entity _captain;
         private Entity _wizard;
         private Entity _engineer;
-        private BallistaController _ballista;
+        private Entity _ballista;
+
+        private BallistaController _ballistaController;
 
         public void Initialize(DIContainer container)
         {
@@ -77,10 +79,12 @@ namespace Assets._Project.Develop.Runtime.Gameplay
             // ballista
             BallistaConfig ballistaConfig = _container.Resolve<ConfigsProviderService>().GetConfig<BallistaConfig>();
             Transform ballistaSpawnPointParent = shipPlaces.First(i => i.PlaceType == ShipPlaceType.Ballista).transform;
-            _ballista = _entitiesFactory.CreateBallista(ballistaSpawnPointParent, ballistaConfig)
-                .Transform.GetComponent<BallistaController>();
-            _ballista.Init(_container.Resolve<IInputService>());
-            _mainShip.Transform.GetComponentInChildren<CinemachineCamera>().Target.TrackingTarget = _ballista.CameraPivot;
+            _ballista = _entitiesFactory.CreateBallista(ballistaSpawnPointParent, ballistaConfig, Teams.Allies);
+
+            _ballistaController = _ballista.Transform.GetComponent<BallistaController>();
+            _ballistaController.Init(_container.Resolve<IInputService>());
+
+            _mainShip.Transform.GetComponentInChildren<CinemachineCamera>().Target.TrackingTarget = _ballistaController.CameraPivot;
 
             // captain
             Transform captainSpawnPointParent = shipPlaces.First(i => i.PlaceType == ShipPlaceType.Driver).transform;
@@ -93,7 +97,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay
             // engineer
             Transform engineerSpawnPointParent = shipPlaces.First(i => i.PlaceType == ShipPlaceType.Paluba).transform;
             _engineer = _mainHeroesFactory.CreateEngineer(engineerSpawnPointParent);
-            _engineer.Transform.GetComponent<ConfigurableJoint>().connectedBody = _ballista.EngineerPivot;
+            _engineer.Transform.GetComponent<ConfigurableJoint>().connectedBody = _ballistaController.EngineerPivot;
 
             // UI
             _gameplayScreenPresenter.SubscribeHealthViewToEntity(_mainShip);
@@ -127,14 +131,19 @@ namespace Assets._Project.Develop.Runtime.Gameplay
 
         private void BallistaAttack()
         {
-            float ballistaPower = _ballista.ShootPower;
-            float launchPowerMultiplier = _ballista.ChargeProgress < 0.5f ? 1f : _ballista.ChargeProgress * 2f;
+            float ballistaPower = _ballistaController.ShootPower;
+            float launchPowerMultiplier = _ballistaController.ChargeProgress < 0.5f ? 1f : _ballistaController.ChargeProgress * 2f;
+            SimpleProjectileConfig config = _container.Resolve<ConfigsProviderService>().GetConfig<SimpleProjectileConfig>();
+            config.GravityScale = 10;
 
             _projectilesFactory.Create(
-                _ballista.ProjectileParent,
-                new ProjectileCreationContext(_mainShip,
-                launchPower: ballistaPower * launchPowerMultiplier, finalDamage: 2, launchDelay: 0.25f),
-                _container.Resolve<ConfigsProviderService>().GetConfig<SimpleProjectileConfig>());
+                _ballistaController.ProjectileParent,
+                new ProjectileCreationContext(_ballista,
+                launchPower: ballistaPower * launchPowerMultiplier, 
+                finalDamage: 2, 
+                launchDelay: 0.25f, 
+                shootDirection: _ballistaController.ProjectileParent.forward),
+                config);
         }
 
         private void ShowPrepTimer()

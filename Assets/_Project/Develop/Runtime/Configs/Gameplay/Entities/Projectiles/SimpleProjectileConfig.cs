@@ -6,6 +6,6 @@ namespace Assets._Project.Develop.Runtime.Configs.Gameplay.Entities.Projectiles
     public class SimpleProjectileConfig : EntityConfig
     {
         [field: SerializeField] public string PrefabPath { get; private set; } = "Entities/Projectiles/SimpleProjectile";
-        [field: SerializeField] public float GravityScale { get; private set; } = 10;
+        [field: SerializeField] public float GravityScale { get; set; } = 10;
     }
 }

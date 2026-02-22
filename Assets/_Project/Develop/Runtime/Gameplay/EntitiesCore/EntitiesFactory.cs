@@ -20,6 +20,7 @@ using Assets._Project.Develop.Runtime.Utilites.Conditions;
 using Assets._Project.Develop.Runtime.Utilites.ConfigsManagment;
 using Assets._Project.Develop.Runtime.Utilites.CoroutinesManagment;
 using Assets._Project.Develop.Runtime.Utilites.Reactive;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
@@ -548,7 +549,9 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
             Entity entity = CreateEmpty();
 
             MonoEntity mono = _monoEntitiesFactory.Create(entity, parent, config.PrefabPath);
-            Vector3 shootDirection = parent.forward;
+
+            // Vector3 shootDirection = parent.forward;
+            Vector3 shootDirection = ctx.ShootDirection;
 
             entity
                 .AddPushDirection(new ReactiveVariable<Vector3>(shootDirection))
@@ -601,11 +604,14 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
         // projectiles
 
 
-        public Entity CreateBallista(Transform parent, BallistaConfig config)
+        public Entity CreateBallista(Transform parent, BallistaConfig config, Teams team)
         {
             Entity entity = CreateEmpty();
 
-            _monoEntitiesFactory.Create(entity, parent, config.PrefabPath);
+            MonoEntity mono =_monoEntitiesFactory.Create(entity, parent, config.PrefabPath);
+
+            entity
+                .AddTeam(new ReactiveVariable<Teams>(team));
 
             return entity;
         }

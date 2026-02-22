@@ -46,11 +46,22 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Attack.Shoot
 
         private void OnAttackDelayEnd()
         {
+            Vector3 targetPos = _entity.CurrentTarget.Value.Transform.position;
+            Vector3 originPos = _shootPoint.position;
+
+            Vector3 direction = (targetPos - originPos).normalized;
+            SimpleProjectileConfig config = _configsProviderService.GetConfig<SimpleProjectileConfig>();
+            config.GravityScale = 0;
+
             _projectilesFactory.Create(
                 _shootPoint,
                 new ProjectileCreationContext(_entity,
-                launchPower: 15, finalDamage: _damage.Value, launchDelay: 0.05f),
-                _configsProviderService.GetConfig<SimpleProjectileConfig>());
+                launchPower: 15,
+                finalDamage: _damage.Value, 
+                launchDelay: 0.05f,
+                shootDirection: direction),
+                config
+                );
         }
     }
 }

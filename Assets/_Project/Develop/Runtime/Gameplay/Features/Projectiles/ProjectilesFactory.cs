@@ -25,14 +25,14 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Enemies
             _entitiesLifeContext = _container.Resolve<EntitiesLifeContext>();
         }
 
-        public Entity Create(Transform parent, ProjectileCreationContext ctx, EntityConfig config)
+        public Entity Create(Transform parent, ProjectileCreationContext ctx, SimpleProjectileConfig config)
         {
             Entity entity;
 
             switch (config)
             {
                 case SimpleProjectileConfig simpleProjectileConfig:
-                    entity = _entitiesFactory.CreateSimpleProjectile(parent, ctx, simpleProjectileConfig);
+                    entity = _entitiesFactory.CreateSimpleProjectile(parent, ctx, simpleProjectileConfig); 
                     _brainsFactory.CreateEmptyBrain(entity);
                     break;
 

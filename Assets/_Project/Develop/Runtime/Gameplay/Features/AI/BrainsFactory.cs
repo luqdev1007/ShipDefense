@@ -122,13 +122,25 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.AI
                 {
                     Entity target = currentTarget.Value;
 
-                    if (target == null)
+                    if (target == null || target.Transform == null)
                         return false;
 
-                    float angleToTarget = Quaternion.Angle(transform.rotation, 
-                        Quaternion.LookRotation(target.Transform.position - transform.position));
+                    // 1. Получаем направление к цели
+                    Vector3 direction = target.Transform.position - transform.position;
 
-                    float minThreshold = 3f;
+                    // 2. САМОЕ ВАЖНОЕ: Игнорируем разницу в высоте
+                    direction.y = 0;
+
+                    if (direction.sqrMagnitude < 0.001f) // Проверка на случай, если цель прямо под нами
+                        return true;
+
+                    // 3. Создаем "плоский" целевой поворот
+                    Quaternion targetRotation = Quaternion.LookRotation(direction);
+
+                    // 4. Считаем угол только в горизонтальной плоскости
+                    float angleToTarget = Quaternion.Angle(transform.rotation, targetRotation);
+
+                    float minThreshold = 5f; // Попробуйте начать с 5 градусов, 3 может быть слишком жестко
 
                     return angleToTarget < minThreshold;
                 }));
