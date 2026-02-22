@@ -9,13 +9,9 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
         {
             if (damageable.TryGetTakeDamageRequest(out ReactiveEvent<float> takeDamageRequest) == false)
                 return false;
-
-            if (source.TryGetTeam(out ReactiveVariable<Teams> sourceTeam)
-                && damageable.TryGetTeam(out ReactiveVariable<Teams> damageableTeam))
-            {
-                if (sourceTeam.Value == damageableTeam.Value)
-                    return false;
-            }
+     
+            if (IsSameTeam(source, damageable)) 
+                return false;
 
             takeDamageRequest.Invoke(damage);
 

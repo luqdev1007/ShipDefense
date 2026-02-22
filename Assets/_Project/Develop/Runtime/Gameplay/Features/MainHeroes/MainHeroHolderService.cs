@@ -32,7 +32,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.MainHero
 
         private void OnEntityAdded(Entity entity)
         {
-            if (entity.HasComponent<IsMainHero>())
+            if (entity.HasComponent<MainHeroTag>())
             {
                 _entitiesLifeContext.Added -= OnEntityAdded;
                 _mainHero = entity;

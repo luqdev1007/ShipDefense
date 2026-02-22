@@ -107,12 +107,17 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.AI
 
             AttackTriggerState attackTriggerState = new AttackTriggerState(entity);
 
-            ICondition canAttack = entity.CanStartAttack;
+            ICondition canStartAttack = entity.CanStartAttack;
             Transform transform = entity.Transform;
             ReactiveVariable<Entity> currentTarget = entity.CurrentTarget;
 
+            /* work!
+            Debug.Log("Can start attack " + canStartAttack.Evaluate());
+            ICompositeCondition fromRotateToAttackCondition = new CompositeCondition().Add(canStartAttack);
+            */
+
             ICompositeCondition fromRotateToAttackCondition = new CompositeCondition()
-                .Add(canAttack)
+                .Add(canStartAttack)
                 .Add(new FuncCondition(() =>
                 {
                     Entity target = currentTarget.Value;

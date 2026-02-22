@@ -36,7 +36,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.MainHero
             Entity entity = _entitiesFactory.CreateCaptain(parent, config);
 
             entity
-                .AddIsMainHero()
+                .AddMainHeroTag(new ReactiveVariable<MainHeroes>(MainHeroes.Captain))
                 .AddTeam(new ReactiveVariable<Teams>(Teams.Allies));
 
             _brainsFactory.CreateCaptainBrain(entity);
@@ -53,7 +53,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.MainHero
             Entity entity = _entitiesFactory.CreateEngineer(parent, config);
 
             entity
-                .AddIsMainHero()
+                .AddMainHeroTag(new ReactiveVariable<MainHeroes>(MainHeroes.Engineer))
                 .AddTeam(new ReactiveVariable<Teams>(Teams.Allies));
 
             _brainsFactory.CreateEmptyBrain(entity);
@@ -70,8 +70,10 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.MainHero
             Entity entity = _entitiesFactory.CreateWizard(parent, config);
 
             entity
-                .AddIsMainHero()
+                .AddMainHeroTag(new ReactiveVariable<MainHeroes>(MainHeroes.Wizard))
                 .AddTeam(new ReactiveVariable<Teams>(Teams.Allies));
+
+            entity.AddCurrentTarget();
 
             _brainsFactory.CreateWizardBrain(entity, new NearestDamagableTargetSelector(entity));
 

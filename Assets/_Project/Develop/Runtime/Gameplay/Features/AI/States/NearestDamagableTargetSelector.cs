@@ -2,8 +2,6 @@
 using Assets._Project.Develop.Runtime.Gameplay.Features.ApplyDamage;
 using Assets._Project.Develop.Runtime.Utilites.Conditions;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Assets._Project.Develop.Runtime.Gameplay.Features.AI.States
@@ -21,77 +19,48 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.AI.States
 
         public Entity SelectTargetFrom(IEnumerable<Entity> targets)
         {
-            Debug.Log("Ищу цель среди: " + targets.Count() + " entities");
+            if (targets == null) return null;
 
-            string list = "";
+            Entity closestTarget = null;
+            float minDistance = float.MaxValue;
 
             foreach (Entity target in targets)
             {
-                if (target.Transform == null)
+                if (target == null || target.Transform == null || target == _source)
                     continue;
 
-                list += target.Transform.gameObject.name + " ";
-            }
+                if (target.HasComponent<TakeDamageRequest>() == false)
+                    continue;
 
-            Debug.Log("Targets: " + list);
-
-            IEnumerable<Entity> selectedTargets = targets.Where(target =>
-            {
-                bool result = target.HasComponent<TakeDamageRequest>();
+                if (EntitiesHelper.IsSameTeam(_source, target))
+                    continue;
 
                 if (target.TryGetCanApplyDamage(out ICompositeCondition canApplyDamage))
                 {
-                    result = result && canApplyDamage.Evaluate();
+                    if (canApplyDamage.Evaluate() == false)
+                        continue;
                 }
 
-                result = result && EntitiesHelper.IsSameTeam(_source, target) == false;
+                Vector3 diff = target.Transform.position - _sourceTransform.position;
+                float curSqrDistance = diff.sqrMagnitude;
 
-                result = result && (target != _source);
-
-                return result;
-            });
-
-            Debug.Log("Selected targets count: " + selectedTargets.Count());
-
-            if (selectedTargets.Any() == false)
-            {
-                Debug.Log("no selected targets");
-                return null;
-            }
-
-            Entity closestTarget = selectedTargets.First();
-
-            if (TryGetDistanceTo(closestTarget, out float minDistance) == false)
-            {
-                return null;
-            }
-
-            foreach (Entity target in selectedTargets)
-            {
-                if (TryGetDistanceTo(target, out float distance) == false)
-                    continue;
-
-                if (distance < minDistance)
+                if (curSqrDistance < minDistance)
                 {
-                    minDistance = distance;
+                    minDistance = curSqrDistance;
                     closestTarget = target;
                 }
             }
 
-            return closestTarget;
-        }
-
-        private bool TryGetDistanceTo(Entity target, out float result)
-        {
-            if (target == null || target.Transform == null)
+            if (closestTarget == null)
             {
-                result = 0;
-                return false;
+                Debug.Log("[TargetSelector] Подходящих целей не найдено.");
+            }
+            else
+            {
+                Debug.Log($"[TargetSelector] Найдена цель: {closestTarget.Transform.gameObject.name}");
             }
 
-            result = (_sourceTransform.position - target.Transform.position).magnitude;
-
-            return true;
+            return closestTarget;
         }
     }
 }

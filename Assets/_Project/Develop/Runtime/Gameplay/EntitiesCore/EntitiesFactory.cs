@@ -4,12 +4,12 @@ using Assets._Project.Develop.Runtime.Configs.Gameplay.Entities.MainHeroes;
 using Assets._Project.Develop.Runtime.Configs.Gameplay.Entities.Projectiles;
 using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Mono;
 using Assets._Project.Develop.Runtime.Gameplay.Features.ApplyDamage;
-using Assets._Project.Develop.Runtime.Gameplay.Features.Ballista;
+using Assets._Project.Develop.Runtime.Gameplay.Features.Attack;
+using Assets._Project.Develop.Runtime.Gameplay.Features.Attack.Shoot;
 using Assets._Project.Develop.Runtime.Gameplay.Features.ContactTakeDamage;
 using Assets._Project.Develop.Runtime.Gameplay.Features.CustomPhysics;
 using Assets._Project.Develop.Runtime.Gameplay.Features.Enemies;
 using Assets._Project.Develop.Runtime.Gameplay.Features.ExplosionFeature;
-using Assets._Project.Develop.Runtime.Gameplay.Features.InputFeature;
 using Assets._Project.Develop.Runtime.Gameplay.Features.LifeCycle;
 using Assets._Project.Develop.Runtime.Gameplay.Features.MovementFeature;
 using Assets._Project.Develop.Runtime.Gameplay.Features.Sensors;
@@ -17,10 +17,10 @@ using Assets._Project.Develop.Runtime.Gameplay.Features.TeamsFeature;
 using Assets._Project.Develop.Runtime.Meta.Features.ShipUpgrades;
 using Assets._Project.Develop.Runtime.Utilites;
 using Assets._Project.Develop.Runtime.Utilites.Conditions;
+using Assets._Project.Develop.Runtime.Utilites.ConfigsManagment;
 using Assets._Project.Develop.Runtime.Utilites.CoroutinesManagment;
 using Assets._Project.Develop.Runtime.Utilites.Reactive;
 using UnityEngine;
-using static UnityEngine.Rendering.STP;
 
 namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
 {
@@ -50,33 +50,42 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
             _monoEntitiesFactory.Create(entity, parent, config.PrefabPath);
 
             entity
-                .AddStartAttackRequest()
-                .AddInAttackProcess(new ReactiveVariable<bool>(false))
-                .AddCurrentTarget()
-
-                .AddRotationDirection()
                 .AddRotationSpeed(new ReactiveVariable<float>(config.RotationSpeed))
+                .AddRotationDirection()
 
                 .AddMaxHealth(new ReactiveVariable<float>(config.MaxHealth))
                 .AddCurrentHealth(new ReactiveVariable<float>(config.MaxHealth))
 
-                .AddIsDead(new ReactiveVariable<bool>())
+                .AddIsDead()
                 .AddInDeathProcess()
-                .AddDeathProcessCurrentTime(new ReactiveVariable<float>(config.DeathProcessTime))
+
                 .AddDeathProcessInitialTime(new ReactiveVariable<float>(config.DeathProcessTime))
+                .AddDeathProcessCurrentTime()
 
                 .AddTakeDamageRequest()
-                .AddTakeDamageEvent();
+                .AddTakeDamageEvent()
 
-            ICompositeCondition canStartAttack = new CompositeCondition()
-                .Add(new FuncCondition(() => entity.IsDead.Value == false));
+                .AddAttackProcessInitialTime(new ReactiveVariable<float>(config.AttackProcessTime))
+                .AddAttackProcessCurrentTime()
+                .AddInAttackProcess()
+
+                .AddStartAttackRequest()
+                .AddStartAttackEvent()
+                .AddEndAttackEvent()
+                .AddAttackCanceledEvent()
+
+                .AddAttackDelayTime(new ReactiveVariable<float>(config.AttackDelayTime))
+                .AddAttackDelayEndEvent()
+
+                .AddInstantAttackDamage(new ReactiveVariable<float>(config.InstantAttackDamage))
+
+                .AddAttackCooldownInitialTime(new ReactiveVariable<float>(config.AttackCooldown))
+                .AddAttackCooldownCurrentTime()
+                .AddInAttackCooldown();
 
             ICompositeCondition canRotate = new CompositeCondition()
                 .Add(new FuncCondition(() => entity.IsDead.Value == false))
                 .Add(new FuncCondition(() => entity.InAttackProcess.Value == false));
-
-            ICompositeCondition canApplyDamage = new CompositeCondition()
-                .Add(new FuncCondition(() => entity.IsDead.Value == false));
 
             ICompositeCondition mustDie = new CompositeCondition()
                 .Add(new FuncCondition(() => entity.CurrentHealth.Value <= 0));
@@ -85,20 +94,42 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
                 .Add(new FuncCondition(() => entity.IsDead.Value == true))
                 .Add(new FuncCondition(() => entity.InDeathProcess.Value == false));
 
+            ICompositeCondition canApplyDamage = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.IsDead.Value == false));
+
+            ICompositeCondition canStartAttack = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.IsDead.Value == false))
+                .Add(new FuncCondition(() => entity.InAttackProcess.Value == false))
+                .Add(new FuncCondition(() => entity.InAttackCooldown.Value == false));
+
+            ICompositeCondition mustCancelAttack = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.IsDead.Value == true));
+
             entity
+                .AddCanRotate(canRotate)
                 .AddMustDie(mustDie)
                 .AddMustSelfRelease(mustSelfRelease)
                 .AddCanApplyDamage(canApplyDamage)
                 .AddCanStartAttack(canStartAttack)
-                .AddCanRotate(canRotate);
+                .AddMustCancelAttack(mustCancelAttack);
 
             entity
-                .AddSystem(new ApplyDamageSystem())
-                .AddSystem(new DeathSystem())
-                .AddSystem(new DeathProcessTimerSystem())
-                .AddSystem(new DisableCollidersOnDeathSystem())
-                .AddSystem(new SelfReleaseSystem(_entitiesLifeContext))
-                .AddSystem(new RigidbodyRotationSystem());
+                  .AddSystem(new RigidbodyRotationSystem())
+
+                  .AddSystem(new InstantShootSystem(_container.Resolve<ProjectilesFactory>(), _container.Resolve<ConfigsProviderService>()))
+                  .AddSystem(new StartAttackSystem())
+                  .AddSystem(new AttackProcessTimerSystem())
+                  .AddSystem(new AttackDelayEndTriggerSystem())
+                  .AddSystem(new AttackCooldownTimerSystem())
+                  .AddSystem(new EndAttackSystem())
+                  .AddSystem(new AttackCancelSystem())
+
+                  .AddSystem(new ApplyDamageSystem())
+
+                  .AddSystem(new DeathSystem())
+                  .AddSystem(new DeathProcessTimerSystem())
+                  .AddSystem(new DisableCollidersOnDeathSystem())
+                  .AddSystem(new SelfReleaseSystem(_entitiesLifeContext));
 
             return entity;
         }
@@ -529,7 +560,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
                 .AddContactCollidersBuffer(new Buffer<Collider>(64))
                 .AddContactEntitiesBuffer(new Buffer<Entity>(64))
                 .AddBodyContactDamage(new ReactiveVariable<float>(ctx.FinalDamage))
-                .AddDeathMask(LayersAPI.LayerMaskWater)
+                .AddDeathMask(LayersAPI.LayerMaskWater) // ? | LayersAPI.LayerMaskDefault)
                 .AddIsTouchDeathMask()
                 .AddIsTouchAnotherTeam()
                 .AddTeam(new ReactiveVariable<Teams>(ctx.Owner.Team.Value))
