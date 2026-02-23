@@ -1,12 +1,14 @@
+using Assets._Project.Develop.Runtime.Configs.Gameplay.Levels;
+
 namespace Assets._Project.Develop.Runtime.Utilites.SceneManagement
 {
     public class GameplayInputArgs : IInputSceneArgs
     {
-        public GameplayInputArgs(int levelNumber)
+        public GameplayInputArgs(LevelConfig levelConfig)
         {
-            LevelNumber = levelNumber;
+            LevelConfig = levelConfig;
         }
 
-        public int LevelNumber { get; private set; }
+        public LevelConfig LevelConfig { get; private set; }
     }
 }

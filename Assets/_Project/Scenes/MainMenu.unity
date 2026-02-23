@@ -802,7 +802,6 @@ Transform:
   m_Children:
   - {fileID: 1195101672}
   - {fileID: 1388101864}
-  - {fileID: 2153246739965498232}
   - {fileID: 947160724}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6682,7 +6681,7 @@ Transform:
   m_GameObject: {fileID: 1633133401107663298}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -10, z: 109.1}
+  m_LocalPosition: {x: 0, y: -10, z: 110}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -6694,7 +6693,7 @@ Transform:
   - {fileID: 7645040294291000228}
   - {fileID: 348214695392645334}
   - {fileID: 8424492200222460087}
-  m_Father: {fileID: 399617078}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &2210870221797338785
 Transform:
@@ -6981,7 +6980,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a09bc0b463b1f34c9b3c6d295805223, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Config>k__BackingField: {fileID: 11400000, guid: 0b58fba675dbdd94d809bb9e8c084c93, type: 2}
+  <LevelConfig>k__BackingField: {fileID: 11400000, guid: 0b58fba675dbdd94d809bb9e8c084c93, type: 2}
 --- !u!33 &3076594689430721470
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -8355,3 +8354,4 @@ SceneRoots:
   - {fileID: 1850575454}
   - {fileID: 947143605}
   - {fileID: 1252920134}
+  - {fileID: 2153246739965498232}

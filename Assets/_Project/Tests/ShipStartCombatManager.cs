@@ -20,7 +20,11 @@ public class ShipStartCombatManager : MonoBehaviour
         if (other.TryGetComponent(out EnemyShip enemyShip) && _isTriggered == false)
         {
             _isTriggered = true;
-            _coroutinesPerformer.StartPerform(_sceneSwitcherService.ProcessingSwitchTo(Scenes.Gameplay, new GameplayInputArgs(1)));
+
+            _coroutinesPerformer.StartPerform(
+                _sceneSwitcherService.ProcessingSwitchTo(
+                    Scenes.Gameplay, 
+                    new GameplayInputArgs(enemyShip.LevelConfig)));
         }
     }
 }

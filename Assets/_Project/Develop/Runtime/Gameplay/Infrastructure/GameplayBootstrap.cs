@@ -37,8 +37,6 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Infrastructure
 
         public override IEnumerator Initialize()
         {
-            Debug.Log($"Вы попали на уровень {_inputArgs.LevelNumber}");
-
             Debug.Log("Инициализация геймплейной сцены");
 
             _walletService = _container.Resolve<WalletService>();

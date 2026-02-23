@@ -1,4 +1,5 @@
 ﻿using Assets._Project.Develop.Infrastructure.DI;
+using Assets._Project.Develop.Runtime.Configs.Gameplay.Levels;
 using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore;
 using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Mono;
 using Assets._Project.Develop.Runtime.Gameplay.Features.AI;
@@ -7,10 +8,12 @@ using Assets._Project.Develop.Runtime.Gameplay.Features.ExplosionFeature;
 using Assets._Project.Develop.Runtime.Gameplay.Features.InputFeature;
 using Assets._Project.Develop.Runtime.Gameplay.Features.MainHero;
 using Assets._Project.Develop.Runtime.Gameplay.Features.StagesFeature;
+using Assets._Project.Develop.Runtime.Gameplay.States;
 using Assets._Project.Develop.Runtime.UI;
 using Assets._Project.Develop.Runtime.UI.Core;
 using Assets._Project.Develop.Runtime.UI.Gameplay;
 using Assets._Project.Develop.Runtime.Utilites.AssetsManagment;
+using Assets._Project.Develop.Runtime.Utilites.ConfigsManagment;
 using Assets._Project.Develop.Runtime.Utilites.SceneManagement;
 using UnityEngine;
 
@@ -18,8 +21,12 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Infrastructure
 {
     public class GameplayContextRegistrations
     {
+        private static GameplayInputArgs _inputArgs;
+
         public static void Process(DIContainer container, GameplayInputArgs args)
         {
+            _inputArgs = args;
+
             // entities
             container.RegisterAsSingle(CreateMonoEntitiesFactory).NonLazy();
             container.RegisterAsSingle(CreateEntitiesFactory);
@@ -27,7 +34,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Infrastructure
             container.RegisterAsSingle(CreateCollidersRegistryService);
 
             // main heroes
-            container.RegisterAsSingle(CreateMainHeroHolderService);
+            container.RegisterAsSingle(CreateMainHeroHolderService).NonLazy();
             container.RegisterAsSingle(CreateMainHeroesFactory);
 
             // input
@@ -39,6 +46,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Infrastructure
             container.RegisterAsSingle(CreateVehiclesFactory);
             container.RegisterAsSingle(CreateProjectilesFactory);
             container.RegisterAsSingle(CreateStagesFactory);
+            container.RegisterAsSingle(CreateGameplayStatesFactory);
 
             // UI
             container.RegisterAsSingle(CreateGameplayScreenPresenter).NonLazy();
@@ -49,6 +57,30 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Infrastructure
             // AI
             container.RegisterAsSingle(CreateBrainsFactory);
             container.RegisterAsSingle(CreateAIBrainsContext);
+
+            // Stage
+            container.RegisterAsSingle(CreateStageProviderService);
+            container.RegisterAsSingle(CreateGameplayStatesContext);
+        }
+
+        private static GameplayStatesContext CreateGameplayStatesContext(DIContainer container)
+        {
+            return new GameplayStatesContext(
+                container.Resolve<GameplayStatesFactory>()
+                .CreateGameplayStateMachine(_inputArgs));
+        }
+
+        private static GameplayStatesFactory CreateGameplayStatesFactory(DIContainer container)
+        {
+            return new GameplayStatesFactory(container);
+        }
+
+        private static StageProviderService CreateStageProviderService(DIContainer container)
+        {
+            return new StageProviderService(
+                _inputArgs.LevelConfig,
+                container.Resolve<StagesFactory>()
+                );
         }
 
         private static StagesFactory CreateStagesFactory(DIContainer container)
