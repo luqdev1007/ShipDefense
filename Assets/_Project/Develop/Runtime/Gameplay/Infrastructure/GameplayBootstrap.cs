@@ -70,13 +70,21 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Infrastructure
         {
             Debug.Log("Инициализация геймплейной сцены");
 
+            // factories
             _entitiesFactory = _container.Resolve<EntitiesFactory>();
             _vehiclesFactory = _container.Resolve<VehiclesFactory>();
             _mainHeroesFactory = _container.Resolve<MainHeroesFactory>();
             _projectilesFactory = _container.Resolve<ProjectilesFactory>();
 
+            // ctx
+            _entitiesLifeContext = _container.Resolve<EntitiesLifeContext>();
+            _brainsContext = _container.Resolve<AIBrainsContext>();
+            _gameplayStatesContext = _container.Resolve<GameplayStatesContext>();
+
+            // UI
             _gameplayScreenPresenter = _container.Resolve<GameplayScreenPresenter>();
 
+            // Input
             _input = _container.Resolve<IInputService>();
 
             yield break;
@@ -90,6 +98,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Infrastructure
 
             // UI
             _gameplayScreenPresenter.SubscribeHealthViewToEntity(_mainShip);
+
+            _gameplayStatesContext.Run();
         }
 
         private void Update()
@@ -98,9 +108,14 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Infrastructure
             _entitiesLifeContext?.Update(Time.deltaTime);
             _gameplayStatesContext?.Update(Time.deltaTime);
 
-            if (_input.IsAttackKeyReleased)
+            if (_input != null && _input.IsAttackKeyReleased)
             {
                 BallistaAttack();
+            }
+
+            if (Input.GetKeyDown(KeyCode.K))
+            {
+                KillAllCrew();
             }
         }
 
@@ -128,6 +143,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Infrastructure
                 .GetConfig<MainShipConfig>(); // saved data provide
 
             _mainShip = _vehiclesFactory.Create(null, Teams.Allies, config);
+            _mainShip.AddMainShipTag();
+
             ShipPlace[] shipPlaces = _mainShip.Transform.GetComponentsInChildren<ShipPlace>();
 
             // ballista
@@ -152,6 +169,13 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Infrastructure
             Transform engineerSpawnPointParent = shipPlaces.First(i => i.PlaceType == ShipPlaceType.Paluba).transform;
             _engineer = _mainHeroesFactory.CreateEngineer(engineerSpawnPointParent);
             _engineer.Transform.GetComponent<ConfigurableJoint>().connectedBody = _ballistaController.EngineerPivot;
+        }
+
+        private void KillAllCrew()
+        {
+            _captain.CurrentHealth.Value = 0;
+            _wizard.CurrentHealth.Value = 0;
+            _engineer.CurrentHealth.Value = 0;
         }
     }
 }

@@ -33,7 +33,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.States
 
             Debug.Log("VICTORY!");
 
-            _coroutinesPerformer.StartPerform(_playerDataProvider.SaveAsync());
+            _coroutinesPerformer.StartPerform(_playerDataProvider.SaveAsync()); // saves win reward
         }
 
         public void Update(float deltaTime)

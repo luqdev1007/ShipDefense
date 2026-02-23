@@ -1,18 +1,35 @@
-﻿using Assets._Project.Develop.Runtime.Utilites.StateMachineCore;
+﻿using Assets._Project.Develop.Runtime.Gameplay.Features.Timers;
+using Assets._Project.Develop.Runtime.UI.Gameplay;
+using Assets._Project.Develop.Runtime.Utilites.StateMachineCore;
 
 namespace Assets._Project.Develop.Runtime.Gameplay.States
 {
     public class PreperationState : State, IUpdatableState
     {
-        public PreperationState()
+        private readonly GameplayTimersService _gameplayTimersService;
+        private readonly GameplayScreenPresenter _gameplayScreenPresenter;
+
+        private float _time;
+
+        public PreperationState
+            (GameplayTimersService gameplayTimersService, 
+            GameplayScreenPresenter gameplayScreenPresenter,
+            float time)
         {
+            _gameplayTimersService = gameplayTimersService;
+            _gameplayScreenPresenter = gameplayScreenPresenter;
+
+            _time = time;
         }
 
         public override void Enter()
         {
             base.Enter();
 
+            _gameplayTimersService.CreatePreperationTimer(_time);
+            _gameplayTimersService.PreperationTimer.Restart();
 
+            _gameplayScreenPresenter.ShowPreperationTimer(_gameplayTimersService.PreperationTimer);
         }
 
         public void Update(float deltaTime)
@@ -22,9 +39,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.States
 
         public override void Exit()
         {
-            base.Exit();
-
-           
+            base.Exit();          
         }
     }
 }

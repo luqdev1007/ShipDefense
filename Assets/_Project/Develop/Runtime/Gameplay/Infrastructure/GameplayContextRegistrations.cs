@@ -8,6 +8,7 @@ using Assets._Project.Develop.Runtime.Gameplay.Features.ExplosionFeature;
 using Assets._Project.Develop.Runtime.Gameplay.Features.InputFeature;
 using Assets._Project.Develop.Runtime.Gameplay.Features.MainHero;
 using Assets._Project.Develop.Runtime.Gameplay.Features.StagesFeature;
+using Assets._Project.Develop.Runtime.Gameplay.Features.Timers;
 using Assets._Project.Develop.Runtime.Gameplay.States;
 using Assets._Project.Develop.Runtime.UI;
 using Assets._Project.Develop.Runtime.UI.Core;
@@ -15,6 +16,7 @@ using Assets._Project.Develop.Runtime.UI.Gameplay;
 using Assets._Project.Develop.Runtime.Utilites.AssetsManagment;
 using Assets._Project.Develop.Runtime.Utilites.ConfigsManagment;
 using Assets._Project.Develop.Runtime.Utilites.SceneManagement;
+using Assets._Project.Develop.Runtime.Utilites.Timer;
 using UnityEngine;
 
 namespace Assets._Project.Develop.Runtime.Gameplay.Infrastructure
@@ -61,6 +63,12 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Infrastructure
             // Stage
             container.RegisterAsSingle(CreateStageProviderService);
             container.RegisterAsSingle(CreateGameplayStatesContext);
+            container.RegisterAsSingle(CreateGameplayTimersService);
+        }
+
+        private static GameplayTimersService CreateGameplayTimersService(DIContainer container)
+        {
+            return new GameplayTimersService(container.Resolve<TimerServiceFactory>());
         }
 
         private static GameplayStatesContext CreateGameplayStatesContext(DIContainer container)
@@ -72,7 +80,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Infrastructure
 
         private static GameplayStatesFactory CreateGameplayStatesFactory(DIContainer container)
         {
-            return new GameplayStatesFactory(container);
+            return new GameplayStatesFactory(container, container.Resolve<GameplayTimersService>());
         }
 
         private static StageProviderService CreateStageProviderService(DIContainer container)
@@ -103,9 +111,9 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Infrastructure
             return new EnemiesFactory(container, container.Resolve<VehiclesFactory>());
         }
 
-        private static MainHeroHolderService CreateMainHeroHolderService(DIContainer container)
+        private static MainHeroesHolderService CreateMainHeroHolderService(DIContainer container)
         {
-            return new MainHeroHolderService(container.Resolve<EntitiesLifeContext>());
+            return new MainHeroesHolderService(container.Resolve<EntitiesLifeContext>());
         }
 
         private static MainHeroesFactory CreateMainHeroesFactory(DIContainer container)

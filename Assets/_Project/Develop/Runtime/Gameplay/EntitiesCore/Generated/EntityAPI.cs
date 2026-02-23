@@ -351,6 +351,13 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
 			return AddComponent(new Assets._Project.Develop.Runtime.Gameplay.Features.MainHero.MainHeroTag() {Value = value}); 
 		}
 
+		public Assets._Project.Develop.Runtime.Gameplay.Features.MainHero.MainShipTag MainShipTagC => GetComponent<Assets._Project.Develop.Runtime.Gameplay.Features.MainHero.MainShipTag>();
+
+		public Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Entity AddMainShipTag()
+		{
+			return AddComponent(new Assets._Project.Develop.Runtime.Gameplay.Features.MainHero.MainShipTag() ); 
+		}
+
 		public Assets._Project.Develop.Runtime.Gameplay.Features.LifeCycle.CurrentHealth CurrentHealthC => GetComponent<Assets._Project.Develop.Runtime.Gameplay.Features.LifeCycle.CurrentHealth>();
 
 		public Assets._Project.Develop.Runtime.Utilites.Reactive.ReactiveVariable<System.Single> CurrentHealth => CurrentHealthC.Value;

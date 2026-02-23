@@ -2,6 +2,8 @@
 using Assets._Project.Develop.Runtime.Gameplay.Features.InputFeature;
 using Assets._Project.Develop.Runtime.Gameplay.Features.MainHero;
 using Assets._Project.Develop.Runtime.Gameplay.Features.StagesFeature;
+using Assets._Project.Develop.Runtime.Gameplay.Features.Timers;
+using Assets._Project.Develop.Runtime.UI.Gameplay;
 using Assets._Project.Develop.Runtime.Utilites.Conditions;
 using Assets._Project.Develop.Runtime.Utilites.CoroutinesManagment;
 using Assets._Project.Develop.Runtime.Utilites.DataProviders;
@@ -12,20 +14,22 @@ namespace Assets._Project.Develop.Runtime.Gameplay.States
     public class GameplayStatesFactory
     {
         private readonly DIContainer _container;
+        private readonly GameplayTimersService _gameplayTimersService;
 
-        public GameplayStatesFactory(DIContainer container)
+        public GameplayStatesFactory(DIContainer container, GameplayTimersService gameplayTimersService)
         {
             _container = container;
+            _gameplayTimersService = gameplayTimersService;
         }
 
-        public PreperationState CreatePreperationState()
+        public PreperationState CreatePreperationState(float time)
         {
-            return new PreperationState();
+            return new PreperationState(_gameplayTimersService, _container.Resolve<GameplayScreenPresenter>(), time);
         }
 
         public StageProcessState CreateStageProcessState()
         {
-            return new StageProcessState(_container.Resolve<StageProviderService>());
+            return new StageProcessState(_container.Resolve<StageProviderService>(), _container.Resolve<GameplayScreenPresenter>());
         }
 
         public WinState CreateWinState(GameplayInputArgs inputArgs)
@@ -49,7 +53,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.States
         public GameplayStateMachine CreateGameplayStateMachine(GameplayInputArgs inputArgs)
         {
             StageProviderService stageProviderService = _container.Resolve<StageProviderService>();
-            MainHeroHolderService mainHeroHolderService = _container.Resolve<MainHeroHolderService>();
+            MainHeroesHolderService mainHeroHolderService = _container.Resolve<MainHeroesHolderService>();
 
             GameplayStateMachine coreLoopState = CreateCoreLoopState();
 
@@ -60,11 +64,18 @@ namespace Assets._Project.Develop.Runtime.Gameplay.States
                 .Add(new FuncCondition(() => stageProviderService.CurrentStageResult.Value == StageResults.Completed))
                 .Add(new FuncCondition(() => stageProviderService.HasNextStage() == false));
 
-            ICompositeCondition coreLoopToDefeatStateCondition = new CompositeCondition()
+            ICompositeCondition coreLoopToDefeatStateCondition = new CompositeCondition(LogicOperations.Or)
                 .Add(new FuncCondition(() =>
                 {
-                    if (mainHeroHolderService.MainHero != null)
-                        return mainHeroHolderService.MainHero.IsDead.Value;
+                    if (mainHeroHolderService.MainShip != null)
+                        return mainHeroHolderService.IsMainShipDestroyed();
+
+                    return false;
+                }))
+                .Add(new FuncCondition(() =>
+                {
+                    if (mainHeroHolderService.MainHeroes != null)
+                        return mainHeroHolderService.IsAllHeroesDead();
 
                     return false;
                 }));
@@ -85,11 +96,12 @@ namespace Assets._Project.Develop.Runtime.Gameplay.States
         {
             StageProviderService stageProviderService = _container.Resolve<StageProviderService>();
 
-            PreperationState preperationState = CreatePreperationState();
+            PreperationState preperationState = CreatePreperationState(time: 10); // configs / gameplay input args?
             StageProcessState stageProcessState = CreateStageProcessState();
 
             ICompositeCondition preperationToStageProcessCondition = new CompositeCondition()
-                .Add(new FuncCondition(() => stageProviderService.HasNextStage()));
+                .Add(new FuncCondition(() => stageProviderService.HasNextStage()))
+                .Add(new FuncCondition(() => _gameplayTimersService.PreperationTimer.CurrentTime.Value <= 0));
 
             FuncCondition stageProcessToPreperationCondition =
                 new FuncCondition(() => stageProviderService.CurrentStageResult.Value == StageResults.Completed);
