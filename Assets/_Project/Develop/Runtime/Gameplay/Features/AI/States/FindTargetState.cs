@@ -24,7 +24,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.AI.States
         public void Update(float deltaTime)
         {
             _currentTarget.Value = _targetSelector.SelectTargetFrom(_entitiesLifeContext.Entities);
-            Debug.Log("Target: " + _currentTarget.Value == null);
+            // Debug.Log("Target: " + _currentTarget.Value == null);
         }
     }
 }

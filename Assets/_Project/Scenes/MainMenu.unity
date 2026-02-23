@@ -6965,7 +6965,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 4.210656
+  m_Radius: 2
   m_Height: 25
   m_Direction: 1
   m_Center: {x: 0, y: 1.3718895, z: 0.92055905}
@@ -6981,6 +6981,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a09bc0b463b1f34c9b3c6d295805223, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Config>k__BackingField: {fileID: 11400000, guid: 0b58fba675dbdd94d809bb9e8c084c93, type: 2}
 --- !u!33 &3076594689430721470
 MeshFilter:
   m_ObjectHideFlags: 0

@@ -19,12 +19,10 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.AI.States
             base.Enter();
 
             _attackRequest.Invoke();
-            Debug.Log("attack trigger state!");
         }
 
         public void Update(float deltaTime)
         {
-            Debug.Log("Attack trigger state");
         }
     }
 }

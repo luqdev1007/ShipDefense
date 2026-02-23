@@ -128,9 +128,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 221068262}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: SpawnPoint
-  m_TagString: Untagged
+  m_TagString: Spawner
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -432,12 +432,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03329e1776f54b147bef325a15cc50a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spawners:
-  - {fileID: 221068262}
-  - {fileID: 1250152635}
-  - {fileID: 1302211495}
-  _mainCamera: {fileID: 635422877}
-  _baseProjLaunchPower: 25
+  _config: {fileID: 11400000, guid: 4adfc697ce9a174459376f1865059df1, type: 2}
 --- !u!1 &1096858678
 GameObject:
   m_ObjectHideFlags: 0
@@ -568,9 +563,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1250152635}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: SpawnPoint
-  m_TagString: Untagged
+  m_TagString: Spawner
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -633,9 +628,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1302211495}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: SpawnPoint
-  m_TagString: Untagged
+  m_TagString: Spawner
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

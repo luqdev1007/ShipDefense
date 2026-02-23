@@ -31,7 +31,6 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Attack
                 return;
 
             _currentTime.Value += deltaTime;
-            Debug.Log(_currentTime.Value + " attack process timer");
         }
 
         public void OnDispose()
@@ -42,7 +41,6 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Attack
         private void OnStartAttackProcess()
         {
             _currentTime.Value = 0;
-            Debug.Log("Start attack process");
         }
     }
 }

@@ -39,14 +39,11 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Attack
 
         private void OnTimerChanged(float arg1, float currentTime)
         {
-            Debug.Log("Timer changed: " + currentTime);
-
             if (_alreadyAttacked)
                 return;
 
             if (currentTime >= _delay.Value)
             {
-                Debug.Log("Delay before attack is end");
                 _attackDelayEndEvent.Invoke();
                 _alreadyAttacked = true;
             }

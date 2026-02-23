@@ -6,6 +6,7 @@ using Assets._Project.Develop.Runtime.Gameplay.Features.Enemies;
 using Assets._Project.Develop.Runtime.Gameplay.Features.ExplosionFeature;
 using Assets._Project.Develop.Runtime.Gameplay.Features.InputFeature;
 using Assets._Project.Develop.Runtime.Gameplay.Features.MainHero;
+using Assets._Project.Develop.Runtime.Gameplay.Features.StagesFeature;
 using Assets._Project.Develop.Runtime.UI;
 using Assets._Project.Develop.Runtime.UI.Core;
 using Assets._Project.Develop.Runtime.UI.Gameplay;
@@ -37,6 +38,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Infrastructure
             container.RegisterAsSingle(CreateEnemiesFactory);
             container.RegisterAsSingle(CreateVehiclesFactory);
             container.RegisterAsSingle(CreateProjectilesFactory);
+            container.RegisterAsSingle(CreateStagesFactory);
 
             // UI
             container.RegisterAsSingle(CreateGameplayScreenPresenter).NonLazy();
@@ -47,6 +49,11 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Infrastructure
             // AI
             container.RegisterAsSingle(CreateBrainsFactory);
             container.RegisterAsSingle(CreateAIBrainsContext);
+        }
+
+        private static StagesFactory CreateStagesFactory(DIContainer container)
+        {
+            return new StagesFactory(container);
         }
 
         private static ProjectilesFactory CreateProjectilesFactory(DIContainer container)
@@ -61,7 +68,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Infrastructure
 
         private static EnemiesFactory CreateEnemiesFactory(DIContainer container)
         {
-            return new EnemiesFactory(container);
+            return new EnemiesFactory(container, container.Resolve<VehiclesFactory>());
         }
 
         private static MainHeroHolderService CreateMainHeroHolderService(DIContainer container)

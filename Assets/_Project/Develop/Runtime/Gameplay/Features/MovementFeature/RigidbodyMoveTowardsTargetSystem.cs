@@ -49,7 +49,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.MovementFeature
             // Логирование при смене цели
             if (_target.Value != _lastLoggedTarget)
             {
-                Debug.Log($"<color=yellow>[MovementSystem]</color> Entity follows: <b>{_target.Value.Transform.name}</b>");
+                // Debug.Log($"<color=yellow>[MovementSystem]</color> Entity follows: <b>{_target.Value.Transform.name}</b>");
                 _lastLoggedTarget = _target.Value;
             }
 

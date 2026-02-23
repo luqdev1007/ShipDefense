@@ -12,6 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69f55ed4d1b3cb14d89e0007d42b6514, type: 3}
   m_Name: LevelConfig
   m_EditorClassIdentifier: 
-  <LevelName>k__BackingField: 1
+  _stageConfigs:
+  - {fileID: 11400000, guid: 4adfc697ce9a174459376f1865059df1, type: 2}
+  - {fileID: 11400000, guid: 4adfc697ce9a174459376f1865059df1, type: 2}
+  - {fileID: 11400000, guid: 4adfc697ce9a174459376f1865059df1, type: 2}
+  <LevelName>k__BackingField: "\u0411\u0440\u0438\u0442\u0430\u043D\u0441\u043A\u0438\u0439
+    \u0444\u043B\u043E\u0442"
   <LevelNumber>k__BackingField: 1
   <LevelIcon>k__BackingField: {fileID: 21300000, guid: f26fa8880b3aeef4b8516c82dc12f2a5, type: 3}

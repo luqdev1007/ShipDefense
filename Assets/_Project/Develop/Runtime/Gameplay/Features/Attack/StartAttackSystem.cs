@@ -3,7 +3,6 @@ using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Systems;
 using Assets._Project.Develop.Runtime.Utilites.Conditions;
 using Assets._Project.Develop.Runtime.Utilites.Reactive;
 using System;
-using UnityEngine;
 
 namespace Assets._Project.Develop.Runtime.Gameplay.Features.Attack
 {
@@ -33,17 +32,10 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Attack
 
         private void OnAttackRequest()
         {
-            Debug.Log("Attack requested");
-
             if (_canStartAttack.Evaluate())
             {
                 _inAttackProcess.Value = true;
                 _startAttackEvent.Invoke();
-                Debug.Log("Start attack");
-            }
-            else
-            {
-                Debug.Log("Can't start attack");
             }
         }
     }

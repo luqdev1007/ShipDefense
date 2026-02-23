@@ -53,11 +53,11 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.AI.States
 
             if (closestTarget == null)
             {
-                Debug.Log("[TargetSelector] Подходящих целей не найдено.");
+                // Debug.Log("[TargetSelector] Подходящих целей не найдено.");
             }
             else
             {
-                Debug.Log($"[TargetSelector] Найдена цель: {closestTarget.Transform.gameObject.name}");
+                // Debug.Log($"[TargetSelector] Найдена цель: {closestTarget.Transform.gameObject.name}");
             }
 
             return closestTarget;

@@ -2,17 +2,20 @@
 using Assets._Project.Develop.Runtime.Configs.Gameplay.Entities;
 using Assets._Project.Develop.Runtime.Configs.Gameplay.Entities.MainHeroes;
 using Assets._Project.Develop.Runtime.Configs.Gameplay.Entities.Projectiles;
+using Assets._Project.Develop.Runtime.Configs.Gameplay.Stages;
 using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore;
 using Assets._Project.Develop.Runtime.Gameplay.Features.AI;
 using Assets._Project.Develop.Runtime.Gameplay.Features.Ballista;
 using Assets._Project.Develop.Runtime.Gameplay.Features.Enemies;
 using Assets._Project.Develop.Runtime.Gameplay.Features.InputFeature;
 using Assets._Project.Develop.Runtime.Gameplay.Features.MainHero;
+using Assets._Project.Develop.Runtime.Gameplay.Features.StagesFeature;
 using Assets._Project.Develop.Runtime.Gameplay.Features.TeamsFeature;
 using Assets._Project.Develop.Runtime.Gameplay.Features.Vehicles;
 using Assets._Project.Develop.Runtime.UI.Gameplay;
 using Assets._Project.Develop.Runtime.Utilites.ConfigsManagment;
 using Assets._Project.Develop.Runtime.Utilites.Timer;
+using System;
 using System.Linq;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -21,23 +24,22 @@ namespace Assets._Project.Develop.Runtime.Gameplay
 {
     public class TestGameplay : MonoBehaviour
     {
-        [SerializeField] private Transform[] _spawners;
-        [SerializeField] private Camera _mainCamera;
+        [SerializeField] private StageConfig _config;
+        private StagesFactory _stagesFactory;
+        private IStage _stage;
 
         private DIContainer _container;
 
+        private GameplayScreenPresenter _gameplayScreenPresenter;
+        private IInputService _input;
+
+        // factories
         private EntitiesFactory _entitiesFactory;
         private ProjectilesFactory _projectilesFactory;
         private EnemiesFactory _enemiesFactory;
         private VehiclesFactory _vehiclesFactory;
         private BrainsFactory _brainsFactory;
         private MainHeroesFactory _mainHeroesFactory;
-
-        private GameplayScreenPresenter _gameplayScreenPresenter;
-
-        private IInputService _input;
-
-        private bool _isRunning;
 
         // Main Entities
         private Entity _mainShip;
@@ -46,19 +48,23 @@ namespace Assets._Project.Develop.Runtime.Gameplay
         private Entity _engineer;
         private Entity _ballista;
 
+        // tests
         private BallistaController _ballistaController;
+
+        private bool _isRunning;
 
         public void Initialize(DIContainer container)
         {
             _container = container;
 
             _entitiesFactory = _container.Resolve<EntitiesFactory>();
-
             _enemiesFactory = _container.Resolve<EnemiesFactory>();
             _vehiclesFactory = _container.Resolve<VehiclesFactory>();
             _mainHeroesFactory = _container.Resolve<MainHeroesFactory>();
             _projectilesFactory = _container.Resolve<ProjectilesFactory>();
             _brainsFactory = _container.Resolve<BrainsFactory>();
+
+            _stagesFactory = _container.Resolve<StagesFactory>();
 
             _gameplayScreenPresenter = _container.Resolve<GameplayScreenPresenter>();
 
@@ -68,6 +74,11 @@ namespace Assets._Project.Develop.Runtime.Gameplay
         public void Run()
         {
             _isRunning = true;
+
+            // stage
+            _stage = _stagesFactory.Create(_config);
+            _stage.Completed.Subscribe(OnStageCompleted);
+            _stage.Start();
 
             // main ship
             MainShipConfig config = _container.Resolve<ConfigsProviderService>()
@@ -103,10 +114,18 @@ namespace Assets._Project.Develop.Runtime.Gameplay
             _gameplayScreenPresenter.SubscribeHealthViewToEntity(_mainShip);
         }
 
+        private void OnStageCompleted()
+        {
+            Debug.Log("Victory!");
+            _stage.Cleanup();
+        }
+
         private void Update()
         {
             if (_isRunning == false)
                 return;
+
+            _stage.Update(Time.deltaTime);
 
             if (_input.IsAttackKeyReleased)
             {
@@ -125,7 +144,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay
 
             if (Input.GetKeyDown(KeyCode.E))
             {
-                CreateEnemySmallShip();
+                // CreateEnemySmallShip();
             }
         }
 
@@ -153,6 +172,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay
                 .Resolve<TimerServiceFactory>().Create(prepTime));
         }
 
+        /*
         private void CreateEnemySmallShip()
         {
             Transform randomSpawner = _spawners[Random.Range(0, _spawners.Length)];
@@ -184,5 +204,6 @@ namespace Assets._Project.Develop.Runtime.Gameplay
                 }
             }
         }
+        */
     }
 }

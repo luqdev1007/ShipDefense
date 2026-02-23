@@ -161,7 +161,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.AI
 
         public void CreateEmptyBrain(Entity entity)
         {
-            Debug.Log("no brains for " + entity.Transform.gameObject.name + " yet");
+            // Debug.Log("no brains for " + entity.Transform.gameObject.name + " yet");
         }
     }
 }

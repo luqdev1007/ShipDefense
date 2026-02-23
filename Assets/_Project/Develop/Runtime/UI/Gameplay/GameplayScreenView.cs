@@ -1,6 +1,4 @@
 ﻿using Assets._Project.Develop.Runtime.Gameplay.UI;
-using Assets._Project.Develop.Runtime.Meta.Features.ShipUpgrades;
-using Assets._Project.Develop.Runtime.UI.CommonViews;
 using Assets._Project.Develop.Runtime.UI.Core;
 using TMPro;
 using UnityEngine;
