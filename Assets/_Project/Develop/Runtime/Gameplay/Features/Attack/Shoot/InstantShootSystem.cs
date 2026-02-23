@@ -46,6 +46,9 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Attack.Shoot
 
         private void OnAttackDelayEnd()
         {
+            if (_entity.CurrentTarget == null || _entity.CurrentTarget.Value == null || _entity.CurrentTarget.Value.Transform == null)
+                return;
+
             Vector3 targetPos = _entity.CurrentTarget.Value.Transform.position;
             Vector3 originPos = _shootPoint.position;
 

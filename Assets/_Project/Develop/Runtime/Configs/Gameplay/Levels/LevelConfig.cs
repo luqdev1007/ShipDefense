@@ -11,7 +11,8 @@ namespace Assets._Project.Develop.Runtime.Configs.Gameplay.Levels
         [SerializeField] private List<StageConfig> _stageConfigs;
 
         [field: SerializeField] public string LevelName { get; private set; }
-        [field: SerializeField] public int LevelDifficulty { get; private set; }
+        [field: SerializeField] public int Difficulty { get; private set; }
+        [field: SerializeField] public int BaseReward { get; private set; }
         [field: SerializeField] public Sprite LevelIcon { get; private set; }
 
         public IReadOnlyList<StageConfig> StageConfigs => _stageConfigs;

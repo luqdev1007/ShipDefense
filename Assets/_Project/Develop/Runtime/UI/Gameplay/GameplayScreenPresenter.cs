@@ -47,9 +47,9 @@ namespace Assets._Project.Develop.Runtime.UI.Gameplay
             _view.HealthView.Show();
         }
 
-        public void ShowAnnouncement()
+        public void ShowAnnouncement(string header, string subheader = "")
         {
-            _view.AnouncementView.SetTrigger("Show");
+            _view.AnouncementView.SetTrigger("Show"); // rework with class
         }
 
         public void ShowPreperationTimer(TimerService timerService)

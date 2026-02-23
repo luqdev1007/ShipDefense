@@ -1,4 +1,6 @@
 ﻿using Assets._Project.Develop.Runtime.Gameplay.Features.InputFeature;
+using Assets._Project.Develop.Runtime.Meta.Features.Wallet;
+using Assets._Project.Develop.Runtime.UI.Gameplay;
 using Assets._Project.Develop.Runtime.Utilites.CoroutinesManagment;
 using Assets._Project.Develop.Runtime.Utilites.DataProviders;
 using Assets._Project.Develop.Runtime.Utilites.SceneManagement;
@@ -13,18 +15,24 @@ namespace Assets._Project.Develop.Runtime.Gameplay.States
         private readonly PlayerDataProvider _playerDataProvider;
         private readonly SceneSwitcherService _sceneSwitcherService;
         private readonly ICoroutinesPerformer _coroutinesPerformer;
+        private readonly WalletService _walletService;
+        private readonly GameplayScreenPresenter _gameplayScreenPresenter;
 
         public WinState(
             IInputService inputService,
             GameplayInputArgs gameplayInputArgs,
             PlayerDataProvider playerDataProvider,
             SceneSwitcherService sceneSwitcherService,
-            ICoroutinesPerformer coroutinesPerformer) : base(inputService)
+            ICoroutinesPerformer coroutinesPerformer,
+            WalletService walletService,
+            GameplayScreenPresenter gameplayScreenPresenter) : base(inputService)
         {
             _gameplayInputArgs = gameplayInputArgs;
             _playerDataProvider = playerDataProvider;
             _sceneSwitcherService = sceneSwitcherService;
             _coroutinesPerformer = coroutinesPerformer;
+            _walletService = walletService;
+            _gameplayScreenPresenter = gameplayScreenPresenter;
         }
 
         public override void Enter()
@@ -33,7 +41,10 @@ namespace Assets._Project.Develop.Runtime.Gameplay.States
 
             Debug.Log("VICTORY!");
 
+            _walletService.Add(CurrencyTypes.Gold, _gameplayInputArgs.LevelConfig.BaseReward * _gameplayInputArgs.LevelConfig.Difficulty);
             _coroutinesPerformer.StartPerform(_playerDataProvider.SaveAsync()); // saves win reward
+
+            _gameplayScreenPresenter.ShowAnnouncement("ПОБЕДА!\nНажмите 'Q' для перехода в главное меню", "здесь могла быть ваша реклама");
         }
 
         public void Update(float deltaTime)
