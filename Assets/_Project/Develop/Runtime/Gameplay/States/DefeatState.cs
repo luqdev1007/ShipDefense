@@ -1,4 +1,5 @@
 ﻿using Assets._Project.Develop.Runtime.Gameplay.Features.InputFeature;
+using Assets._Project.Develop.Runtime.UI.Gameplay;
 using Assets._Project.Develop.Runtime.Utilites.CoroutinesManagment;
 using Assets._Project.Develop.Runtime.Utilites.SceneManagement;
 using Assets._Project.Develop.Runtime.Utilites.StateMachineCore;
@@ -10,14 +11,17 @@ namespace Assets._Project.Develop.Runtime.Gameplay.States
     {
         private readonly SceneSwitcherService _sceneSwitcherService;
         private readonly ICoroutinesPerformer _coroutinesPerformer;
+        private GameplayScreenPresenter _gameplayScreenPresenter;
 
         public DefeatState(
             IInputService inputService,
             SceneSwitcherService sceneSwitcherService,
-            ICoroutinesPerformer coroutinesPerformer) : base(inputService)
+            ICoroutinesPerformer coroutinesPerformer,
+            GameplayScreenPresenter gameplayScreenPresenter) : base(inputService)
         {
             _sceneSwitcherService = sceneSwitcherService;
             _coroutinesPerformer = coroutinesPerformer;
+            _gameplayScreenPresenter = gameplayScreenPresenter;
         }
 
         public override void Enter()
@@ -25,6 +29,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.States
             base.Enter();
 
             Debug.Log("Defeat...");
+            _gameplayScreenPresenter.ShowAnnouncement("ПОБЕДА!\nНажмите 'Q' для перехода в главное меню", "здесь могла быть ваша реклама");
         }
 
         public void Update(float deltaTime)

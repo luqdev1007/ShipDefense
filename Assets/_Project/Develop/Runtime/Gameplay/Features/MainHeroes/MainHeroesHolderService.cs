@@ -3,6 +3,7 @@ using Assets._Project.Develop.Runtime.Infrastructure.DI;
 using Assets._Project.Develop.Runtime.Utilites.Reactive;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Assets._Project.Develop.Runtime.Gameplay.Features.MainHero
 {
@@ -22,13 +23,14 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.MainHero
         }
 
         public IReadOnlyEvent<Entity> HeroRegistred => _heroRegistred;
-        public IReadOnlyEvent<Entity> MainShipRegistred => _heroRegistred;
+        public IReadOnlyEvent<Entity> MainShipRegistred => _mainShipRegistred;
         public IReadOnlyCollection<Entity> MainHeroes => _mainHeroes;
         public Entity MainShip => _mainShip;
 
         public void Initialize()
         {
             _entitiesLifeContext.Added += OnEntityAdded;
+            Debug.Log("main heroes holder service init");
         }
 
         public void Dispose()
@@ -56,11 +58,14 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.MainHero
 
         public bool IsAllHeroesDead()
         {
+            if (_mainHeroes.Count == 0) 
+                return false;
+
             bool isConditionCompleted = true;
 
             foreach (Entity hero in _mainHeroes)
             {
-                if (hero.IsDead.Value == false)
+                if (hero.MustDie.Evaluate() == false)
                 {
                     isConditionCompleted = false;
                     return isConditionCompleted;
@@ -70,6 +75,9 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.MainHero
             return isConditionCompleted;
         }
 
-        public bool IsMainShipDestroyed() => _mainShip.IsDead.Value; // ? isDead not work
+        public bool IsMainShipDestroyed()
+        {
+            return _mainShip.InDeathProcess.Value == true;
+        }
     }
 }

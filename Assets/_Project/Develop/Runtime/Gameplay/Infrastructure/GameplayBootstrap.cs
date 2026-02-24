@@ -104,9 +104,11 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Infrastructure
 
         private void Update()
         {
-            _brainsContext?.Update(Time.deltaTime);
-            _entitiesLifeContext?.Update(Time.deltaTime);
             _gameplayStatesContext?.Update(Time.deltaTime);
+
+            _entitiesLifeContext?.Update(Time.deltaTime);
+
+            _brainsContext?.Update(Time.deltaTime);
 
             if (_input != null && _input.IsAttackKeyReleased)
             {
@@ -121,6 +123,9 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Infrastructure
 
         private void BallistaAttack()
         {
+            if (_ballistaController == null)
+                return;
+
             float ballistaPower = _ballistaController.ShootPower;
             float launchPowerMultiplier = _ballistaController.ChargeProgress < 0.5f ? 1f : _ballistaController.ChargeProgress * 2f;
             SimpleProjectileConfig config = _container.Resolve<ConfigsProviderService>().GetConfig<SimpleProjectileConfig>();
@@ -143,7 +148,6 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Infrastructure
                 .GetConfig<MainShipConfig>(); // saved data provide
 
             _mainShip = _vehiclesFactory.Create(null, Teams.Allies, config);
-            _mainShip.AddMainShipTag();
 
             ShipPlace[] shipPlaces = _mainShip.Transform.GetComponentsInChildren<ShipPlace>();
 

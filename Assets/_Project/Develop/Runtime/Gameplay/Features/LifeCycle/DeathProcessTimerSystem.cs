@@ -36,7 +36,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.LifeCycle
                 return;
 
             _currentTime.Value -= deltaTime;
-            Debug.Log("Медленно помираю я");
+            Debug.Log($"Медленно помираю я " + _currentTime.Value);
 
             if (CooldownIsOver())
             {

@@ -6,6 +6,8 @@ using Assets._Project.Develop.Runtime.Utilites.Reactive;
 using Assets._Project.Develop.Runtime.Utilites.Static;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Assets._Project.Develop.Runtime.Gameplay.Features.StagesFeature
 {
@@ -90,10 +92,14 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.StagesFeature
 
         private void SpawnEnemy(EnemyItemConfig enemyItemConfig)
         {
+            Vector3 randomOffsetXZ = new Vector3(Random.Range(-5, 5), 0, Random.Range(-5, 5));
+
             Entity spawnedEnemy = _vehiclesFactory.Create(
                 SpawnerProvider.GetRandomSpawner().transform, 
                 Teams.Enemies, 
                 enemyItemConfig.EnemyConfig);
+
+            spawnedEnemy.Transform.position += randomOffsetXZ;
 
             IDisposable removeReason = spawnedEnemy.IsDead.Subscribe((oldValue, isDead) =>
             {

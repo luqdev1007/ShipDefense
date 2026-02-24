@@ -422,12 +422,13 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
                 .AddCurrentHealth(new ReactiveVariable<float>(shipData.MaxHealth))
 
                 .AddIsDead(new ReactiveVariable<bool>())
-                .AddInDeathProcess()
+                .AddInDeathProcess(new ReactiveVariable<bool>(false))
                 .AddDeathProcessCurrentTime(new ReactiveVariable<float>(config.DeathProcessTime))
                 .AddDeathProcessInitialTime(new ReactiveVariable<float>(config.DeathProcessTime))
 
                 .AddTakeDamageRequest()
                 .AddTakeDamageEvent()
+                .AddMainShipTag()
                 ;
 
             ICompositeCondition canApplyDamage = new CompositeCondition()
@@ -450,6 +451,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
                 .AddSystem(new DeathSystem())
                 .AddSystem(new DeathProcessTimerSystem())
                 .AddSystem(new SelfReleaseSystem(_entitiesLifeContext))
+                .AddSystem(new ReleaseChildEntitiesSystem(_entitiesLifeContext))
 
                 .AddSystem(new ApplyDamageSystem())
                 ;
