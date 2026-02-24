@@ -20,7 +20,6 @@ using Assets._Project.Develop.Runtime.Utilites.Conditions;
 using Assets._Project.Develop.Runtime.Utilites.ConfigsManagment;
 using Assets._Project.Develop.Runtime.Utilites.CoroutinesManagment;
 using Assets._Project.Develop.Runtime.Utilites.Reactive;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
@@ -470,7 +469,9 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
 
             entity
                 .AddMoveSpeed(new ReactiveVariable<float>(config.MoveSpeed))
+                .AddRotationSpeed(new ReactiveVariable<float>(config.RotationSpeed))
                 .AddMoveDirection(new ReactiveVariable<Vector3>())
+                .AddRotationDirection(new ReactiveVariable<Vector3>())
 
                 .AddMaxHealth(new ReactiveVariable<float>(config.MaxHealth))
                 .AddCurrentHealth(new ReactiveVariable<float>(config.MaxHealth))
@@ -482,7 +483,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
 
                 .AddIsTouchAnotherTeam()
 
-                .AddIsDead(new ReactiveVariable<bool>())
+                .AddIsDead(new ReactiveVariable<bool>(false))
                 .AddInDeathProcess()
                 .AddDeathProcessCurrentTime(new ReactiveVariable<float>(config.DeathProcessTime))
                 .AddDeathProcessInitialTime(new ReactiveVariable<float>(config.DeathProcessTime))
@@ -494,6 +495,9 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
                 ;
 
             ICompositeCondition canMove = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.IsDead.Value == false));
+
+            ICompositeCondition canRotate = new CompositeCondition()
                 .Add(new FuncCondition(() => entity.IsDead.Value == false));
 
             ICompositeCondition canApplyDamage = new CompositeCondition()
@@ -511,6 +515,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
 
             entity
                 .AddCanMove(canMove)
+                .AddCanRotate(canRotate)
                 .AddMustDie(mustDie)
                 .AddMustSelfRelease(mustSelfRelease)
                 .AddCanApplyDamage(canApplyDamage)
@@ -518,7 +523,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
                 ;
 
             entity
-                .AddSystem(new RigidbodyMoveTowardsTargetSystem(_entitiesLifeContext))
+                .AddSystem(new RigidbodyMovementSystem())
+                .AddSystem(new RigidbodyRotationSystem())
 
                 .AddSystem(new ApplyDamageSystem())
 

@@ -37,7 +37,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.ExplosionFeature
                     if (monoEntity.LinkedEntity.HasComponent<TakeDamageRequest>())
                     {
                         monoEntity.LinkedEntity.TakeDamageRequest.Invoke(1);
-                        Debug.Log(monoEntity.gameObject.name + " health: " + monoEntity.LinkedEntity.CurrentHealth.Value);
+                        // Debug.Log(monoEntity.gameObject.name + " health: " + monoEntity.LinkedEntity.CurrentHealth.Value);
                     }
                 }
             }

@@ -11,5 +11,6 @@ namespace Assets._Project.Develop.Runtime.Configs.Gameplay.Entities.MainHeroes
         [field: SerializeField, Min(0)] public float MaxHealth { get; private set; } = 10;
         [field: SerializeField, Min(0)] public float DeathProcessTime { get; private set; } = 3;
         [field: SerializeField, Min(0)] public float BodyContactDamage { get; private set; } = 3;
+        [field: SerializeField, Min(0)] public float RotationSpeed { get; private set; } = 30;
     }
 }

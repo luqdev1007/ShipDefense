@@ -1,5 +1,6 @@
 ﻿using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore;
 using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Systems;
+using Assets._Project.Develop.Runtime.Gameplay.Features.MainHero;
 using Assets._Project.Develop.Runtime.Utilites.Conditions;
 using Assets._Project.Develop.Runtime.Utilites.Reactive;
 using UnityEngine;
@@ -24,9 +25,13 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.MovementFeature
         public void OnUpdate(float deltaTime)
         {
             if (_canMove.Evaluate() == false)
+            {
+                _rigidbody.linearVelocity = Vector3.zero;
                 return;
+            }
 
-            _rigidbody.linearVelocity = _moveDirection.Value * _moveSpeed.Value;
+            Vector3 velocity = _moveDirection.Value * _moveSpeed.Value;
+            _rigidbody.linearVelocity = velocity;
         }
     }
 }

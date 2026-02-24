@@ -1,5 +1,6 @@
 ﻿using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore;
 using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Systems;
+using Assets._Project.Develop.Runtime.Gameplay.Features.MainHero;
 using Assets._Project.Develop.Runtime.Utilites.Conditions;
 using Assets._Project.Develop.Runtime.Utilites.Reactive;
 using UnityEngine;
@@ -20,7 +21,6 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.MovementFeature
             _rotationSpeed = entity.RotationSpeed;
             _canRotate = entity.CanRotate;
 
-            // Исправлено: применяем те же правила при старте
             Vector3 startDir = _direction.Value;
             startDir.y = 0;
 
@@ -37,23 +37,18 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.MovementFeature
 
             Vector3 direction = _direction.Value;
 
-            // Гарантируем "плоское" вращение
             direction.y = 0;
 
-            // Используем sqrMagnitude для производительности и точности
             if (direction.sqrMagnitude < 0.0001f)
                 return;
 
-            // Создаем целевой поворот
             Quaternion lookRotation = Quaternion.LookRotation(direction.normalized);
 
-            // Если мы уже почти смотрим туда, куда надо, ничего не делаем
             if (Quaternion.Angle(_rigidbody.rotation, lookRotation) < 0.1f)
                 return;
 
             float step = _rotationSpeed.Value * deltaTime;
 
-            // Плавный поворот физического тела
             Quaternion rotation = Quaternion.RotateTowards(_rigidbody.rotation, lookRotation, step);
 
             _rigidbody.MoveRotation(rotation);

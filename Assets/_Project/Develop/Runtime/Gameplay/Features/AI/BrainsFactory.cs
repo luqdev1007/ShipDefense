@@ -111,11 +111,6 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.AI
             Transform transform = entity.Transform;
             ReactiveVariable<Entity> currentTarget = entity.CurrentTarget;
 
-            /* work!
-            Debug.Log("Can start attack " + canStartAttack.Evaluate());
-            ICompositeCondition fromRotateToAttackCondition = new CompositeCondition().Add(canStartAttack);
-            */
-
             ICompositeCondition fromRotateToAttackCondition = new CompositeCondition()
                 .Add(canStartAttack)
                 .Add(new FuncCondition(() =>
@@ -125,22 +120,18 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.AI
                     if (target == null || target.Transform == null)
                         return false;
 
-                    // 1. Получаем направление к цели
                     Vector3 direction = target.Transform.position - transform.position;
 
-                    // 2. САМОЕ ВАЖНОЕ: Игнорируем разницу в высоте
                     direction.y = 0;
 
-                    if (direction.sqrMagnitude < 0.001f) // Проверка на случай, если цель прямо под нами
+                    if (direction.sqrMagnitude < 0.001f)
                         return true;
 
-                    // 3. Создаем "плоский" целевой поворот
                     Quaternion targetRotation = Quaternion.LookRotation(direction);
 
-                    // 4. Считаем угол только в горизонтальной плоскости
                     float angleToTarget = Quaternion.Angle(transform.rotation, targetRotation);
 
-                    float minThreshold = 5f; // Попробуйте начать с 5 градусов, 3 может быть слишком жестко
+                    float minThreshold = 5f;
 
                     return angleToTarget < minThreshold;
                 }));
@@ -157,6 +148,33 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.AI
             stateMachine.AddTransition(attackTriggerState, rotateToTargetState, fromAttackToRotateStateCondition);
 
             return stateMachine;
+        }
+
+        public StateMachineBrain CreateMoveToClosestTargetStateMachine(Entity entity)
+        {
+            FindTargetState findTargetState = new FindTargetState(new NearestDamagableTargetSelector(entity), _entitiesLifeContext, entity);
+            MoveToClosestTargetState moveToTargetState = new MoveToClosestTargetState(entity);
+
+            AIStateMachine stateMachine = new AIStateMachine();
+
+            stateMachine.AddState(findTargetState);
+            stateMachine.AddState(moveToTargetState);
+
+            ICompositeCondition fromFindTargetToMoveToTargetStateCondition = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.CurrentTarget.Value != null));
+
+            ICompositeCondition fromMoveToTargetToFindTargetState = new CompositeCondition()
+                .Add(new FuncCondition(() => entity.CurrentTarget.Value == null));
+
+
+            stateMachine.AddTransition(findTargetState, moveToTargetState, fromFindTargetToMoveToTargetStateCondition);
+            stateMachine.AddTransition(moveToTargetState, findTargetState, fromMoveToTargetToFindTargetState);
+
+            StateMachineBrain brain = new StateMachineBrain(stateMachine);
+
+            _brainsContext.SetFor(entity, brain);
+
+            return brain;
         }
 
         public void CreateEmptyBrain(Entity entity)

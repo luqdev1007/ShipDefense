@@ -99,7 +99,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.States
         {
             StageProviderService stageProviderService = _container.Resolve<StageProviderService>();
 
-            PreperationState preperationState = CreatePreperationState(time: 10); // configs / gameplay input args?
+            PreperationState preperationState = CreatePreperationState(time: 3); // configs / gameplay input args?
             StageProcessState stageProcessState = CreateStageProcessState();
 
             ICompositeCondition preperationToStageProcessCondition = new CompositeCondition()

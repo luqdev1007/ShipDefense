@@ -31,7 +31,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.ExplosionFeature
             if (_mustExplode.Evaluate() == false)
                 return;
 
-            Debug.Log("SELF EXPLODE!");
+            // Debug.Log("SELF EXPLODE!");
             ExplosionView explosion = _explosionsFactory.Create(ExplosionType.Large, _transform.position);
             explosion.ExplosionEffect.Activate(_transform.position, 10);
 

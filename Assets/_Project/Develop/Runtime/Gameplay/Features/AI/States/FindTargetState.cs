@@ -1,4 +1,5 @@
 ﻿using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore;
+using Assets._Project.Develop.Runtime.Gameplay.Features.MainHero;
 using Assets._Project.Develop.Runtime.Utilites.Reactive;
 using Assets._Project.Develop.Runtime.Utilites.StateMachineCore;
 using UnityEngine;
@@ -24,7 +25,6 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.AI.States
         public void Update(float deltaTime)
         {
             _currentTarget.Value = _targetSelector.SelectTargetFrom(_entitiesLifeContext.Entities);
-            // Debug.Log("Target: " + _currentTarget.Value == null);
         }
     }
 }
