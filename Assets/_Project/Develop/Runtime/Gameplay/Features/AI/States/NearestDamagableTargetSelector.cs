@@ -19,7 +19,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.AI.States
 
         public Entity SelectTargetFrom(IEnumerable<Entity> targets)
         {
-            if (targets == null) return null;
+            if (targets == null) 
+                return null;
 
             Entity closestTarget = null;
             float minDistance = float.MaxValue;

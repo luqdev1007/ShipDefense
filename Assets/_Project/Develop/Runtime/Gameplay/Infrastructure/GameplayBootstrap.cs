@@ -87,14 +87,14 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Infrastructure
             // Input
             _input = _container.Resolve<IInputService>();
 
+            CreateMainCrew(); // init
+
             yield break;
         }
 
         public override void Run()
         {
             Debug.Log("Старт геймплейной сцены");
-
-            CreateMainCrew();
 
             // UI
             _gameplayScreenPresenter.SubscribeHealthViewToEntity(_mainShip);
