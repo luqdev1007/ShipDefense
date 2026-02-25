@@ -1,43 +1,31 @@
 ﻿using Assets._Project.Develop.Runtime.Gameplay.Features.InputFeature;
 using Assets._Project.Develop.Runtime.UI.Gameplay;
-using Assets._Project.Develop.Runtime.Utilites.CoroutinesManagment;
-using Assets._Project.Develop.Runtime.Utilites.SceneManagement;
 using Assets._Project.Develop.Runtime.Utilites.StateMachineCore;
-using UnityEngine;
 
 namespace Assets._Project.Develop.Runtime.Gameplay.States
 {
     public class DefeatState : EndGameState, IUpdatableState
     {
-        private readonly SceneSwitcherService _sceneSwitcherService;
-        private readonly ICoroutinesPerformer _coroutinesPerformer;
-        private GameplayScreenPresenter _gameplayScreenPresenter;
+        private readonly GameplayPopupService _gameplayPopupService;
 
         public DefeatState(
             IInputService inputService,
-            SceneSwitcherService sceneSwitcherService,
-            ICoroutinesPerformer coroutinesPerformer,
-            GameplayScreenPresenter gameplayScreenPresenter) : base(inputService, gameplayScreenPresenter)
+            GameplayScreenPresenter gameplayScreenPresenter,
+            GameplayPopupService gameplayPopupService) : base(inputService, gameplayScreenPresenter)
         {
-            _sceneSwitcherService = sceneSwitcherService;
-            _coroutinesPerformer = coroutinesPerformer;
-            _gameplayScreenPresenter = gameplayScreenPresenter;
+            _gameplayPopupService = gameplayPopupService;
         }
 
         public override void Enter()
         {
             base.Enter();
 
-            Debug.Log("Defeat...");
-            _gameplayScreenPresenter.ShowAnnouncement("Поражение...", "Нажмите 'Q' для перехода в главное меню");
+            _gameplayPopupService.OpenDefeatMenuPopup();
         }
 
         public void Update(float deltaTime)
         {
-            if (Input.GetKeyDown(KeyCode.Q))
-            {
-                _coroutinesPerformer.StartPerform(_sceneSwitcherService.ProcessingSwitchTo(Scenes.MainMenu));
-            }
+           
         }
     }
 }

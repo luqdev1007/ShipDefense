@@ -37,21 +37,16 @@ namespace Assets._Project.Develop.Runtime.Gameplay.States
         {
             return new WinState(
                 _container.Resolve<IInputService>(),
-                inputArgs,
-                _container.Resolve<PlayerDataProvider>(),
-                _container.Resolve<SceneSwitcherService>(),
-                _container.Resolve<ICoroutinesPerformer>(),
-                _container.Resolve<WalletService>(),
-                _container.Resolve<GameplayScreenPresenter>());
+                _container.Resolve<GameplayScreenPresenter>(),
+                _container.Resolve<GameplayPopupService>());
         }
 
         public DefeatState CreateDefeatState()
         {
             return new DefeatState(
                 _container.Resolve<IInputService>(),
-                _container.Resolve<SceneSwitcherService>(),
-                _container.Resolve<ICoroutinesPerformer>(),
-                _container.Resolve<GameplayScreenPresenter>());
+                _container.Resolve<GameplayScreenPresenter>(),
+                _container.Resolve<GameplayPopupService>());
         }
 
         public GameplayStateMachine CreateGameplayStateMachine(GameplayInputArgs inputArgs)

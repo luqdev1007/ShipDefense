@@ -9,7 +9,9 @@ namespace Assets._Project.Develop.Runtime.Gameplay.States
         private readonly IInputService _inputService;
         private readonly GameplayScreenPresenter _gameplayScreenPresenter;
 
-        protected EndGameState(IInputService inputService, GameplayScreenPresenter gameplayScreenPresenter)
+        protected EndGameState(
+            IInputService inputService, 
+            GameplayScreenPresenter gameplayScreenPresenter)
         {
             _inputService = inputService;
             _gameplayScreenPresenter = gameplayScreenPresenter;

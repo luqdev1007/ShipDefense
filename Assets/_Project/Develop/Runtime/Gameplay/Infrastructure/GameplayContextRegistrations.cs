@@ -136,7 +136,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Infrastructure
             return new GameplayPopupService(
                 container.Resolve<ViewsFactory>(),
                 container.Resolve<ProjectPresentersFactory>(),
-                container.Resolve<GameplayUIRoot>()
+                container.Resolve<GameplayUIRoot>(),
+                container.Resolve<GameplayPresentersFactory>()
                 );
         }
 
@@ -152,7 +153,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Infrastructure
 
         private static GameplayPresentersFactory CreateGameplayPresentersFactory(DIContainer container)
         {
-            return new GameplayPresentersFactory(container);
+            return new GameplayPresentersFactory(container, _inputArgs);
         }
 
         private static GameplayScreenPresenter CreateGameplayScreenPresenter(DIContainer container)

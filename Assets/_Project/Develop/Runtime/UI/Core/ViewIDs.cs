@@ -8,5 +8,8 @@
         public const string LevelsMenuPopup = nameof(LevelsMenuPopup);
         public const string MainMenuScreenView = nameof(MainMenuScreenView);
         public const string GameplayScreenView = nameof(GameplayScreenView);
+
+        public const string DefeatMenuPopupView = nameof(DefeatMenuPopupView);
+        public const string WinMenuPopupView = nameof(WinMenuPopupView);
     }
 }
