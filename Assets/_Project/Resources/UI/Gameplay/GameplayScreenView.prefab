@@ -439,6 +439,7 @@ GameObject:
   - component: {fileID: 1745202207034673779}
   - component: {fileID: 7997367511663804506}
   - component: {fileID: 2285697553300961350}
+  - component: {fileID: 1520538591017801502}
   m_Layer: 5
   m_Name: AnouncementView
   m_TagString: Untagged
@@ -530,6 +531,21 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1520538591017801502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2192632597770097004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b14c42dbe4b09b42b744f6141967cbd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 2285697553300961350}
+  _header: {fileID: 49398478252125061}
+  _subHeader: {fileID: 3730889589801090505}
 --- !u!1 &2293529715804683311
 GameObject:
   m_ObjectHideFlags: 0
@@ -615,6 +631,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6997731197281990967}
   - component: {fileID: 6367436192497754149}
+  - component: {fileID: 2909238335847999814}
   m_Layer: 5
   m_Name: PrepTimerView
   m_TagString: Untagged
@@ -666,6 +683,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2909238335847999814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2402626003050371026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db12e8cbb48e3504d8860c5b23f9aec4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 6367436192497754149}
 --- !u!1 &2964676513143330046
 GameObject:
   m_ObjectHideFlags: 0
@@ -755,8 +785,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <HealthView>k__BackingField: {fileID: 7642572406633068547}
-  <AnouncementView>k__BackingField: {fileID: 2285697553300961350}
-  <PrepTimerView>k__BackingField: {fileID: 6367436192497754149}
+  <AnouncementView>k__BackingField: {fileID: 1520538591017801502}
+  <PrepTimerView>k__BackingField: {fileID: 2909238335847999814}
   <TimerText>k__BackingField: {fileID: 5320313125874908653}
 --- !u!1 &3978973385908458522
 GameObject:

@@ -17,7 +17,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.States
             IInputService inputService,
             SceneSwitcherService sceneSwitcherService,
             ICoroutinesPerformer coroutinesPerformer,
-            GameplayScreenPresenter gameplayScreenPresenter) : base(inputService)
+            GameplayScreenPresenter gameplayScreenPresenter) : base(inputService, gameplayScreenPresenter)
         {
             _sceneSwitcherService = sceneSwitcherService;
             _coroutinesPerformer = coroutinesPerformer;
@@ -29,7 +29,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.States
             base.Enter();
 
             Debug.Log("Defeat...");
-            _gameplayScreenPresenter.ShowAnnouncement("ПОБЕДА!\nНажмите 'Q' для перехода в главное меню", "здесь могла быть ваша реклама");
+            _gameplayScreenPresenter.ShowAnnouncement("Поражение...", "Нажмите 'Q' для перехода в главное меню");
         }
 
         public void Update(float deltaTime)

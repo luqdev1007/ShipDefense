@@ -25,7 +25,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.States
             SceneSwitcherService sceneSwitcherService,
             ICoroutinesPerformer coroutinesPerformer,
             WalletService walletService,
-            GameplayScreenPresenter gameplayScreenPresenter) : base(inputService)
+            GameplayScreenPresenter gameplayScreenPresenter) : base(inputService, gameplayScreenPresenter)
         {
             _gameplayInputArgs = gameplayInputArgs;
             _playerDataProvider = playerDataProvider;
@@ -44,7 +44,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.States
             _walletService.Add(CurrencyTypes.Gold, _gameplayInputArgs.LevelConfig.BaseReward * _gameplayInputArgs.LevelConfig.Difficulty);
             _coroutinesPerformer.StartPerform(_playerDataProvider.SaveAsync()); // saves win reward
 
-            _gameplayScreenPresenter.ShowAnnouncement("ПОБЕДА!\nНажмите 'Q' для перехода в главное меню", "здесь могла быть ваша реклама");
+            _gameplayScreenPresenter.ShowAnnouncement("ПОБЕДА!", "Нажмите 'Q' для перехода в главное меню");
         }
 
         public void Update(float deltaTime)

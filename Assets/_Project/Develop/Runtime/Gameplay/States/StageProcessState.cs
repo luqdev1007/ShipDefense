@@ -21,7 +21,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.States
         {
             base.Enter();
 
-            _gameplayScreenPresenter.ShowAnnouncement("СВИСТАТЬ ВСЕХ НАВЕРХ!\nГотовьтесь к бою!");
+            _gameplayScreenPresenter.ShowAnnouncement("СВИСТАТЬ ВСЕХ НАВЕРХ!", "Готовьтесь к бою!");
             _stageProviderService.SwitchToNext();
             _stageProviderService.StartCurrent();
         }

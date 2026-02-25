@@ -40,6 +40,10 @@ namespace Assets._Project.Develop.Runtime.UI.Gameplay
             _disposables.Clear();
         }
 
+        public void HideUI()
+        {
+            _view.HealthView.Hide();
+        }
 
         public void SubscribeHealthViewToEntity(Entity entity)
         {
@@ -49,12 +53,13 @@ namespace Assets._Project.Develop.Runtime.UI.Gameplay
 
         public void ShowAnnouncement(string header, string subheader = "")
         {
-            _view.AnouncementView.SetTrigger("Show"); // rework with class
+            _view.AnouncementView.SetText(header, subheader);
+            _view.AnouncementView.Show();
         }
 
         public void ShowPreperationTimer(TimerService timerService)
         {
-            _view.PrepTimerView.SetTrigger("Show");
+            _view.PrepTimerView.Show();
 
             timerService.CurrentTime.Subscribe(OnTimerChanged);
             timerService.CooldownEnded.Subscribe(OnTimerEnded);
@@ -64,7 +69,7 @@ namespace Assets._Project.Develop.Runtime.UI.Gameplay
 
         private void OnTimerEnded()
         {
-            _view.PrepTimerView.SetTrigger("Hide");
+            _view.PrepTimerView.Hide();
         }
 
         private void OnTimerChanged(float arg1, float timeLeft)

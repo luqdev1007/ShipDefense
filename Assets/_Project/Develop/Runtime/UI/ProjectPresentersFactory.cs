@@ -53,7 +53,6 @@ namespace Assets._Project.Develop.Runtime.UI
             return new ConfirmPopupPresenter(view, _container.Resolve<ICoroutinesPerformer>(), onConfirmButtonClicked, header);
         }
 
-
         public WalletPresenter CreateWalletPresenter(IconTextListView view)
         {
             return new WalletPresenter(
