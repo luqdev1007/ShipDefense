@@ -1,6 +1,5 @@
 ﻿using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore;
 using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore.Systems;
-using Assets._Project.Develop.Runtime.Gameplay.Features.MainHero;
 using Assets._Project.Develop.Runtime.Utilites.Conditions;
 using Assets._Project.Develop.Runtime.Utilites.Reactive;
 using UnityEngine;
@@ -33,7 +32,9 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.MovementFeature
         public void OnUpdate(float deltaTime)
         {
             if (_canRotate.Evaluate() == false)
+            {
                 return;
+            }
 
             Vector3 direction = _direction.Value;
 

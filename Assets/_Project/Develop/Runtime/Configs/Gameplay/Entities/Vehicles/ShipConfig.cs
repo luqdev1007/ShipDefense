@@ -12,5 +12,7 @@ namespace Assets._Project.Develop.Runtime.Configs.Gameplay.Entities.MainHeroes
         [field: SerializeField, Min(0)] public float DeathProcessTime { get; private set; } = 3;
         [field: SerializeField, Min(0)] public float BodyContactDamage { get; private set; } = 3;
         [field: SerializeField, Min(0)] public float RotationSpeed { get; private set; } = 30;
+        [field: SerializeField, Min(0)] public float MoveSinkSpeed { get; private set; } = 5;
+        [field: SerializeField, Min(0)] public float RotationSinkSpeed { get; private set; } = 5;
     }
 }

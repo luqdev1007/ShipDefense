@@ -25,7 +25,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.LifeCycle
 
             if (_mustDie.Evaluate())
             {
-                Debug.Log("А СЕРДЦЕ УМИРАЮ!");
+                // Debug.Log("А СЕРДЦЕ УМИРАЮ!");
                 _isDead.Value = true;
             }
         }

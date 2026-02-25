@@ -14,6 +14,7 @@ using Assets._Project.Develop.Runtime.Gameplay.Features.LifeCycle;
 using Assets._Project.Develop.Runtime.Gameplay.Features.MovementFeature;
 using Assets._Project.Develop.Runtime.Gameplay.Features.Sensors;
 using Assets._Project.Develop.Runtime.Gameplay.Features.TeamsFeature;
+using Assets._Project.Develop.Runtime.Gameplay.Features.Vehicles;
 using Assets._Project.Develop.Runtime.Meta.Features.ShipUpgrades;
 using Assets._Project.Develop.Runtime.Utilites;
 using Assets._Project.Develop.Runtime.Utilites.Conditions;
@@ -428,8 +429,13 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
 
                 .AddTakeDamageRequest()
                 .AddTakeDamageEvent()
-                .AddMainShipTag()
+                .AddMainShipTag();
+
+                /*
+                .AddMoveSinkSpeed(new ReactiveVariable<float>(config.MoveSinkSpeed))
+                .AddRotationSinkSpeed(new ReactiveVariable<float>(config.RotationSinkSpeed))
                 ;
+                */
 
             ICompositeCondition canApplyDamage = new CompositeCondition()
                 .Add(new FuncCondition(() => entity.IsDead.Value == false));
@@ -454,6 +460,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
                 .AddSystem(new ReleaseChildEntitiesSystem(_entitiesLifeContext))
 
                 .AddSystem(new ApplyDamageSystem())
+
+                //.AddSystem(new ShipSinkingSystem())
                 ;
 
             return entity;
@@ -494,6 +502,9 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
                 .AddTakeDamageEvent()
 
                 .AddCurrentTarget()
+
+                .AddMoveSinkSpeed(new ReactiveVariable<float>(config.MoveSinkSpeed))
+                .AddRotationSinkSpeed(new ReactiveVariable<float>(config.RotationSinkSpeed))
                 ;
 
             ICompositeCondition canMove = new CompositeCondition()
@@ -541,6 +552,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay.EntitiesCore
                 .AddSystem(new AnotherTeamTouchDetectorSystem())
 
                 .AddSystem(new SelfExplodeSystem(_container.Resolve<ExplosionsFactory>()))
+
+                .AddSystem(new ShipSinkingSystem())
             ;
 
             return entity;

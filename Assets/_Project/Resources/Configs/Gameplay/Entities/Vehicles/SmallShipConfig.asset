@@ -18,3 +18,5 @@ MonoBehaviour:
   <DeathProcessTime>k__BackingField: 3
   <BodyContactDamage>k__BackingField: 3
   <RotationSpeed>k__BackingField: 30
+  <MoveSinkSpeed>k__BackingField: 15
+  <RotationSinkSpeed>k__BackingField: 25
