@@ -35,13 +35,12 @@ namespace Assets._Project.Develop.Runtime.Gameplay.Features.Enemies
             {
                 case MainShipConfig mainShipConfig:
                     entity = _entitiesFactory.CreateMainShip(at, mainShipConfig);
-                    _brainsFactory.CreateEmptyBrain(entity); // AI
+                    _brainsFactory.CreateEmptyBrain(entity);
                     break;
 
                 case SmallShipConfig smallShipConfig:
                     entity = _entitiesFactory.CreateSmallShip(at, smallShipConfig);
                     _brainsFactory.CreateMoveToClosestTargetStateMachine(entity);
-                    Debug.Log("Added brain for small ship");
                     break;
 
                 default:

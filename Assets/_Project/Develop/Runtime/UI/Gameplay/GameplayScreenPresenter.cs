@@ -1,7 +1,6 @@
 ﻿using Assets._Project.Develop.Runtime.UI.Core;
 using System.Collections.Generic;
 using System;
-using Assets._Project.Develop.Runtime.Utilites.Reactive;
 using Assets._Project.Develop.Runtime.Gameplay.EntitiesCore;
 using Assets._Project.Develop.Runtime.Utilites.Timer;
 
@@ -24,6 +23,8 @@ namespace Assets._Project.Develop.Runtime.UI.Gameplay
         public void Initialize()
         {
             _view.Init();
+
+            _view.UpgradesPanelView.CreateMineButton.OnHoldComplete += CreateMine;
             
             foreach (IPresenter presenter in _childPresenters)
                 presenter.Initialize();
@@ -31,6 +32,8 @@ namespace Assets._Project.Develop.Runtime.UI.Gameplay
 
         public void Dispose()
         {
+            _view.UpgradesPanelView.CreateMineButton.OnHoldComplete -= CreateMine;
+
             foreach (var disposable in _disposables)
                 disposable.Dispose();
 
@@ -65,6 +68,21 @@ namespace Assets._Project.Develop.Runtime.UI.Gameplay
             timerService.CooldownEnded.Subscribe(OnTimerEnded);
 
             timerService.Restart();
+        }
+
+        public void HideUpgradesPanel()
+        {
+            _view.UpgradesPanelView.Hide();
+        }
+
+        public void ShowUpgradesPanel()
+        {
+            _view.UpgradesPanelView.Show();
+        }
+
+        private void CreateMine()
+        {
+
         }
 
         private void OnTimerEnded()

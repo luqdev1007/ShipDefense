@@ -30,6 +30,7 @@ namespace Assets._Project.Develop.Runtime.Gameplay.States
             _gameplayTimersService.PreperationTimer.Restart();
 
             _gameplayScreenPresenter.ShowPreperationTimer(_gameplayTimersService.PreperationTimer);
+            _gameplayScreenPresenter.ShowUpgradesPanel();
         }
 
         public void Update(float deltaTime)
@@ -39,6 +40,8 @@ namespace Assets._Project.Develop.Runtime.Gameplay.States
 
         public override void Exit()
         {
+            _gameplayScreenPresenter.HideUpgradesPanel();
+
             base.Exit();          
         }
     }
