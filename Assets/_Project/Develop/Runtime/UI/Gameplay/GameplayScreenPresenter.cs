@@ -64,8 +64,8 @@ namespace Assets._Project.Develop.Runtime.UI.Gameplay
         {
             _view.PrepTimerView.Show();
 
-            timerService.CurrentTime.Subscribe(OnTimerChanged);
-            timerService.CooldownEnded.Subscribe(OnTimerEnded);
+            _disposables.Add(timerService.CurrentTime.Subscribe(OnTimerChanged));
+            _disposables.Add(timerService.CooldownEnded.Subscribe(OnTimerEnded));
 
             timerService.Restart();
         }
@@ -82,7 +82,7 @@ namespace Assets._Project.Develop.Runtime.UI.Gameplay
 
         private void CreateMine()
         {
-
+             
         }
 
         private void OnTimerEnded()
